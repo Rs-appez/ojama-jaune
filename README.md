@@ -1,1 +1,1 @@
-bot discord for managuing a yugoioh tournament
+bot discord for managing a yugoioh tournament
