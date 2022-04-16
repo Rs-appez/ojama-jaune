@@ -21,7 +21,8 @@ class Ambiance(commands.Cog):
 
     @commands.command()
     async def ojama(self,ctx):
-        await ctx.send("JAUNE !!!!!!!!!!!!") 
+        await ctx.send("JAUNE !!!!!!!!!!!!!!!!!") 
+        await ctx.send("https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003") 
 
         
 def setup(bot):
