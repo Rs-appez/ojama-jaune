@@ -14,7 +14,7 @@ class Ambiance(commands.Cog):
 
     
     @commands.command()
-    async def mp    (self,ctx):
+    async def mp (self,ctx):
         member : Member =  ctx.author
         dm_chan = await member.create_dm()
         await dm_chan.send("hello")
@@ -23,6 +23,11 @@ class Ambiance(commands.Cog):
     async def ojama(self,ctx):
         await ctx.send("JAUNE !!!!!!!!!!!!!!!!!") 
         await ctx.send("https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003") 
+
+        
+    @commands.command()
+    async def ojamaSucks(self,ctx):
+        await ctx.author.edit(nick="ojama slave" )
 
         
 def setup(bot):
