@@ -6,15 +6,15 @@ class TimerDuel(commands.Cog):
     """Manage timer"""
     def __init__(self,bot):
         self.bot = bot
-        self.timer = Timer(time=60)
+        self.timer = Timer()
 
     
 
     @commands.command(name="timer")
-    async def launch_timer(self,ctx):
+    async def launch_timer(self,ctx, temps:int):
         """Timer for a duel"""
         if(not self.timer.started):  
-         await self.timer.launch_timer(ctx, self.bot)
+         await self.timer.launch_timer(ctx, temps)
         else :
             await ctx.send("le timer est déja lancé !")
       

@@ -23,7 +23,8 @@ class Timer():
             self._time_remaining -= 1
         self._time_remaining = self._time
 
-    async def launch_timer(self, ctx, bot):
+    async def launch_timer(self, ctx, time):
+        self._time_remaining = time
         self.started = True
         message = await ctx.send(5)
         for i in range(5):           

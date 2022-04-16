@@ -29,6 +29,7 @@ class Ambiance(commands.Cog):
     async def ojamaSucks(self,ctx):
         await ctx.author.edit(nick="ojama slave" )
 
+    
         
 def setup(bot):
     bot.add_cog(Ambiance(bot))
