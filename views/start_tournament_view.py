@@ -1,6 +1,6 @@
 import nextcord
 from nextcord.ext import commands
-from config import DUELIT_ID
+from config import DUELIST_ID
 
 
 class StartTournamentView(nextcord.ui.View):
@@ -10,7 +10,8 @@ class StartTournamentView(nextcord.ui.View):
         super().__init__(timeout=None)
 
     async def set_duelist_role(self, interaction : nextcord.Interaction):
-        role_id = int(DUELIT_ID)
+        
+        role_id = int(DUELIST_ID)
         role = interaction.guild.get_role(role_id)
         assert isinstance(role,nextcord.Role)
 
