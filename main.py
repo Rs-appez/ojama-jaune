@@ -3,6 +3,8 @@ import os
 import bots.ojamaBot as ojamaBot
 import config
 
+
+
 ojama_jaune = ojamaBot.OjamaBot()
 
 for file in os.listdir("./cogs"):

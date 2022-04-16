@@ -39,7 +39,7 @@ class TimerDuel(commands.Cog):
         """stop timer"""
 
         self.timer.stop()
-        await ctx.send("le timer à été arreté")
+        await ctx.send("le timer a été arreté")
 
         
     # @commands.command()

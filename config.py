@@ -8,3 +8,4 @@ OJAMA_TOKEN = os.getenv("TOKEN_OJAMA")
 
 #role
 DUELIT_ID = os.getenv("DUELIST_ID")
+TEAM_ID = os.getenv("TEAM_ID")
