@@ -1,5 +1,4 @@
 from nextcord.ext import commands
-import asyncio
 from models.timer import Timer
  
 
@@ -11,20 +10,24 @@ class Tournament(commands.Cog):
 
     
 
-    @commands.command()
-    async def timer(self,ctx):
+    @commands.command(name="timer")
+    async def launch_timer(self,ctx):
         """Timer for a duel"""
-
-        await self.timer.launch_timer(ctx, self.bot)
+        if(not self.timer.started):  
+         await self.timer.launch_timer(ctx, self.bot)
+        else :
+            await ctx.send("le timer est déja lancé !")
       
 
     @commands.command()
     async def time(self,ctx):
         """get timer for a duel"""
 
-        time= self.timer.get_time()
-        await ctx.send("il reste " + time)
-
+        if(self.timer.started): 
+            time= self.timer.get_time()
+            await ctx.send("il reste " + time)
+        else :
+            await ctx.send("le timer n'est pas lancé !")
 
         
 def setup(bot):

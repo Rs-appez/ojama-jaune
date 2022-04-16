@@ -5,12 +5,13 @@ class Timer():
         self._time = time
         self._time_remaining = time
         self.time = "Not started"
+        self.started = False
 
     def get_time(self):
         return self.time
 
     async def start(self):
-
+        
         while(self._time_remaining):
             mins, secs = divmod(self._time_remaining, 60)
             self.time = '{:02d}:{:02d}'.format(mins, secs)
@@ -18,11 +19,12 @@ class Timer():
             await asyncio.sleep(1)
             self._time_remaining -= 1
 
-
+        
         self._time_remaining = self._time
         self.time = "Not started"
 
     async def launch_timer(self, ctx, bot):
+        self.started = True
         await ctx.send(5)
         for i in range(5):           
             async for message in ctx.message.channel.history(limit = 1):
@@ -35,3 +37,4 @@ class Timer():
         await self.start()
 
         await ctx.send("TIME !!!!!!!!!!!!!!")
+        self.started = False
