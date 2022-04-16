@@ -1,6 +1,7 @@
 from discord import Member
 from nextcord.ext import commands
 
+from config import JUSTIN_ID
 
 class Ambiance(commands.Cog):
     """Manage ambience with ojama"""
@@ -12,7 +13,6 @@ class Ambiance(commands.Cog):
         member = ctx.author
         await ctx.send(f'hello {member.mention}')
 
-    
     @commands.command()
     async def mp (self,ctx):
         member : Member =  ctx.author
@@ -41,12 +41,12 @@ class Ambiance(commands.Cog):
     async def unmute(self, ctx):
         await ctx.send("DEMUTED !")
         await ctx.author.edit(mute=False)
-        
+
+
     @commands.command()
-    async def TgJustin(self, ctx):
-        author = ctx.author.name
-        if(author == 'Kioyaa#7859'):
-            await ctx.send(ctx.author)
+    async def tgjustin(self, ctx : commands.Context):
+        user = ctx.guild.get_member(JUSTIN_ID)
+        await user.edit(voice_channel=None)
         
         
 def setup(bot):
