@@ -40,7 +40,7 @@ class Ambiance(commands.Cog):
     @commands.command()
     async def unmute(self, ctx):
         await ctx.send("DEMUTED !")
-        await ctx.author.edit(mute=True)
+        await ctx.author.edit(mute=False)
         
     @commands.command()
     async def TgJustin(self, ctx):

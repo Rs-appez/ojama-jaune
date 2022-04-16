@@ -7,5 +7,6 @@ load_dotenv(dotenv_path="config")
 OJAMA_TOKEN = os.getenv("TOKEN_OJAMA")
 
 #role
-DUELIT_ID = os.getenv("DUELIST_ID")
-TEAM_ID = os.getenv("TEAM_ID")
+DUELIT_ID =964988897849380934
+TEAM_ID = 911384286530240533
+JUSTIN_ID = 274274732063326209
