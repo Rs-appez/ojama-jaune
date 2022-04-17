@@ -44,6 +44,10 @@ class Ambiance(commands.Cog):
 
     @commands.command()
     async def tgjustin(self, ctx : commands.Context):
+
+        async for msg in ctx.channel.history(limit=1):
+            await msg.delete()
+
         user = ctx.guild.get_member(JUSTIN_ID)
         await user.edit(voice_channel=None)
         
