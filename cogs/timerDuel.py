@@ -11,7 +11,7 @@ class TimerDuel(commands.Cog):
     
 
     @commands.command(name="timer")
-    async def launch_timer(self,ctx, temps:int):
+    async def launch_timer(self,ctx, temps:int = 2400):
         """Timer for a duel"""
         if(not self.timer.started):  
          await self.timer.launch_timer(ctx, temps)
@@ -24,13 +24,8 @@ class TimerDuel(commands.Cog):
         """get remaining time"""
 
         if(self.timer.started): 
-            time= self.timer.get_time()
-            mins, secs = divmod(time, 60)
-            time = '{:02d}:{:02d}'.format(mins, secs)
-            if(not self.timer.freezed):
-                await ctx.send("il reste " + time)
-            else :
-                await ctx.send("il reste " + time  +" (timer en pause)")
+            await self.timer.get_time()
+            
         else :
             await ctx.send("le timer n'est pas lancé !")
 
