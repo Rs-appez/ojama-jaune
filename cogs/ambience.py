@@ -42,7 +42,6 @@ class Ambiance(commands.Cog):
         await ctx.send("DEMUTED !")
         await ctx.author.edit(mute=False)
 
-
     @commands.command()
     async def tgjustin(self, ctx : commands.Context):
 
