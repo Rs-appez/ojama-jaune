@@ -20,7 +20,7 @@ class OjamaBot(commands.Bot):
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
 
         voice = await voice_channel.connect()
-        source =  FFmpegPCMAudio(executable='C:\\ffmpeg\\bin\\ffmpeg.exe', source = 'audios\\baobaboon.wav')
+        source =  FFmpegPCMAudio(executable='ffmpeg\\ffmpeg.exe', source = 'audios\\baobaboon.wav')
         assert isinstance(source,FFmpegPCMAudio)
         voice.play(source)
         await asyncio.sleep(1)
