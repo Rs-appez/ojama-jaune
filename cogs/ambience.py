@@ -35,10 +35,7 @@ class Ambiance(commands.Cog):
         await asyncio.sleep(5)
         await ctx.send("de marquer ses cartes")
         
-    @commands.command()
-    async def baobaboon(self, ctx):
-        await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
-        await self.bot.join_vocal(ctx.message.author.voice.channel)
+   
         
     @commands.command()
     async def ojamaSucks(self,ctx):

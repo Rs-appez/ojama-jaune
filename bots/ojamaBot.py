@@ -1,4 +1,5 @@
 import asyncio
+from ntpath import join
 from discord import PCMVolumeTransformer
 import nextcord
 from nextcord.ext import commands
@@ -19,14 +20,19 @@ class OjamaBot(commands.Bot):
 
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
 
-        voice = await voice_channel.connect()
-        source =  FFmpegPCMAudio(executable='ffmpeg\\ffmpeg.exe', source = 'audios\\baobaboon.wav')
-        assert isinstance(source,FFmpegPCMAudio)
-        voice.play(source)
-        await asyncio.sleep(1)
-        await self.left_vocal(voice)
+        return await voice_channel.connect()
+        
 
     async def left_vocal(self, voice_client : nextcord.VoiceClient):
 
         await voice_client.disconnect()
+
+    async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
+
+        voice = await self.join_vocal(voice_channel)
+        source =  FFmpegPCMAudio(executable='ffmpeg\\ffmpeg.exe', source = f'audios\\{sound}.wav')
+        assert isinstance(source,FFmpegPCMAudio)
+        voice.play(source)
+        await asyncio.sleep(1)
+        await self.left_vocal(voice)
     
