@@ -23,18 +23,19 @@ class CardSearch(commands.Cog):
                 self.url_ygopro + "cardinfo.php?name=" + '+'.join(name) + '&language=fr'
             )
             response_en = requests.get(
-                self.url_ygoprourl + "cardinfo.php?name=" + '+'.join(name)
+                self.url_ygopro + "cardinfo.php?name=" + '+'.join(name)
             )
             if(response_fr.status_code == 200):
                 img = response_fr.json()['data'][0]['card_images'][0]['image_url']
                 desc = response_fr.json()['data'][0]['desc']
+                print(desc)
                 await ctx.send(img)
                 await ctx.send("```" + desc + "```")
                 
             elif(response_fr.status_code == 400):
                 if(response_en.status_code == 200):
                     img = response_en.json()['data'][0]['card_images'][0]['image_url']
-                    desc = response_en.json()['desc'][0]['desc']
+                    desc = response_en.json()['data'][0]['desc']
                     await ctx.send(img)
                     await ctx.send("```" + desc + "```")
                 elif(response_en.status_code == 400):
@@ -67,6 +68,19 @@ class CardSearch(commands.Cog):
             for r in resp:
                 if 'en' in r:
                     await ctx.send(f"```{r['en']}```")
+        
+    @commands.command(name="archetype")
+    async def archetype(self, ctx, *archetype):
+        """List of cartes from a certain archetypes"""
+        response = requests.get(
+            self.url_ygopro + "cardinfo.php?archetype=" + '+'.join(archetype)
+        )
+        arch = " ".join(archetype)
+        cards = "Listes des cartes de l'archétype " + arch.upper() + ": \n ```"
+        for card in response.json()['data']:
+            cards += card['name'] + '\n'
+        cards += '```'
+        await ctx.send(cards) 
         
         
 def setup(bot):
