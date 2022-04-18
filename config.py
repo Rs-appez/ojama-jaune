@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path="config")
 
 #token
-OJAMA_JAUNE_TOKEN = os.getenv("TOKEN_OJAMA")
-OJAMA_ROUGE_TOKEN = os.getenv("TOKEN_ROUGE")
+OJAMA_JAUNE_TOKEN = os.getenv("TOKEN_OJAMA_JAUNE")
+OJAMA_ROUGE_TOKEN = os.getenv("TOKEN_OJAMA_ROUGE")
 CHALLONGE_TOKEN = os.getenv('CHALLONGE_TOKEN')
 
 
