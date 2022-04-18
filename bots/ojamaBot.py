@@ -1,12 +1,13 @@
 import discord
 from nextcord.ext import commands
 
-intents = discord.Intents.default()
-intents.members = True
+
 
 class OjamaBot(commands.Bot):
 
     def __init__(self):
+        intents = discord.Intents.default()
+        intents.members = True
         super().__init__(command_prefix = "!", intents=intents)
 
 
