@@ -12,6 +12,13 @@ class SoundBox(commands.Cog):
         voice = ctx.message.author.voice
         if(voice): 
          voice_channel = voice.channel
-         await self.bot.play_sound("baobaboon",voice_channel)
+         await self.bot.play_sound("baobaboon.wav",voice_channel)
+
+    @commands.command()
+    async def orelsan(self, ctx):
+        voice = ctx.message.author.voice
+        if(voice): 
+         voice_channel = voice.channel
+         await self.bot.play_sound("orelsan.m4a",voice_channel)
 def setup(bot):
     bot.add_cog(SoundBox(bot))
