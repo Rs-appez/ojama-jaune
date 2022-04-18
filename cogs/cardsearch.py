@@ -60,14 +60,26 @@ class CardSearch(commands.Cog):
             self.url_ygorga + "idx/card/name/en"
         )
         if(response_en.status_code == 200):
-            id = response_en.json()[" ".join(name)][0]       
-            response_rulling = requests.get(
-                f'{self.url_ygorga}card/{id}'
-            )
-            resp:json = response_rulling.json()['faqData']['entries']['0']
-            for r in resp:
-                if 'en' in r:
-                    await ctx.send(f"```{r['en']}```")
+            nom = " ".join(name)
+            result = dict(response_en.json())
+            r = dict((k.lower(), v) for k,v in result.items())
+            
+            if nom.lower in r:
+                id = r[nom][0]
+                response_rulling = requests.get(
+                    f'{self.url_ygorga}card/{id}'
+                )
+                resp:json = response_rulling.json()['faqData']['entries']['0']
+                
+                find = ''
+                for i in resp:
+                    if 'en' in i:
+                        find += i['en'] + '\n'
+                await ctx.send(f'```{find}```')
+            else:
+                await ctx.send("Carte non trouvée")
+            
+            
         
     @commands.command(name="archetype")
     async def archetype(self, ctx, *archetype):
