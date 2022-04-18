@@ -2,18 +2,21 @@
 
 import nextcord
 
+from models.tournament import Tournament
+
 class DuelistView(nextcord.ui.View):
 
-    def __init__(self,ctx):
+    def __init__(self,ctx, tournament : Tournament):
         self.ctx = ctx
+        self.tournament = tournament
         super().__init__(timeout=None)
 
 
-    async def start(self, interaction : nextcord.Interaction):
-       await self.ctx.send(content="go !")
+    async def start(self):
+       self.tournament.start()
 
 
 
     @nextcord.ui.button(label="confirmer",emoji="✅" ,style=nextcord.ButtonStyle.primary)
     async def participate_button(self,button,interaction):
-        await self.start(interaction)
+        await self.start()

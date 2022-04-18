@@ -12,7 +12,7 @@ class TournamentCog(commands.Cog):
     """Manage yugioh tournament"""
     def __init__(self,bot):
         self.bot = bot
-
+        self.test = True
 
     @commands.command("tournament")
     @commands.has_role(int(TEAM_ID))
@@ -39,15 +39,28 @@ class TournamentCog(commands.Cog):
         for member in members:
             
             if(role in member.roles):
-                duelists.append(member.nick or member.name)
+                if(member.nick):
+                    name = member.nick.lower()
+                else :
+                    name = member.name.lower()
+
+                duelists.append(name)
+
         
+        #for test api test API
+        if(self.test):
+            duelists = ["joueur A","joueur B","joueur C", "reponse D","appez","ojama jaune","ojama noir","ojama vert","ojama rouge",'ojama bleu','ojama rose',".ojama roi",'ojama knight',"ojama emperor"]
+
+        duelists.sort()
+
         string_member= "__**Liste des duelists**__ :\n\n"
         for duelist in duelists:
             string_member += "> "+duelist+"\n"
 
-        # tournament = Tournament(duelists)
 
-        await ctx.send(string_member, view = DuelistView(ctx))
+        tournament = Tournament(ctx,duelists)
+
+        await ctx.send(string_member, view = DuelistView(ctx, tournament))
 
     
         
