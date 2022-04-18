@@ -64,20 +64,17 @@ class CardSearch(commands.Cog):
             result = dict(response_en.json())
             r = dict((k.lower(), v) for k,v in result.items())
             
-            if nom.lower in r:
-                id = r[nom][0]
-                response_rulling = requests.get(
-                    f'{self.url_ygorga}card/{id}'
-                )
-                resp:json = response_rulling.json()['faqData']['entries']['0']
-                
-                find = ''
-                for i in resp:
-                    if 'en' in i:
-                        find += i['en'] + '\n'
-                await ctx.send(f'```{find}```')
-            else:
-                await ctx.send("Carte non trouvée")
+            id = r[nom.lower()][0]
+            response_rulling = requests.get(
+                f'{self.url_ygorga}card/{id}'
+            )
+            resp:json = response_rulling.json()['faqData']['entries']['0']
+            
+            find = ''
+            for i in resp:
+                if 'en' in i:
+                    find += i['en'] + '\n'
+            await ctx.send(f'```{find}```')
             
             
         
