@@ -9,6 +9,9 @@ from io import BufferedIOBase
 class OjamaBot(commands.Bot):
 
     def __init__(self):
+
+        self.voice_client = None
+
         intents = nextcord.Intents.default()
         intents.members = True
         intents.voice_states = True
@@ -23,16 +26,23 @@ class OjamaBot(commands.Bot):
         return await voice_channel.connect()
         
 
-    async def left_vocal(self, voice_client : nextcord.VoiceClient):
+    async def left_vocal(self):
+        if(self.voice_client):
+            await self.voice_client.disconnect()
 
-        await voice_client.disconnect()
+    def after_sound(self,error):
+        try:
+            lv = self.left_vocal()
+            fut = asyncio.run_coroutine_threadsafe(lv, self.loop)
+            fut.result()
+        except Exception as e:
+            print(e)
 
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
 
-        voice = await self.join_vocal(voice_channel)
-        source =  FFmpegPCMAudio(executable='ffmpeg\\ffmpeg.exe', source = f'audios\\{sound}.wav')
+        self.voice_client = await self.join_vocal(voice_channel)
+        source =  FFmpegPCMAudio(executable='ffmpeg\\ffmpeg.exe', source = f'audios\\{sound}')
         assert isinstance(source,FFmpegPCMAudio)
-        voice.play(source)
-        await asyncio.sleep(1)
-        await self.left_vocal(voice)
+        self.voice_client.play(source, after= self.after_sound )
+        
     
