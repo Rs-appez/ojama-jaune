@@ -23,7 +23,7 @@ class CardSearch(commands.Cog):
                 self.url_ygopro + "cardinfo.php?name=" + '+'.join(name) + '&language=fr'
             )
             response_en = requests.get(
-                self.url_ygoprourl + "cardinfo.php?name=" + '+'.join(name)
+                self.url_ygopro + "cardinfo.php?name=" + '+'.join(name)
             )
             if(response_fr.status_code == 200):
                 img = response_fr.json()['data'][0]['card_images'][0]['image_url']
