@@ -1,3 +1,4 @@
+import asyncio
 from discord import Member
 from nextcord.ext import commands
 
@@ -28,9 +29,15 @@ class Ambiance(commands.Cog):
     async def emotional(self, ctx):
         await ctx.send("https://tenor.com/view/emotional-damage-emotional-damage-meme-funny-gif-24332819")
         
+    @commands.command(name="blague")
+    async def joke(self, ctx):
+        await ctx.send("Quel est le comble pour un joueur branded")
+        await asyncio.sleep(5)
+        await ctx.send("de marquer ses cartes")
+        
     @commands.command()
     async def baobaboon(self, ctx):
-        await ctx.send("https://www.google.com/url?sa=i&url=https%3A%2F%2Fdb.ygoprodeck.com%2Fcard%2F%3Fsearch%3DBaobaboon&psig=AOvVaw38GKreKmNu415uta-7DAJQ&ust=1650321878244000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPDO56GWnPcCFQAAAAAdAAAAABAR")
+        await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
         
     @commands.command()
     async def ojamaSucks(self,ctx):
