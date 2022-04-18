@@ -8,14 +8,14 @@ from nextcord import FFmpegPCMAudio
 from io import BufferedIOBase
 class OjamaBot(commands.Bot):
 
-    def __init__(self):
+    def __init__(self, command_prefix ):
 
         self.voice_client = None
 
         intents = nextcord.Intents.default()
         intents.members = True
         intents.voice_states = True
-        super().__init__(command_prefix = "!", intents=intents)
+        super().__init__(command_prefix, intents=intents)
 
 
     async def on_ready(self):
