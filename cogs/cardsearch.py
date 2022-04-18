@@ -34,7 +34,7 @@ class CardSearch(commands.Cog):
             elif(response_fr.status_code == 400):
                 if(response_en.status_code == 200):
                     img = response_en.json()['data'][0]['card_images'][0]['image_url']
-                    desc = response_en.json()['desc'][0]['desc']
+                    desc = response_en.json()['data'][0]['desc']
                     await ctx.send(img)
                     await ctx.send("```" + desc + "```")
                 elif(response_en.status_code == 400):
