@@ -9,6 +9,9 @@ class SoundBox(commands.Cog):
     @commands.command()
     async def baobaboon(self, ctx):
         await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
-        await self.bot.play_sound("baobaboon",ctx.message.author.voice.channel)
+        voice = ctx.message.author.voice
+        if(voice): 
+         voice_channel = voice.channel
+         await self.bot.play_sound("baobaboon",voice_channel)
 def setup(bot):
     bot.add_cog(SoundBox(bot))
