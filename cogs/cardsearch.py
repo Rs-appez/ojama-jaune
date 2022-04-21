@@ -74,7 +74,10 @@ class CardSearch(commands.Cog):
             for i in resp:
                 if 'en' in i:
                     find += i['en'] + '\n'
-            await ctx.send(f'```{find}```')
+            if find != '':
+                await ctx.send(f'```{find}```')
+            else:
+                await ctx.send("```Pas de rulling```")
             
             
         

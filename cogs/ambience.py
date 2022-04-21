@@ -1,7 +1,7 @@
 import asyncio
-from discord import Member
+from discord import Member, User, VoiceChannel
 from nextcord.ext import commands
-
+import random
 from config import JUSTIN_ID
 
 class Ambiance(commands.Cog):
@@ -35,23 +35,38 @@ class Ambiance(commands.Cog):
         await asyncio.sleep(5)
         await ctx.send("de marquer ses cartes")
         
-   
-        
     @commands.command()
     async def ojamaSucks(self,ctx):
-        await ctx.author.edit(nick="ojama slave" )
-
+        await ctx.author.edit(nick="ojama slave")
 
     @commands.command()
     async def tgjustin(self, ctx : commands.Context):
-
         async for msg in ctx.channel.history(limit=1):
             await msg.delete()
-        
         user = ctx.guild.get_member(JUSTIN_ID)
-        await user.edit(voice_channel=None)
-        await ctx.author.edit(voice_channel=None)
         
+        nbr = random.randrange(1, 100, 1)
+        if nbr >= 10:
+            await ctx.send("Comme ça on essaie de kick Justin ?")
+            await ctx.author.edit(voice_channel=None)
+        else:
+            await user.edit(voice_channel=None)
+            
+    @commands.command(name="bot")
+    async def teepot(self, ctx):
+        await ctx.send("I'm a teapot !")
+        
+    @commands.command(name="tg")
+    async def tg(self, ctx, mention : Member):
+        nbr = random.randrange(1, 100, 1)
+        user = ctx.guild.get_member_named(str(mention))
+        assert isinstance(user, Member)
+        if nbr <= 50:
+            await ctx.author.edit(voice_channel=None)
+        else:
+            await user.edit(voice_channel=None)
+        
+    
         
 def setup(bot):
     bot.add_cog(Ambiance(bot))
