@@ -62,7 +62,10 @@ class TournamentCog(commands.Cog):
 
         await ctx.send(string_member, view = DuelistView(ctx, tournament))
 
-    
+    @commands.command()
+    @commands.is_owner()
+    async def delete(self, ctx):
+        await Tournament.dell_all_tournament(ctx)
         
 def setup(bot):
     bot.add_cog(TournamentCog(bot))

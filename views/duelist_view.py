@@ -13,7 +13,7 @@ class DuelistView(nextcord.ui.View):
 
 
     async def start(self):
-       self.tournament.start()
+       await self.tournament.start()
 
 
 
