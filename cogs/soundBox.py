@@ -1,17 +1,24 @@
+import nextcord
 from nextcord.ext import commands
 
 
 class SoundBox(commands.Cog):
     """Manage cardmarket commands"""
     def __init__(self,bot):
-        self.bot = bot
+        self.bot : commands.Bot = bot
 
     @commands.command()
-    async def baobaboon(self, ctx):
+    async def baobaboon(self, ctx : commands.Context, voice : int = None):
         await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
-        voice = ctx.message.author.voice
-        if(voice): 
-         voice_channel = voice.channel
+        if(not voice):
+            voice = ctx.message.author.voice
+            if(voice): 
+                voice_channel = voice.channel
+        else :
+            # voice_channel = ctx.guild.get_channel(voice)
+            voice_channel = self.bot.get_channel(voice)
+        
+        if(voice_channel):
          await self.bot.play_sound("baobaboon.wav",voice_channel)
 
     @commands.command()
