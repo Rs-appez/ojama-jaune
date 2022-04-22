@@ -1,6 +1,7 @@
 
 import json
 from operator import index
+from urllib import response
 from config import CHALLONGE_TOKEN
 import requests
 
@@ -84,7 +85,7 @@ class Tournament():
 
         return response.status_code
 
-    async def get_participant(self):
+    def get_participant(self):
 
         response = requests.get(
         Tournament.__challonge_api_url+f"/{self.url}/participants.json",
@@ -98,18 +99,20 @@ class Tournament():
                 self.participants[self.duelists[index].name] = participant["participant"]["id"]
 
         
-    async def matches(self):
-        await self.ctx.send("MATCHES")
+    def matches(self, duelist_id= None):
         param = Tournament.__params
         param['state'] = 'open'
+        if duelist_id:
+            param['participant_id'] = duelist_id
         response = requests.get(
             Tournament.__challonge_api_url+f"/{self.url}/matches.json",
             headers=Tournament._header,
             params=param
         )
         if response.status_code == 200:
-            print()
-    
+         return response
+
+
     async def start_tournament(self):
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
@@ -122,17 +125,23 @@ class Tournament():
             headers=Tournament._header,
             params=Tournament.__params
         )
+
+        self.get_participant()
         
-        print(response)
         if(response.status_code == 200):
             await self.ctx.send("Tournoi demarré ! ")
-            print('***************************************************')
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
             
         else : 
             await self.ctx.send("Error")
 
+    async def set_win(self, winner) :
+        winner_id = self.participants[winner.name]
+
+        match = self.matches(winner_id)
+
+        print(match.json()[0]["match"]["id"])
 
 
     @staticmethod

@@ -67,19 +67,18 @@ class TournamentCog(commands.Cog):
         await Tournament.dell_all_tournament(ctx)
 
 
-    @commands.command("p")
-    async def get_participant(self, ctx):
-        await self.tournament.get_participant()
-
-        
-    @commands.command("matches")
-    async def matches_tournament(self, ctx):
-        await self.tournament.matches()
         
     @commands.command("start")
     async def start_tournament(self, ctx):
         await self.tournament.start_tournament()
 
+                
+    @commands.command("win")
+    async def set_win(self, ctx):
+        if(self.tournament):
+            await self.tournament.set_win(ctx.author)
+        else :
+            ctx.send("Pas de tournoi en cours")
         
 def setup(bot):
     bot.add_cog(TournamentCog(bot))
