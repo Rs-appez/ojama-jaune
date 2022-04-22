@@ -27,5 +27,15 @@ class SoundBox(commands.Cog):
         if(voice): 
          voice_channel = voice.channel
          await self.bot.play_sound("orelsan.m4a",voice_channel)
+
+    @commands.command()
+    async def feur(self, ctx):
+        voice = ctx.message.author.voice
+        if(voice): 
+         voice_channel = voice.channel
+         await self.bot.play_sound("FEUR.wav",voice_channel)
+         await ctx.send(file=nextcord.File("images\\IMG_20220416_205138_438.jpg"))
+
+
 def setup(bot):
     bot.add_cog(SoundBox(bot))
