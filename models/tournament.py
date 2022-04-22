@@ -1,5 +1,6 @@
 
 import json
+from operator import index
 from config import CHALLONGE_TOKEN
 import requests
 
@@ -25,6 +26,7 @@ class Tournament():
         self.url = ""
 
         self.members = members
+        self.participants:dict = {}
         self.ctx = ctx
         
 
@@ -62,8 +64,7 @@ class Tournament():
 
         participants = []
 
-        for index,member in enumerate(self.members):
-            print(index)
+        for member in self.members:
             participants.append({"name" : member})
 
 
@@ -79,11 +80,6 @@ class Tournament():
             params=Tournament.__params
         )
 
-        requests.post(
-            Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
-            headers=Tournament._header,
-            params=Tournament.__params
-        )
 
         return response.status_code
 
@@ -95,20 +91,46 @@ class Tournament():
         params=Tournament.__params
         )
 
+        if response.status_code ==200:
+            
+            for index,participant in enumerate( response.json()):
+                self.participants[self.members[index].name] = participant["participant"]["id"]
+
+        print(self.participants)
+
+        
+    async def matches(self):
+        response = requests.get(
+            Tournament.__challonge_api_url+f"/{self.url}/matches.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
+        print('***************************************************')
         print(response.json())
-
+        return response
+    
     async def start(self):
-
-
+        requests.post(
+            Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
 
         response = requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/start.json",
             headers=Tournament._header,
             params=Tournament.__params
         )
-
+        
         if(response.status_code == 200):
             await self.ctx.send("Tournoi demarré ! ")
+            print(self.matches())
+            print('***************************************************')
+            # créer le nombre de channel vocaux / match
+            # Bouger les participants dans leurs matchs / channel vocal
+            
+            
+            
         else : 
             await self.ctx.send("Error")
 
