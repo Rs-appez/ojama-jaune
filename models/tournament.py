@@ -1,6 +1,5 @@
 
 import json
-import re
 from config import CHALLONGE_TOKEN
 import requests
 
@@ -11,6 +10,15 @@ class Tournament():
     _challonge_url = "https://challonge.com/fr/"
     __challonge_api_url =f"https://appez@api.challonge.com/v1/tournaments"
     __api_key = CHALLONGE_TOKEN
+
+    _header = {
+            "Content-Type": "application/json",
+            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
+        }
+
+    __params = {
+            "api_key" : f"{__api_key }"
+        }
 
     def __init__(self,ctx ,members):
 
@@ -23,10 +31,6 @@ class Tournament():
 
     async def create_tournament(self):
 
-        HEADERS = {
-            "Content-Type": "application/json",
-            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
-        }
 
         data = {
             "name" : "Playing room online tournament",
@@ -36,15 +40,12 @@ class Tournament():
             "game-id" : 45,
             "tournament[game_name]" : "Yu-Gi-Oh!",
         }
-        params = {
-            "api_key" : f"{Tournament.__api_key }"
-        }
 
         response = requests.post(
             Tournament.__challonge_api_url+".json",
-            headers=HEADERS,
+            headers=Tournament._header,
             json=data,
-            params=params
+            params=Tournament.__params
         )
         
         if(response.status_code == 200):
@@ -61,73 +62,76 @@ class Tournament():
 
         participants = []
 
-        for member in self.members:
+        for index,member in enumerate(self.members):
+            print(index)
             participants.append({"name" : member})
 
-        HEADERS = {
-            "Content-Type": "application/json",
-            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
-        }
 
         data = {
             "participants" : participants,
         }
-        params = {
-            "api_key" : f"{Tournament.__api_key }"
-        }
+       
 
         response = requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/bulk_add.json",
-            headers=HEADERS,
+            headers=Tournament._header,
             json=data,
-            params=params
+            params=Tournament.__params
         )
 
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
-            headers=HEADERS,
-            params=params
+            headers=Tournament._header,
+            params=Tournament.__params
         )
 
         return response.status_code
 
+    async def get_participant(self):
+
+        response = requests.get(
+        Tournament.__challonge_api_url+f"/{self.url}/participants.json",
+        headers=Tournament._header,
+        params=Tournament.__params
+        )
+
+        print(response.json())
+
+    async def start(self):
+
+
+
+        response = requests.post(
+            Tournament.__challonge_api_url+f"/{self.url}/start.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
+
+        if(response.status_code == 200):
+            await self.ctx.send("Tournoi demarré ! ")
+        else : 
+            await self.ctx.send("Error")
+
+
+
     @staticmethod
     async def get_tournament() -> json:
-        HEADERS = {
-            "Content-Type": "application/json",
-            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
-            
-        }
-
-
-        params = {
-            "api_key" : f"{Tournament.__api_key }"
-        }
 
         response = requests.get(
             Tournament.__challonge_api_url+".json",
-            headers=HEADERS,
-            params=params
+            headers=Tournament._header,
+            params=Tournament.__params
         )
         
         return response.json()
 
     @staticmethod
     async def delete_tournament( url,ctx):
-        HEADERS = {
-            "Content-Type": "application/json",
-            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
-            
-        }
-
-        params = {
-            "api_key" : f"{Tournament.__api_key}"
-        }
 
         response = requests.delete(
             Tournament.__challonge_api_url+f'/{url}',
-            headers=HEADERS,
-            params=params
+            headers=Tournament._header,
+            params=Tournament.__params
         )
 
         if(response.status_code == 200):

@@ -58,14 +58,21 @@ class TournamentCog(commands.Cog):
             string_member += "> "+duelist+"\n"
 
 
-        tournament = Tournament(ctx,duelists)
+        self.tournament = Tournament(ctx,duelists)
 
-        await ctx.send(string_member, view = DuelistView(ctx, tournament))
+        await ctx.send(string_member, view = DuelistView(ctx, self.tournament))
 
     @commands.command()
     @commands.is_owner()
     async def delete(self, ctx):
         await Tournament.dell_all_tournament(ctx)
+
+
+    @commands.command("p")
+    @commands.is_owner()
+    async def get_participant(self, ctx):
+        await self.tournament.get_participant()
+
         
 def setup(bot):
     bot.add_cog(TournamentCog(bot))
