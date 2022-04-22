@@ -39,4 +39,4 @@ class StartTournamentView(nextcord.ui.View):
 
     @nextcord.ui.button(label="start", style=nextcord.ButtonStyle.blurple, disabled=False)
     async def start_button(self,button,interaction):
-        print("tart")
+        print("start")

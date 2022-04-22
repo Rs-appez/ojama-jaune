@@ -13,6 +13,7 @@ class TournamentCog(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.test = True
+        self.tournament = None
 
     @commands.command("tournament")
     @commands.has_role(int(TEAM_ID))
@@ -69,7 +70,6 @@ class TournamentCog(commands.Cog):
 
 
     @commands.command("p")
-    @commands.is_owner()
     async def get_participant(self, ctx):
         await self.tournament.get_participant()
 
@@ -77,6 +77,10 @@ class TournamentCog(commands.Cog):
     @commands.command("matches")
     async def matches_tournament(self, ctx):
         await self.tournament.matches()
+        
+    @commands.command("start")
+    async def start_tournament(self, ctx):
+        await self.tournament.start_tournament()
 
         
 def setup(bot):
