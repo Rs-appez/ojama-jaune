@@ -21,11 +21,11 @@ class Tournament():
             "api_key" : f"{__api_key }"
         }
 
-    def __init__(self,ctx ,members):
+    def __init__(self,ctx ,duelists):
 
         self.url = ""
 
-        self.members = members
+        self.duelists = duelists
         self.participants:dict = {}
         self.ctx = ctx
         
@@ -64,8 +64,9 @@ class Tournament():
 
         participants = []
 
-        for member in self.members:
-            participants.append({"name" : member})
+        for duelist in self.duelists:
+            name = duelist.nick or duelist.name
+            participants.append({"name" : name })
 
 
         data = {
@@ -94,9 +95,7 @@ class Tournament():
         if response.status_code ==200:
             
             for index,participant in enumerate( response.json()):
-                self.participants[self.members[index].name] = participant["participant"]["id"]
-
-        print(self.participants)
+                self.participants[self.duelists[index].name] = participant["participant"]["id"]
 
         
     async def matches(self):

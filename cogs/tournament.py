@@ -30,6 +30,7 @@ class TournamentCog(commands.Cog):
         """start the tournament"""
 
         duelists = []
+        duelists_str = []
 
         role_id = int(DUELIST_ID)
         role = ctx.guild.get_role(role_id)
@@ -45,17 +46,14 @@ class TournamentCog(commands.Cog):
                 else :
                     name = member.name.lower()
 
-                duelists.append(name)
+                duelists_str.append(name)
+                duelists.append(member)
 
-        
-        #for test api test API
-        if(self.test):
-            duelists = ["joueur A","joueur B","joueur C", "reponse D","appez","ojama jaune","ojama noir","ojama vert","ojama rouge",'ojama bleu','ojama rose',".ojama roi",'ojama knight',"ojama emperor"]
-
-        duelists.sort()
+      
+        duelists_str.sort()
 
         string_member= "__**Liste des duelists**__ :\n\n"
-        for duelist in duelists:
+        for duelist in duelists_str:
             string_member += "> "+duelist+"\n"
 
 
