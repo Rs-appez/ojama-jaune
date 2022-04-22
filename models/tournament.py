@@ -100,16 +100,18 @@ class Tournament():
 
         
     async def matches(self):
+        await self.ctx.send("MATCHES")
+        param = Tournament.__params
+        param['state'] = 'open'
         response = requests.get(
             Tournament.__challonge_api_url+f"/{self.url}/matches.json",
             headers=Tournament._header,
-            params=Tournament.__params
+            params=param
         )
-        print('***************************************************')
-        print(response.json())
-        return response
+        if response.status_code == 200:
+            print()
     
-    async def start(self):
+    async def start_tournament(self):
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
             headers=Tournament._header,
@@ -122,14 +124,12 @@ class Tournament():
             params=Tournament.__params
         )
         
+        print(response)
         if(response.status_code == 200):
             await self.ctx.send("Tournoi demarré ! ")
-            print(self.matches())
             print('***************************************************')
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            
-            
             
         else : 
             await self.ctx.send("Error")
