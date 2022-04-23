@@ -79,6 +79,10 @@ class TournamentCog(commands.Cog):
             await self.tournament.set_win(ctx.author)
         else :
             ctx.send("Pas de tournoi en cours")
-        
+    
+    @commands.command("delete_vocal")
+    async def delete_vocal_tournament(self, ctx):
+        await self.tournament.dell_vocal(self)
+    
 def setup(bot):
     bot.add_cog(TournamentCog(bot))

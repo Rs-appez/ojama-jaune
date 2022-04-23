@@ -1,10 +1,9 @@
 
 import json
 from operator import index
-from urllib import response
-from config import CHALLONGE_TOKEN
+from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID
 import requests
-
+from nextcord import CategoryChannel
 
 
 class Tournament():
@@ -29,6 +28,9 @@ class Tournament():
         self.duelists = duelists
         self.participants:dict = {}
         self.ctx = ctx
+        
+        category = [c for c in ctx.guild.categories if c.id == CATEGORY_TOURNAMENT_ID]
+        self.category = category[0]
         
 
 
@@ -110,9 +112,29 @@ class Tournament():
             params=param
         )
         if response.status_code == 200:
-         return response
-
-
+            return response
+    
+    async def create_vocal(self):
+        matches = self.matches()
+        
+        for index,m in enumerate(matches.json()):
+            cat = await self.category.create_voice_channel(f'Table {index+1}')
+            
+    
+    async def move_player(self):
+        matches = self.matches()
+        mydict = self.participants
+        channels = [x for x in self.category.channels if x.name.startswith('Table')]
+        print(channels)
+        
+        for index, m in enumerate(matches.json()):
+            player1 = list(mydict.keys())[list(mydict.values()).index(m['match']['player1_id'])]
+            player2 = list(mydict.keys())[list(mydict.values()).index(m['match']['player2_id'])]
+            for d in self.duelists:
+                if d.name == player1 or d.name == player2:
+                    await d.edit(voice_channel = channels[index])
+            
+            
     async def start_tournament(self):
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
@@ -132,7 +154,10 @@ class Tournament():
             await self.ctx.send("Tournoi demarré ! ")
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            
+            await self.create_vocal()
+            await self.move_player()
+                
+                
         else : 
             await self.ctx.send("Error")
 
@@ -178,6 +203,12 @@ class Tournament():
             url = tournament['tournament']["url"]
             await Tournament.delete_tournament(url,ctx)
 
+    async def dell_vocal(self, ctx):
+        categories = self.ctx.guild.categories            
+        category = [c for c in categories if c.id == CATEGORY_TOURNAMENT_ID]
+        for c in category[0].channels:
+            if c.name.startswith("Table"):
+                await c.delete()
 
     async def start(self):
         await self.create_tournament()
