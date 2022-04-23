@@ -1,6 +1,5 @@
 
 import json
-from operator import index
 from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID
 import requests
 from nextcord import CategoryChannel
@@ -38,12 +37,14 @@ class Tournament():
 
 
         data = {
-            "name" : "Playing room online tournament",
-            "tournament_type" : "swiss",
-            "open_signup" : "False",
-            "private"  : "True",
-            "game-id" : 45,
-            "tournament[game_name]" : "Yu-Gi-Oh!",
+            "tournament" : {
+                "name" : "Playing room online tournament",
+                "tournament_type" : "swiss",
+                "open_signup" : "false",
+                "private"  : "true",
+                "game-id" : 45,
+                "game_name" : "Yu-Gi-Oh!",
+            }
         }
 
         response = requests.post(
@@ -58,9 +59,9 @@ class Tournament():
             if (await self.add_members() == 200):
                 await self.ctx.send(f"Tournoi crée : {Tournament._challonge_url+self.url} ")
             else :
-                await self.ctx.send("Error ajout membre")
+                await self.ctx.send("Erreur ajout membre")
         else : 
-            await self.ctx.send("Error")
+            await self.ctx.send("Erreur création tournoi")
 
 
     async def add_members(self):
@@ -84,6 +85,9 @@ class Tournament():
             params=Tournament.__params
         )
 
+        self.get_participant()
+
+
 
         return response.status_code
 
@@ -100,7 +104,6 @@ class Tournament():
             for index,participant in enumerate( response.json()):
                 self.participants[self.duelists[index].name] = participant["participant"]["id"]
 
-        
     def matches(self, duelist_id= None):
         param = Tournament.__params
         param['state'] = 'open'
@@ -136,6 +139,8 @@ class Tournament():
             
             
     async def start_tournament(self):
+
+
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
             headers=Tournament._header,
@@ -148,18 +153,16 @@ class Tournament():
             params=Tournament.__params
         )
 
-        self.get_participant()
         
         if(response.status_code == 200):
-            await self.ctx.send("Tournoi demarré ! ")
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            await self.create_vocal()
-            await self.move_player()
-                
+            # await self.create_vocal()
+            # await self.move_player()    
+            pass
                 
         else : 
-            await self.ctx.send("Error")
+            await self.ctx.send("Erreur démarrage du tournoi")
 
     async def set_win(self, winner, w, l) :
         winner_id = self.participants[winner.name]
@@ -183,8 +186,6 @@ class Tournament():
         else:
             data["match"]["scores_csv"] = f"{l}-{w}"
 
-        print(data)
-
         response = requests.put(
             Tournament.__challonge_api_url+f"/{self.url}/matches/{match_id}.json",
             headers=Tournament._header,
@@ -198,7 +199,33 @@ class Tournament():
         else:
             await  self.ctx.send(f"erreur :/")
 
-        print(response.json())
+    async def set_draw(self, duelist, score) :
+        duelist_id = self.participants[duelist.name]
+
+        
+        match = self.matches(duelist_id)
+        match_id = match.json()[0]["match"]["id"]
+
+
+        data = {
+            "match": {
+                "winner_id" : "tie",
+                "scores_csv" : f"{score}-{score}"
+            }
+        } 
+
+
+        response = requests.put(
+            Tournament.__challonge_api_url+f"/{self.url}/matches/{match_id}.json",
+            headers=Tournament._header,
+            params= Tournament.__params,
+            json=data
+        )
+        if(response.status_code == 200):
+            await self.ctx.send("https://tenor.com/view/mark-wahlberg-wahlberg-tie-oscar-%E5%B9%B3%E6%89%8B-gif-9081826")
+
+        else:
+            await  self.ctx.send(f"erreur :/")
 
 
     @staticmethod
@@ -224,7 +251,7 @@ class Tournament():
         if(response.status_code == 200):
             await ctx.send("Tournoi delete")
         else :
-            await ctx.send("Error")
+            await ctx.send("Erreur supression tournoi")
     
     @staticmethod
     async def dell_all_tournament(ctx):
@@ -244,4 +271,5 @@ class Tournament():
 
     async def start(self):
         await self.create_tournament()
+        await self.start_tournament()
 
