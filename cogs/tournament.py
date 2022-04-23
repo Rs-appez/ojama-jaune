@@ -24,9 +24,9 @@ class TournamentCog(commands.Cog):
         await ctx.send("Clique ici pour participer au tournoi !", view=StartTournamentView(msg_nb_participant))
     
         
-    @commands.command("validate")
+    @commands.command("start")
     @commands.has_role(int(TEAM_ID))
-    async def validate_tournament(self, ctx : commands.Context ):
+    async def start_tournament(self, ctx : commands.Context ):
         """start the tournament"""
 
         duelists = []
