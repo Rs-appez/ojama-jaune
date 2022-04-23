@@ -74,9 +74,13 @@ class TournamentCog(commands.Cog):
 
                 
     @commands.command("win")
-    async def set_win(self, ctx):
+    @commands.has_role(int(DUELIST_ID))
+    async def set_win(self, ctx, *score):
         if(self.tournament):
-            await self.tournament.set_win(ctx.author)
+            if(score):
+                await self.tournament.set_win(ctx.author,score[0],score[1])
+            else :
+                await ctx.send("Utiliser la commande comme ceci :\n !win 2 0\n ou\n !win 2 1")
         else :
             ctx.send("Pas de tournoi en cours")
         
