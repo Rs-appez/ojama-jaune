@@ -1,6 +1,6 @@
 
 import json
-from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID
+from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID, DUELIST_ID
 import requests
 from nextcord import CategoryChannel
 
@@ -163,6 +163,25 @@ class Tournament():
                 
         else : 
             await self.ctx.send("Erreur démarrage du tournoi")
+
+    async def finish_tournament(self):
+
+        role_id = int(DUELIST_ID)
+        duelist_role = self.ctx.guild.get_role(role_id)
+
+
+        response = requests.post(
+            Tournament.__challonge_api_url+f"/{self.url}/finalize.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
+
+        
+        if(response.status_code == 200):            
+            await self.ctx.send(f"Tournoi terminé !\nMerci à tout les {duelist_role.mention}")
+        else : 
+            await self.ctx.send("Erreur cloture du tournoi")
+
 
     async def set_win(self, winner, w, l) :
         winner_id = self.participants[winner.name]
