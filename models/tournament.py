@@ -161,12 +161,44 @@ class Tournament():
         else : 
             await self.ctx.send("Error")
 
-    async def set_win(self, winner) :
+    async def set_win(self, winner, w, l) :
         winner_id = self.participants[winner.name]
 
+        
         match = self.matches(winner_id)
+        match_id = match.json()[0]["match"]["id"]
 
-        print(match.json()[0]["match"]["id"])
+
+        match_player1_id = match.json()[0]["match"]["player1_id"]
+
+
+        data = {
+            "match": {
+                "winner_id" : winner_id
+            }
+        } 
+
+        if winner_id == match_player1_id:
+            data["match"]["scores_csv"] = f"{w}-{l}"
+        else:
+            data["match"]["scores_csv"] = f"{l}-{w}"
+
+        print(data)
+
+        response = requests.put(
+            Tournament.__challonge_api_url+f"/{self.url}/matches/{match_id}.json",
+            headers=Tournament._header,
+            params= Tournament.__params,
+            json=data
+        )
+
+        if(response.status_code == 200):
+            await self.ctx.send(f"gg {winner.mention}")
+
+        else:
+            await  self.ctx.send(f"erreur :/")
+
+        print(response.json())
 
 
     @staticmethod
