@@ -212,13 +212,15 @@ class Tournament():
 
                 end_message += f"\n{i+1}) {duelist[0]}"
 
-                if(i < 3):
+                if(i < 4):
                     if i == 0:
                         end_message += "🥇"
                     elif i == 1:
                        end_message += "🥈"
                     elif i == 2:
                        end_message += "🥉"
+                    elif i == 3:
+                       end_message += "🤿"
 
            
             await self.ctx.send(end_message)
