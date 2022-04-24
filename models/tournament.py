@@ -166,9 +166,7 @@ class Tournament():
 
     async def finish_tournament(self):
 
-        role_id = int(DUELIST_ID)
-        duelist_role = self.ctx.guild.get_role(role_id)
-
+       
         params = self.__params
 
         params["include_participants"] = 1
@@ -184,50 +182,58 @@ class Tournament():
        
         
         if(response.status_code == 200):
-
-            finalists = {}
-
-            participants = response.json()["tournament"]["participants"]
-
-            for participant in participants:
-
-                id = participant["participant"]["id"]
-                pos = participant["participant"]["final_rank"]
-
-                finalists[pos] = id
-
-
-
-            winner = [k for k, v in self.participants.items() if v == finalists[1]]
-            winner_mention = ''
-            for duelist in self.duelists:
-                if duelist.name == winner[0]:
-                    winner_mention = duelist.mention
-        
-            end_message = f"Tournoi terminé !\nMerci à tous les {duelist_role.mention} et bravo à {winner_mention}\n__**Classement final**__ :"
-
-            for i,finalist in enumerate(finalists):
-                
-                duelist = [k for k, v in self.participants.items() if v == finalists[i+1]]
-
-                end_message += f"\n{i+1}) {duelist[0]}"
-
-                if(i < 4):
-                    if i == 0:
-                        end_message += "🥇"
-                    elif i == 1:
-                       end_message += "🥈"
-                    elif i == 2:
-                       end_message += "🥉"
-                    elif i == 3:
-                       end_message += "🤿"
-
-           
-            await self.ctx.send(end_message)
+            await self.display_result(response)
+            
 
         else : 
             await self.ctx.send("Erreur cloture du tournoi")
 
+    async def display_result(self, ladder : requests.Response):
+
+        role_id = int(DUELIST_ID)
+        duelist_role = self.ctx.guild.get_role(role_id)
+
+
+
+        finalists = {}
+
+        participants = ladder.json()["tournament"]["participants"]
+
+        for participant in participants:
+
+            id = participant["participant"]["id"]
+            pos = participant["participant"]["final_rank"]
+
+            finalists[pos] = id
+
+
+
+        winner = [k for k, v in self.participants.items() if v == finalists[1]]
+        winner_mention = ''
+        for duelist in self.duelists:
+            if duelist.name == winner[0]:
+                winner_mention = duelist.mention
+    
+        end_message = f"Tournoi terminé !\nMerci à tous les {duelist_role.mention} et bravo à {winner_mention}\n__**Classement final**__ :"
+
+        for i,finalist in enumerate(finalists):
+            
+            duelist = [k for k, v in self.participants.items() if v == finalists[i+1]]
+
+            end_message += f"\n{i+1}) {duelist[0]}"
+
+            if(i < 4):
+                if i == 0:
+                    end_message += "🥇"
+                elif i == 1:
+                    end_message += "🥈"
+                elif i == 2:
+                    end_message += "🥉"
+                elif i == 3:
+                    end_message += "🤿"
+
+        
+        await self.ctx.send(end_message)
 
     async def set_win(self, winner, w, l) :
         winner_id = self.participants[winner.name]
