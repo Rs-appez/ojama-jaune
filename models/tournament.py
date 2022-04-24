@@ -25,7 +25,7 @@ class Tournament():
         self.url = ""
 
         self.duelists = duelists
-        self.participants:dict = {}
+        self.participants:dict = {} # dicord.name : challonge_id
         self.ctx = ctx
         
         category = [c for c in ctx.guild.categories if c.id == CATEGORY_TOURNAMENT_ID]
@@ -169,16 +169,60 @@ class Tournament():
         role_id = int(DUELIST_ID)
         duelist_role = self.ctx.guild.get_role(role_id)
 
+        params = self.__params
+
+        params["include_participants"] = 1
+
 
         response = requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/finalize.json",
             headers=Tournament._header,
-            params=Tournament.__params
+            params=Tournament.__params,
         )
 
+
+       
         
-        if(response.status_code == 200):            
-            await self.ctx.send(f"Tournoi terminé !\nMerci à tout les {duelist_role.mention}")
+        if(response.status_code == 200):
+
+            finalists = {}
+
+            participants = response.json()["tournament"]["participants"]
+
+            for participant in participants:
+
+                id = participant["participant"]["id"]
+                pos = participant["participant"]["final_rank"]
+
+                finalists[pos] = id
+
+
+
+            winner = [k for k, v in self.participants.items() if v == finalists[1]]
+            winner_mention = ''
+            for duelist in self.duelists:
+                if duelist.name == winner[0]:
+                    winner_mention = duelist.mention
+        
+            end_message = f"Tournoi terminé !\nMerci à tous les {duelist_role.mention} et bravo à {winner_mention}\n__**Classement final**__ :"
+
+            for i,finalist in enumerate(finalists):
+                
+                duelist = [k for k, v in self.participants.items() if v == finalists[i+1]]
+
+                end_message += f"\n{i+1}) {duelist[0]}"
+
+                if(i < 3):
+                    if i == 0:
+                        end_message += "🥇"
+                    elif i == 1:
+                       end_message += "🥈"
+                    elif i == 2:
+                       end_message += "🥉"
+
+           
+            await self.ctx.send(end_message)
+
         else : 
             await self.ctx.send("Erreur cloture du tournoi")
 
@@ -246,9 +290,18 @@ class Tournament():
         else:
             await  self.ctx.send(f"erreur :/")
 
+    def get_tournament(self)-> json:
+
+        response = requests.get(
+            Tournament.__challonge_api_url+f"/{self.url}.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
+        
+        return response.json()
 
     @staticmethod
-    async def get_tournament() -> json:
+    def get_all_tournaments() -> json:
 
         response = requests.get(
             Tournament.__challonge_api_url+".json",
@@ -275,7 +328,7 @@ class Tournament():
     @staticmethod
     async def dell_all_tournament(ctx):
 
-        tournaments =   await Tournament.get_tournament()
+        tournaments =  Tournament.get_all_tournaments()
 
         for tournament in tournaments:
             url = tournament['tournament']["url"]
