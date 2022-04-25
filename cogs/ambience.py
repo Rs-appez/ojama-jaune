@@ -25,10 +25,7 @@ class Ambiance(commands.Cog):
         await ctx.send("JAUNE !!!!!!!!!!!!!!!!!") 
         await ctx.send("https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003") 
 
-    @commands.command()
-    async def emotional(self, ctx):
-        await ctx.send("https://tenor.com/view/emotional-damage-emotional-damage-meme-funny-gif-24332819")
-        
+    
     @commands.command(name="blague")
     async def joke(self, ctx):
         await ctx.send("Quel est le comble pour un joueur branded")

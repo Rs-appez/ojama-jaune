@@ -25,3 +25,6 @@ JUSTIN_ID = 377207249937891329
 
 #Categorie_ID_tournament
 #CATEGORY_TOURNAMENT_ID = 932636106271358996
+
+URL_ygopro = "https://db.ygoprodeck.com/api/v7/"
+URL_ygorga = "https://db.ygorganization.com/data/"

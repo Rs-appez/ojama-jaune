@@ -1,8 +1,9 @@
+import imp
 import json
 import string
-from discord import Member
+from discord import Member, Embed
 from nextcord.ext import commands
-
+from models.cards import Cards
 import requests
 
 class CardSearch(commands.Cog):
@@ -13,33 +14,38 @@ class CardSearch(commands.Cog):
         self.url_ygorga ="https://db.ygorganization.com/data/"
         
 
-    @commands.command(name="card")
-    async def searchcards(self, ctx, *name):
+    @commands.command(name="cards")
+    async def search_cards(self, ctx, *name):
         """Search a card"""
-        
-        if(name != ''):
-            await ctx.send("Recherche de : " + ' '.join(name))
-            response_fr = requests.get(
-                self.url_ygopro + "cardinfo.php?name=" + '+'.join(name) + '&language=fr'
-            )
+        if name != '':
             response_en = requests.get(
-                self.url_ygopro + "cardinfo.php?name=" + '+'.join(name)
+                self.url_ygopro + "cardinfo.php?fname=" + "%20".join(name)
             )
-            if(response_fr.status_code == 200):
-                img = response_fr.json()['data'][0]['card_images'][0]['image_url']
-                desc = response_fr.json()['data'][0]['desc']
-                print(desc)
-                await ctx.send(img)
-                await ctx.send("```" + desc + "```")
+            response_fr = requests.get(
+                self.url_ygopro + "cardinfo.php?fname=" + "%20".join(name) + '&language=fr'
+            )
+            if response_en.status_code == 200:
+                response = response_en
+            elif response_fr.status_code == 200:
+                response = response_fr
+            else:
+                await ctx.send('Aucun résultat')
+            cards = list(response.json()['data'])
+            ## AFFICHAGE
+            if len(cards) == 1:
+                # Créer un embed
                 
-            elif(response_fr.status_code == 400):
-                if(response_en.status_code == 200):
-                    img = response_en.json()['data'][0]['card_images'][0]['image_url']
-                    desc = response_en.json()['data'][0]['desc']
-                    await ctx.send(img)
-                    await ctx.send("```" + desc + "```")
-                elif(response_en.status_code == 400):
-                    await ctx.send("Soyez plus précis dans le nom de la carte !")
+                data = Cards(cards)
+                await ctx.send(embed=data.embed())
+                
+            elif len(cards) <= 50:
+                message = f"Listes des cartes trouvées ({len(cards)}):\n"
+                message += '--------------------------------\n'
+                for card in cards:
+                    message += f"{card['name']} \n"
+                await ctx.send(f'```{message}```')
+            else:
+                await ctx.send(f"```Affiner la recherche, il y a trop de résultat ({len(cards)})```")
         else:
             await ctx.send("J'ai besoin d'un nom de carte à rechercher !")
 

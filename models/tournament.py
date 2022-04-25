@@ -132,7 +132,10 @@ class Tournament():
             player2 = list(mydict.keys())[list(mydict.values()).index(m['match']['player2_id'])]
             for d in self.duelists:
                 if d.name == player1 or d.name == player2:
-                    await d.edit(voice_channel = channels[index])
+                    try:
+                        await d.edit(voice_channel = channels[index])
+                    except:
+                        pass
             
             
     async def start_tournament(self):
