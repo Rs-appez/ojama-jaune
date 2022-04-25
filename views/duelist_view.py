@@ -1,6 +1,7 @@
 
 
 import nextcord
+from config import TEAM_ID
 
 from models.tournament import Tournament
 
@@ -9,7 +10,7 @@ class DuelistView(nextcord.ui.View):
     def __init__(self,ctx, tournament : Tournament):
         self.ctx = ctx
         self.tournament = tournament
-        super().__init__(timeout=None)
+        super().__init__()
 
 
     async def start(self):
@@ -17,6 +18,16 @@ class DuelistView(nextcord.ui.View):
 
 
 
-    @nextcord.ui.button(label="confirmer",emoji="✅" ,style=nextcord.ButtonStyle.primary)
-    async def participate_button(self,button,interaction):
-        await self.start()
+    @nextcord.ui.button(label="commencer le tournoi",emoji="✅" ,style=nextcord.ButtonStyle.primary, disabled=False)
+    async def participate_button(self,button : nextcord.ui.Button ,interaction):
+
+        user = interaction.user
+        role_id = int(TEAM_ID)
+        role = interaction.guild.get_role(role_id)
+        assert isinstance(role,nextcord.Role)
+
+        if role in user.roles:
+            button.disabled = True
+            await interaction.response.edit_message(view=self)
+            await self.start()
+

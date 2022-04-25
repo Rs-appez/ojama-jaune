@@ -1,7 +1,6 @@
 
 import json
-from operator import index
-from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID
+from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID, DUELIST_ID
 import requests
 from nextcord import CategoryChannel
 
@@ -26,7 +25,7 @@ class Tournament():
         self.url = ""
 
         self.duelists = duelists
-        self.participants:dict = {}
+        self.participants:dict = {} # dicord.name : challonge_id
         self.ctx = ctx
         
         category = [c for c in ctx.guild.categories if c.id == CATEGORY_TOURNAMENT_ID]
@@ -38,12 +37,14 @@ class Tournament():
 
 
         data = {
-            "name" : "Playing room online tournament",
-            "tournament_type" : "swiss",
-            "open_signup" : "False",
-            "private"  : "True",
-            "game-id" : 45,
-            "tournament[game_name]" : "Yu-Gi-Oh!",
+            "tournament" : {
+                "name" : "Playing room online tournament",
+                "tournament_type" : "swiss",
+                "open_signup" : "false",
+                "private"  : "true",
+                "game-id" : 45,
+                "game_name" : "Yu-Gi-Oh!",
+            }
         }
 
         response = requests.post(
@@ -58,9 +59,9 @@ class Tournament():
             if (await self.add_members() == 200):
                 await self.ctx.send(f"Tournoi crée : {Tournament._challonge_url+self.url} ")
             else :
-                await self.ctx.send("Error ajout membre")
+                await self.ctx.send("Erreur ajout membre")
         else : 
-            await self.ctx.send("Error")
+            await self.ctx.send("Erreur création tournoi")
 
 
     async def add_members(self):
@@ -84,6 +85,9 @@ class Tournament():
             params=Tournament.__params
         )
 
+        self.get_participant()
+
+
 
         return response.status_code
 
@@ -100,7 +104,6 @@ class Tournament():
             for index,participant in enumerate( response.json()):
                 self.participants[self.duelists[index].name] = participant["participant"]["id"]
 
-        
     def matches(self, duelist_id= None):
         param = Tournament.__params
         param['state'] = 'open'
@@ -139,6 +142,8 @@ class Tournament():
             
             
     async def start_tournament(self):
+
+
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
             headers=Tournament._header,
@@ -151,18 +156,87 @@ class Tournament():
             params=Tournament.__params
         )
 
-        self.get_participant()
         
         if(response.status_code == 200):
-            await self.ctx.send("Tournoi demarré ! ")
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            await self.create_vocal()
-            await self.move_player()
-                
+            # await self.create_vocal()
+            # await self.move_player()    
+            pass
                 
         else : 
-            await self.ctx.send("Error")
+            await self.ctx.send("Erreur démarrage du tournoi")
+
+    async def finish_tournament(self):
+
+       
+        params = self.__params
+
+        params["include_participants"] = 1
+
+
+        response = requests.post(
+            Tournament.__challonge_api_url+f"/{self.url}/finalize.json",
+            headers=Tournament._header,
+            params=Tournament.__params,
+        )
+
+
+       
+        
+        if(response.status_code == 200):
+            await self.display_result(response)
+            
+
+        else : 
+            await self.ctx.send("Erreur cloture du tournoi")
+
+    async def display_result(self, ladder : requests.Response):
+
+        role_id = int(DUELIST_ID)
+        duelist_role = self.ctx.guild.get_role(role_id)
+
+
+
+        finalists = {}
+
+        participants = ladder.json()["tournament"]["participants"]
+
+        for participant in participants:
+
+            id = participant["participant"]["id"]
+            pos = participant["participant"]["final_rank"]
+
+            finalists[pos] = id
+
+
+
+        winner = [k for k, v in self.participants.items() if v == finalists[1]]
+        winner_mention = ''
+        for duelist in self.duelists:
+            if duelist.name == winner[0]:
+                winner_mention = duelist.mention
+    
+        end_message = f"Tournoi terminé !\nMerci à tous les {duelist_role.mention} et bravo à {winner_mention}\n__**Classement final**__ :"
+
+        for i,finalist in enumerate(finalists):
+            
+            duelist = [k for k, v in self.participants.items() if v == finalists[i+1]]
+
+            end_message += f"\n{i+1}) {duelist[0]}"
+
+            if(i < 4):
+                if i == 0:
+                    end_message += "🥇"
+                elif i == 1:
+                    end_message += "🥈"
+                elif i == 2:
+                    end_message += "🥉"
+                elif i == 3:
+                    end_message += "🤿"
+
+        
+        await self.ctx.send(end_message)
 
     async def set_win(self, winner, w, l) :
         winner_id = self.participants[winner.name]
@@ -186,8 +260,6 @@ class Tournament():
         else:
             data["match"]["scores_csv"] = f"{l}-{w}"
 
-        print(data)
-
         response = requests.put(
             Tournament.__challonge_api_url+f"/{self.url}/matches/{match_id}.json",
             headers=Tournament._header,
@@ -201,11 +273,46 @@ class Tournament():
         else:
             await  self.ctx.send(f"erreur :/")
 
-        print(response.json())
+    async def set_draw(self, duelist, score) :
+        duelist_id = self.participants[duelist.name]
 
+        
+        match = self.matches(duelist_id)
+        match_id = match.json()[0]["match"]["id"]
+
+
+        data = {
+            "match": {
+                "winner_id" : "tie",
+                "scores_csv" : f"{score}-{score}"
+            }
+        } 
+
+
+        response = requests.put(
+            Tournament.__challonge_api_url+f"/{self.url}/matches/{match_id}.json",
+            headers=Tournament._header,
+            params= Tournament.__params,
+            json=data
+        )
+        if(response.status_code == 200):
+            await self.ctx.send("https://tenor.com/view/mark-wahlberg-wahlberg-tie-oscar-%E5%B9%B3%E6%89%8B-gif-9081826")
+
+        else:
+            await  self.ctx.send(f"erreur :/")
+
+    def get_tournament(self)-> json:
+
+        response = requests.get(
+            Tournament.__challonge_api_url+f"/{self.url}.json",
+            headers=Tournament._header,
+            params=Tournament.__params
+        )
+        
+        return response.json()
 
     @staticmethod
-    async def get_tournament() -> json:
+    def get_all_tournaments() -> json:
 
         response = requests.get(
             Tournament.__challonge_api_url+".json",
@@ -227,12 +334,12 @@ class Tournament():
         if(response.status_code == 200):
             await ctx.send("Tournoi delete")
         else :
-            await ctx.send("Error")
+            await ctx.send("Erreur supression tournoi")
     
     @staticmethod
     async def dell_all_tournament(ctx):
 
-        tournaments =   await Tournament.get_tournament()
+        tournaments =  Tournament.get_all_tournaments()
 
         for tournament in tournaments:
             url = tournament['tournament']["url"]
@@ -247,4 +354,5 @@ class Tournament():
 
     async def start(self):
         await self.create_tournament()
+        await self.start_tournament()
 

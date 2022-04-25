@@ -1,16 +1,16 @@
 import nextcord
 from nextcord.ext import commands
-from config import DUELIST_ID
+from config import DUELIST_ID, TEAM_ID
 
 
 class StartTournamentView(nextcord.ui.View):
 
     def __init__(self, msg_nb_participant):
         self.msg_nb_participant = msg_nb_participant
-        super().__init__(timeout=None)
+        super().__init__()
 
     async def set_duelist_role(self, interaction : nextcord.Interaction):
-        
+
         role_id = int(DUELIST_ID)
         role = interaction.guild.get_role(role_id)
         assert isinstance(role,nextcord.Role)
@@ -32,11 +32,8 @@ class StartTournamentView(nextcord.ui.View):
         await self.msg_nb_participant.edit(content=f"Participant : {nb_participant}")
 
 
-
     @nextcord.ui.button(label="je participe", style=nextcord.ButtonStyle.primary)
     async def participate_button(self,button,interaction):
         await self.set_duelist_role(interaction)
 
-    @nextcord.ui.button(label="start", style=nextcord.ButtonStyle.blurple, disabled=False)
-    async def start_button(self,button,interaction):
-        print("start")
+

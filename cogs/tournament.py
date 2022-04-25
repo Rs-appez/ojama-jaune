@@ -24,9 +24,9 @@ class TournamentCog(commands.Cog):
         await ctx.send("Clique ici pour participer au tournoi !", view=StartTournamentView(msg_nb_participant))
     
         
-    @commands.command("validate")
+    @commands.command("start")
     @commands.has_role(int(TEAM_ID))
-    async def validate_tournament(self, ctx : commands.Context ):
+    async def start_tournament(self, ctx : commands.Context ):
         """start the tournament"""
 
         duelists = []
@@ -66,23 +66,34 @@ class TournamentCog(commands.Cog):
     async def delete(self, ctx):
         await Tournament.dell_all_tournament(ctx)
 
-
-        
-    @commands.command("start")
-    async def start_tournament(self, ctx):
-        await self.tournament.start_tournament()
-
                 
     @commands.command("win")
     @commands.has_role(int(DUELIST_ID))
-    async def set_win(self, ctx, *score):
+    async def set_win(self, ctx, *score : int):
         if(self.tournament):
-            if(score):
+            if(score and score[0] > score[1] and 
+                score[0] > 0 and score[0] <=2 and
+                score[1] >= 0 and score[1] <2):
                 await self.tournament.set_win(ctx.author,score[0],score[1])
             else :
                 await ctx.send("Utiliser la commande comme ceci :\n !win 2 0\n ou\n !win 2 1")
         else :
-            ctx.send("Pas de tournoi en cours")
+            await ctx.send("Pas de tournoi en cours")
+                
+    @commands.command("draw")
+    @commands.has_role(int(DUELIST_ID))
+    async def set_draw(self, ctx, *score : int):
+        if(self.tournament):
+            if(score and (score[0] == 1 or score[0] == 0)):
+                await self.tournament.set_draw(ctx.author, score[0])
+            else:
+                await ctx.send("Utiliser la commande comme ceci :\n !draw 1\n ou\n !draw 0")
+        else :
+            await ctx.send("Pas de tournoi en cours")
+    
+    @commands.command("finish")
+    async def finish_tournament(self, ctx):
+        await self.tournament.finish_tournament()
     
     @commands.command("delete_vocal")
     async def delete_vocal_tournament(self, ctx):
