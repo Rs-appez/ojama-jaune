@@ -1,10 +1,11 @@
-import imp
 import json
 import string
-from discord import Member, Embed
-from nextcord.ext import commands
-from models.cards import Cards
+
 import requests
+from discord import Embed, Member
+from nextcord.ext import commands
+from models.cards import Cards, CardsRulling
+
 
 class CardSearch(commands.Cog):
     """Manage cardmarket commands"""
@@ -13,80 +14,75 @@ class CardSearch(commands.Cog):
         self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
         self.url_ygorga ="https://db.ygorganization.com/data/"
         
-
-    @commands.command(name="cards")
+    @commands.command(name="card")
     async def search_cards(self, ctx, *name):
         """Search a card"""
         if name != '':
-            response_en = requests.get(
-                self.url_ygopro + "cardinfo.php?fname=" + "%20".join(name)
-            )
-            response_fr = requests.get(
-                self.url_ygopro + "cardinfo.php?fname=" + "%20".join(name) + '&language=fr'
-            )
-            if response_en.status_code == 200:
-                response = response_en
-            elif response_fr.status_code == 200:
-                response = response_fr
-            else:
-                await ctx.send('Aucun résultat')
-            cards = list(response.json()['data'])
+            value : str = "%20".join(name)
+            card = Cards.search(self, value)
             ## AFFICHAGE
-            if len(cards) == 1:
-                # Créer un embed
-                
-                data = Cards(cards)
-                await ctx.send(embed=data.embed())
-                
-            elif len(cards) <= 50:
-                message = f"Listes des cartes trouvées ({len(cards)}):\n"
-                message += '--------------------------------\n'
-                for card in cards:
-                    message += f"{card['name']} \n"
-                await ctx.send(f'```{message}```')
+            if isinstance(card, Cards):
+                await ctx.send(embed = card.embed())
             else:
-                await ctx.send(f"```Affiner la recherche, il y a trop de résultat ({len(cards)})```")
+                await ctx.send(card)
         else:
             await ctx.send("J'ai besoin d'un nom de carte à rechercher !")
 
+
     @commands.command(name="random")
-    async def randomcards(self, ctx, *name):
+    async def randomcards(self, ctx):
         """Get a random cards"""
         response = requests.get(
             self.url_ygopro + "randomcard.php"
         )
-        if(response.status_code == 200):
-            await ctx.send(response.json()['card_images'][0]['image_url'])
-            await ctx.send("```" + response.json()['desc'] + "```")
-    
+        if response.status_code == 200:
+            card = Cards(response.json())
+            await ctx.send(embed = card.embed())
+
     @commands.command(name="rulling")
     async def rulling(self, ctx, *name):
         """Rulling from a cards"""
         response_en = requests.get(
             self.url_ygorga + "idx/card/name/en"
         )
-        if(response_en.status_code == 200):
-            nom = " ".join(name)
+        if response_en.status_code == 200:
+            value = " ".join(name)
+            card = Cards.search(self, value)
             result = dict(response_en.json())
             r = dict((k.lower(), v) for k,v in result.items())
             
-            id = r[nom.lower()][0]
+            id = r[card.name.lower()][0]
             response_rulling = requests.get(
                 f'{self.url_ygorga}card/{id}'
             )
-            resp:json = response_rulling.json()['faqData']['entries']['0']
-            
-            find = ''
-            for i in resp:
-                if 'en' in i:
-                    find += i['en'] + '\n'
-            if find != '':
-                await ctx.send(f'```{find}```')
-            else:
-                await ctx.send("```Pas de rulling```")
-            
-            
-        
+            try:
+                resp = response_rulling.json()['qaIndex']
+                card.id_rulling = response_rulling.json()['cardData']['en']['id']
+                rullings = list()
+                
+                if len(resp) > 10:
+                    await ctx.send(f"Trop de résultat : {len(resp)}")
+                    await ctx.send(f"https://db.ygorganization.com/card#{card.id_rulling}")
+                else:
+                    for value in resp:
+                        response_r = requests.get(
+                            f'{self.url_ygorga}qa/{value}'
+                        )
+                        data = response_r.json()
+                        cards = data['cards']
+                        id = data['qaData']['en']['id']
+                        question = data['qaData']['en']['question']
+                        answer = data['qaData']['en']['answer']
+                        
+                        rulling = CardsRulling(id, cards, question, answer)
+                        embed = Embed(title = card.name, url=rulling.url, color=0xff0000)
+                        embed.add_field(name="Question", value=rulling.question, inline=False)
+                        embed.add_field(name="Answer", value=rulling.answer)
+                        rullings.append(embed)
+                    await ctx.send(embeds=rullings)
+            except KeyError:
+                await ctx.send("Erreur")
+
     @commands.command(name="archetype")
     async def archetype(self, ctx, *archetype):
         """List of cartes from a certain archetypes"""
@@ -94,11 +90,11 @@ class CardSearch(commands.Cog):
             self.url_ygopro + "cardinfo.php?archetype=" + '+'.join(archetype)
         )
         arch = " ".join(archetype)
-        cards = "Listes des cartes de l'archétype " + arch.upper() + ": \n ```"
+        cards : str = "Listes des cartes de l'archétype " + arch.upper() + ": \n ```"
         for card in response.json()['data']:
             cards += card['name'] + '\n'
         cards += '```'
-        await ctx.send(cards) 
+        await ctx.send(cards)
         
         
 def setup(bot):
