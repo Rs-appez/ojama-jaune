@@ -1,5 +1,6 @@
 import asyncio
 from discord import Member, User, VoiceChannel
+import discord
 from nextcord.ext import commands
 import random
 from config import JUSTIN_ID
@@ -24,6 +25,10 @@ class Ambiance(commands.Cog):
     async def ojama(self,ctx):
         await ctx.send("JAUNE !!!!!!!!!!!!!!!!!") 
         await ctx.send("https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003") 
+
+    @commands.command()
+    async def fdp(self, ctx):
+        await ctx.send(file=discord.File("images\\fdp.png"))
 
     
     @commands.command(name="blague")
