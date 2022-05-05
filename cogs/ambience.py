@@ -26,10 +26,7 @@ class Ambiance(commands.Cog):
         await ctx.send("JAUNE !!!!!!!!!!!!!!!!!") 
         await ctx.send("https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003") 
 
-    @commands.command()
-    async def fdp(self, ctx):
-        await ctx.send(file=discord.File("images\\fdp.png"))
-
+    
     
     @commands.command(name="blague")
     async def joke(self, ctx):

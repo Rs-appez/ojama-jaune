@@ -29,6 +29,14 @@ class SoundBox(commands.Cog):
             await self.bot.play_sound("orelsan.m4a",voice_channel)
 
     @commands.command()
+    async def fdp(self, ctx):
+        voice = ctx.message.author.voice
+        await ctx.send(file=nextcord.File("images\\fdp.png"))
+        if(voice): 
+            voice_channel = voice.channel
+            await self.bot.play_sound("FDP.mp3",voice_channel)
+
+    @commands.command()
     async def gogole(self, ctx):
         voice = ctx.message.author.voice
         if(voice): 
