@@ -92,7 +92,7 @@ class TournamentCog(commands.Cog):
             await ctx.send("Pas de tournoi en cours")
     
     @commands.command("finish")
-    async def finish_tournament(self):
+    async def finish_tournament(self,ctx):
         await self.tournament.finish_tournament()
     
     @commands.command("delete_vocal")
@@ -122,7 +122,8 @@ class TournamentCog(commands.Cog):
     
     
     @commands.command("launch_vocal_round")
-    async def launch_vocal_round(self):
+    @commands.has_role(int(TEAM_ID))
+    async def launch_vocal_round(self,ctx):
         await self.tournament.launch_vocal_round()
     
 def setup(bot):

@@ -119,8 +119,9 @@ class Tournament():
     
     async def launch_vocal_round(self):
         matches = self.matches()
-        self.create_vocal(self, matches)
-        self.move_player(self, matches)
+        await self.dell_vocal()
+        await self.create_vocal(matches)
+        await self.move_player(matches)
         
     async def create_vocal(self, matches):        
         for index,m in enumerate(matches.json()):
