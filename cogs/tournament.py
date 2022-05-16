@@ -105,8 +105,7 @@ class TournamentCog(commands.Cog):
     @commands.is_owner()
     async def clean(self, ctx):
 
-        if(self.tournament):
-            await self.tournament.dell_vocal(self)
+        await self.tournament.dell_vocal(self)
 
         role_id = int(DUELIST_ID)
         role = ctx.guild.get_role(role_id)
@@ -124,7 +123,8 @@ class TournamentCog(commands.Cog):
     @commands.command("launch_vocal_round")
     @commands.has_role(int(TEAM_ID))
     async def launch_vocal_round(self,ctx):
-        await self.tournament.launch_vocal_round()
+        if self.tournament:
+            await Tournament.launch_vocal_round(ctx)
     
 def setup(bot):
     bot.add_cog(TournamentCog(bot))
