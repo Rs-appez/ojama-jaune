@@ -97,9 +97,29 @@ class TournamentCog(commands.Cog):
     
     @commands.command("delete_vocal")
     @commands.is_owner()
-
     async def delete_vocal_tournament(self, ctx):
         await self.tournament.dell_vocal(self)
+
+
+    @commands.command()
+    @commands.is_owner()
+    async def clean(self, ctx):
+
+        if(self.tournament):
+            await self.tournament.dell_vocal(self)
+
+        role_id = int(DUELIST_ID)
+        role = ctx.guild.get_role(role_id)
+        assert isinstance(role,nextcord.Role)   
+
+        members = ctx.guild.members
+
+        for member in members:
+            
+            if(role in member.roles):
+               await member.remove_roles(role)
+
+    
     
 def setup(bot):
     bot.add_cog(TournamentCog(bot))

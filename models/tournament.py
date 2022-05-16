@@ -128,7 +128,6 @@ class Tournament():
         matches = self.matches()
         mydict = self.participants
         channels = [x for x in self.category.channels if x.name.startswith('Table')]
-        print(channels)
         
         for index, m in enumerate(matches.json()):
             player1 = list(mydict.keys())[list(mydict.values()).index(m['match']['player1_id'])]
