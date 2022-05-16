@@ -121,7 +121,7 @@ class Tournament():
     
     async def launch_vocal_round(self):
         matches = self.matches()
-        await self.switch()
+        await self.move_waiting()
         await Tournament.dell_vocal(self.ctx)
         await self.create_vocal(matches)
         await self.move_player(matches)
@@ -356,14 +356,14 @@ class Tournament():
         await self.create_tournament()
         await self.start_tournament()
 
-    async def switch(self):
+    async def move_waiting(self):
         role_id = int(DUELIST_ID)
         role = self.ctx.guild.get_role(role_id)
         assert isinstance(role, Role)
         
         members = self.ctx.guild.members
-        salle = VoiceChannel(SALLE_D_ATTENTE)
+        channels = [x for x in self.category.channels if x.id(SALLE_D_ATTENTE)]
         for member in members:
             if(role in member.roles):
                 
-                await member.edit(VoiceChannel = salle)
+                await member.edit(VoiceChannel = channels[0])
