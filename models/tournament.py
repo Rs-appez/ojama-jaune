@@ -1,8 +1,10 @@
 
 import json
-from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID, DUELIST_ID
+
+from discord import VoiceChannel
+from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID, DUELIST_ID, SALLE_D_ATTENTE
 import requests
-from nextcord import CategoryChannel
+from nextcord import CategoryChannel, Role
 
 
 class Tournament():
@@ -119,6 +121,7 @@ class Tournament():
     
     async def launch_vocal_round(self):
         matches = self.matches()
+        await self.switch()
         await Tournament.dell_vocal(self.ctx)
         await self.create_vocal(matches)
         await self.move_player(matches)
@@ -353,3 +356,13 @@ class Tournament():
         await self.create_tournament()
         await self.start_tournament()
 
+    async def switch(self):
+        role_id = int(DUELIST_ID)
+        role = self.ctx.guild.get_role(role_id)
+        assert isinstance(role, Role)
+        
+        members = self.ctx.guild.members
+        
+        for member in members:
+            if(role in member.roles):
+               await member.edit(VoiceChannel = int(SALLE_D_ATTENTE))
