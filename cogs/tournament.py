@@ -84,7 +84,11 @@ class TournamentCog(commands.Cog):
     @commands.has_role(int(DUELIST_ID))
     async def set_draw(self, ctx, *score : int):
         if(self.tournament):
-            if(score and (score[0] == 1 or score[0] == 0)):
+            
+            if(not score):
+                await self.tournament.set_draw(ctx.author, 1)
+                
+            elif(score and (score[0] == 1 or score[0] == 0)):
                 await self.tournament.set_draw(ctx.author, score[0])
             else:
                 await ctx.send("Utiliser la commande comme ceci :\n !draw 1\n ou\n !draw 0")
@@ -124,7 +128,7 @@ class TournamentCog(commands.Cog):
     @commands.has_role(int(TEAM_ID))
     async def launch_vocal_round(self,ctx):
         if self.tournament:
-            await Tournament.launch_vocal_round(ctx)
+            await self.tournament.launch_vocal_round()
     
 def setup(bot):
     bot.add_cog(TournamentCog(bot))
