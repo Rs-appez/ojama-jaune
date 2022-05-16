@@ -160,10 +160,8 @@ class Tournament():
         if(response.status_code == 200):
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            # await self.create_vocal()
-            # await self.move_player()    
-            pass
-                
+            await self.create_vocal()
+            await self.move_player()                    
         else : 
             await self.ctx.send("Erreur démarrage du tournoi")
 
@@ -345,7 +343,7 @@ class Tournament():
             url = tournament['tournament']["url"]
             await Tournament.delete_tournament(url,ctx)
 
-    async def dell_vocal(self, ctx):
+    async def dell_vocal(self):
         categories = self.ctx.guild.categories            
         category = [c for c in categories if c.id == CATEGORY_TOURNAMENT_ID]
         for c in category[0].channels:

@@ -92,10 +92,12 @@ class TournamentCog(commands.Cog):
             await ctx.send("Pas de tournoi en cours")
     
     @commands.command("finish")
-    async def finish_tournament(self, ctx):
+    async def finish_tournament(self):
         await self.tournament.finish_tournament()
     
     @commands.command("delete_vocal")
+    @commands.is_owner()
+
     async def delete_vocal_tournament(self, ctx):
         await self.tournament.dell_vocal(self)
     
