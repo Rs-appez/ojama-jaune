@@ -362,7 +362,8 @@ class Tournament():
         assert isinstance(role, Role)
         
         members = self.ctx.guild.members
-        
+        salle = VoiceChannel(SALLE_D_ATTENTE)
         for member in members:
             if(role in member.roles):
-               await member.edit(VoiceChannel = int(SALLE_D_ATTENTE))
+                
+                await member.edit(VoiceChannel = salle)
