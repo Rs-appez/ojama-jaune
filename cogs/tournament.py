@@ -124,7 +124,7 @@ class TournamentCog(commands.Cog):
     @commands.command("launch_vocal_round")
     @commands.has_role(int(TEAM_ID))
     async def launch_vocal_round(self,ctx):
-        await self.tournament.launch_vocal_round()
+        await Tournament.launch_vocal_round(ctx)
     
 def setup(bot):
     bot.add_cog(TournamentCog(bot))

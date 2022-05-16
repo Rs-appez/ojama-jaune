@@ -119,7 +119,7 @@ class Tournament():
     
     async def launch_vocal_round(self):
         matches = self.matches()
-        await self.dell_vocal()
+        await Tournament.dell_vocal(self.ctx)
         await self.create_vocal(matches)
         await self.move_player(matches)
         
@@ -341,8 +341,9 @@ class Tournament():
             url = tournament['tournament']["url"]
             await Tournament.delete_tournament(url,ctx)
 
-    async def dell_vocal(self):
-        categories = self.ctx.guild.categories            
+    @staticmethod
+    async def dell_vocal(ctx):
+        categories = ctx.guild.categories            
         category = [c for c in categories if c.id == CATEGORY_TOURNAMENT_ID]
         for c in category[0].channels:
             if c.name.startswith("Table"):
