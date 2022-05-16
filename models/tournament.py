@@ -117,15 +117,16 @@ class Tournament():
         if response.status_code == 200:
             return response
     
-    async def create_vocal(self):
+    async def launch_vocal_round(self):
         matches = self.matches()
+        self.create_vocal(self, matches)
+        self.move_player(self, matches)
         
+    async def create_vocal(self, matches):        
         for index,m in enumerate(matches.json()):
             cat = await self.category.create_voice_channel(f'Table {index+1}')
             
-    
-    async def move_player(self):
-        matches = self.matches()
+    async def move_player(self, matches):
         mydict = self.participants
         channels = [x for x in self.category.channels if x.name.startswith('Table')]
         
@@ -141,8 +142,6 @@ class Tournament():
             
             
     async def start_tournament(self):
-
-
         requests.post(
             Tournament.__challonge_api_url+f"/{self.url}/participants/randomize.json",
             headers=Tournament._header,
@@ -159,8 +158,7 @@ class Tournament():
         if(response.status_code == 200):
             # créer le nombre de channel vocaux / match
             # Bouger les participants dans leurs matchs / channel vocal
-            await self.create_vocal()
-            await self.move_player()                    
+            await self.launch_vocal_round()                 
         else : 
             await self.ctx.send("Erreur démarrage du tournoi")
 

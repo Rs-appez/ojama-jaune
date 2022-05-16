@@ -121,5 +121,9 @@ class TournamentCog(commands.Cog):
 
     
     
+    @commands.command("launch_vocal_round")
+    async def launch_vocal_round(self):
+        await self.tournament.launch_vocal_round()
+    
 def setup(bot):
     bot.add_cog(TournamentCog(bot))
