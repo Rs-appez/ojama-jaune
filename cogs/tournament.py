@@ -105,7 +105,7 @@ class TournamentCog(commands.Cog):
     @commands.is_owner()
     async def clean(self, ctx):
 
-        Tournament.dell_vocal(self)
+        await Tournament.dell_vocal(self)
 
         role_id = int(DUELIST_ID)
         role = ctx.guild.get_role(role_id)
