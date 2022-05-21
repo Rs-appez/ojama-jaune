@@ -79,12 +79,31 @@ class TournamentCog(commands.Cog):
                 await ctx.send("Utiliser la commande comme ceci :\n !win 2 0\n ou\n !win 2 1")
         else :
             await ctx.send("Pas de tournoi en cours")
+
                 
+    @commands.command("fwin")
+    @commands.has_role(int(TEAM_ID))
+    async def force_win(self, ctx, *score ):
+
+        duelist = ctx.guild.get_member(int(score[0][2:-1]))
+        if duelist:
+            if(self.tournament):
+
+                if(score and score[1] > score[2] and 
+                    int(score[1]) > 0 and int(score[1]) <=2 and
+                    int(score[2]) >= 0 and int(score[2]) <2):
+                    await self.tournament.set_win(duelist,int(score[1]), int(score[2]))
+                else :
+                    await ctx.send("Utiliser la commande comme ceci :\n !fwin @jouer 2 0\n ou\n !fwin @jouer 2 1")
+            else :
+                await ctx.send("Pas de tournoi en cours")
+        else:
+            await ctx.send("fguguUtiliser la commande comme ceci :\n !fwin @jouer 2 0\n ou\n !fwin @jouer 2 1")
     @commands.command("draw")
     @commands.has_role(int(DUELIST_ID))
     async def set_draw(self, ctx, *score : int):
         if(self.tournament):
-            
+
             if(not score):
                 await self.tournament.set_draw(ctx.author, 1)
                 

@@ -341,8 +341,10 @@ class Tournament():
         tournaments =  Tournament.get_all_tournaments()
 
         for tournament in tournaments:
+            
             url = tournament['tournament']["url"]
-            await Tournament.delete_tournament(url,ctx)
+            if not url == 'bgt49rwj':
+                await Tournament.delete_tournament(url,ctx)
 
     @staticmethod
     async def dell_vocal(ctx):
