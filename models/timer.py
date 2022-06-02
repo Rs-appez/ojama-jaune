@@ -1,6 +1,6 @@
 import asyncio
 
-from discord import  Role
+from nextcord import  Role
 
 from config import DUELIST_ID
 

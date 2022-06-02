@@ -1,6 +1,5 @@
 import asyncio
-from discord import Member, User, VoiceChannel
-import discord
+from nextcord import Member
 from nextcord.ext import commands
 import random
 from config import JUSTIN_ID

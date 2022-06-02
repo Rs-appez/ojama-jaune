@@ -1,8 +1,5 @@
-import json
-import string
-
 import requests
-from discord import Embed, Member
+from nextcord import Embed
 from nextcord.ext import commands
 from models.cards import Cards, CardsRulling
 

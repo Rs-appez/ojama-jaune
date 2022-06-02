@@ -1,12 +1,9 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv(dotenv_path="config")
 
 #token
-OJAMA_JAUNE_TOKEN = os.getenv("TOKEN_OJAMA_JAUNE")
-OJAMA_ROUGE_TOKEN = os.getenv("TOKEN_OJAMA_ROUGE")
-CHALLONGE_TOKEN = os.getenv('CHALLONGE_TOKEN')
+OJAMA_JAUNE_TOKEN = os.environ['TOKEN_OJAMA_JAUNE']
+OJAMA_ROUGE_TOKEN = os.environ['TOKEN_OJAMA_ROUGE']
+CHALLONGE_TOKEN = os.environ['CHALLONGE_TOKEN']
 
 
 #role

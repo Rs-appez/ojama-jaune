@@ -1,7 +1,6 @@
 
 import json
 
-from discord import VoiceChannel
 from config import CHALLONGE_TOKEN, CATEGORY_TOURNAMENT_ID, DUELIST_ID, SALLE_D_ATTENTE
 import requests
 from nextcord import CategoryChannel, Role

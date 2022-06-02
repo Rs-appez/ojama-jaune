@@ -1,7 +1,5 @@
-
-from email import message
 from typing import List
-from discord import Embed
+from nextcord import Embed
 import requests
 import json
 
