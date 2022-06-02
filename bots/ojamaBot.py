@@ -1,11 +1,7 @@
 import asyncio
-from ntpath import join
-from discord import PCMVolumeTransformer
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio
-
-from io import BufferedIOBase
 class OjamaBot(commands.Bot):
 
     def __init__(self, command_prefix ):
