@@ -8,3 +8,4 @@ __pycache__/
 ffmpeg/
 images/
 audios/
+cogs/test.py
