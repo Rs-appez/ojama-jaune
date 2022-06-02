@@ -31,7 +31,7 @@ class SoundBox(commands.Cog):
     @commands.command()
     async def fdp(self, ctx):
         voice = ctx.message.author.voice
-        await ctx.send(file=nextcord.File("images\\fdp.png"))
+        await ctx.send(file=nextcord.File("images/fdp.png"))
         if(voice): 
             voice_channel = voice.channel
             await self.bot.play_sound("FDP.mp3",voice_channel)
@@ -49,7 +49,7 @@ class SoundBox(commands.Cog):
         if(voice):
             voice_channel = voice.channel
             await self.bot.play_sound("FEUR.wav",voice_channel)
-            await ctx.send(file=nextcord.File("images\\IMG_20220416_205138_438.jpg"))
+            await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
 
     @commands.command()
     async def emotional(self, ctx):
