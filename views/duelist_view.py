@@ -1,7 +1,7 @@
 
 
 import nextcord
-from config import TEAM_ID
+from config import ADMIN_SPEED, TEAM_ID
 
 from models.tournament import Tournament
 
@@ -23,7 +23,14 @@ class DuelistView(nextcord.ui.View):
 
         user = interaction.user
         role_id = int(TEAM_ID)
-        role = interaction.guild.get_role(role_id)
+        role_id_speed = int(ADMIN_SPEED)
+
+        if interaction.guild.get_role(role_id):
+            role = interaction.guild.get_role(role_id)
+        
+        elif interaction.guild.get_role(role_id_speed):
+            interaction.guild.get_role(role_id_speed)
+            
         assert isinstance(role,nextcord.Role)
 
         if role in user.roles:
