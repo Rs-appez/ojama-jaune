@@ -1,9 +1,11 @@
 import os
+from decouple import config
+
 
 #token
-OJAMA_JAUNE_TOKEN = os.environ['TOKEN_OJAMA_JAUNE']
-OJAMA_ROUGE_TOKEN = os.environ['TOKEN_OJAMA_ROUGE']
-CHALLONGE_TOKEN = os.environ['CHALLONGE_TOKEN']
+OJAMA_JAUNE_TOKEN =config('TOKEN_OJAMA_JAUNE')
+OJAMA_ROUGE_TOKEN = config('TOKEN_OJAMA_ROUGE')
+CHALLONGE_TOKEN = config('CHALLONGE_TOKEN')
 
 
 #role

@@ -1,5 +1,5 @@
 config
-.env/
+venv/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -9,3 +9,4 @@ ffmpeg/
 images/
 audios/
 cogs/test.py
+.env
