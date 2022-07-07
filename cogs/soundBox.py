@@ -1,3 +1,4 @@
+from discord import VoiceChannel
 import nextcord
 from nextcord.ext import commands
 
@@ -7,9 +8,10 @@ class SoundBox(commands.Cog):
     def __init__(self,bot):
         self.bot : commands.Bot = bot
 
-    @commands.command()
-    async def baobaboon(self, ctx : commands.Context, voice : int = None):
-        await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
+    async def play_sound(self, ctx, voice,sound):
+
+        voice_channel = None
+
         if(not voice):
             voice = ctx.message.author.voice
             if(voice): 
@@ -17,53 +19,45 @@ class SoundBox(commands.Cog):
         else :
             # voice_channel = ctx.guild.get_channel(voice)
             voice_channel = self.bot.get_channel(voice)
-        
+
         if(voice_channel):
-            await self.bot.play_sound("baobaboon.wav",voice_channel)
+
+            await self.bot.play_sound(sound,voice_channel)
 
     @commands.command()
-    async def orelsan(self, ctx):
-        voice = ctx.message.author.voice
-        if(voice): 
-            voice_channel = voice.channel
-            await self.bot.play_sound("orelsan.m4a",voice_channel)
+    async def baobaboon(self, ctx : commands.Context, voice : int = None):
+        await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
+        
+        await self. play_sound(ctx, voice,"baobaboon.wav")
 
     @commands.command()
-    async def fdp(self, ctx):
-        voice = ctx.message.author.voice
+    async def orelsan(self, ctx, voice : int = None):
+
+        await self. play_sound(ctx, voice,"orelsan.m4a")
+
+    @commands.command()
+    async def fdp(self, ctx, voice : int = None):
+
+        await self. play_sound(ctx, voice,"FDP.mp3")
         await ctx.send(file=nextcord.File("images/fdp.png"))
-        if(voice): 
-            voice_channel = voice.channel
-            await self.bot.play_sound("FDP.mp3",voice_channel)
 
     @commands.command()
-    async def gogole(self, ctx):
-        voice = ctx.message.author.voice
-        if(voice): 
-            voice_channel = voice.channel
-            await self.bot.play_sound("gogole.mp3",voice_channel)
+    async def gogole(self, ctx, voice : int = None):
+        await self. play_sound(ctx, voice,"gogole.mp3")
 
     @commands.command()
-    async def feur(self, ctx):
-        voice = ctx.message.author.voice
-        if(voice):
-            voice_channel = voice.channel
-            await self.bot.play_sound("FEUR.wav",voice_channel)
-            await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
+    async def feur(self, ctx, voice : int = None):
+
+        await self. play_sound(ctx, voice,"FEUR.wav")
+        await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
 
     @commands.command()
-    async def emotional(self, ctx):
-        voice = ctx.message.author.voice
-        if(voice): 
-            voice_channel = voice.channel
-            await self.bot.play_sound("emotional-damage.mp3",voice_channel)
+    async def emotional(self, ctx, voice : int = None):
+        await self. play_sound(ctx, voice,"emotional-damage.mp3")
 
     @commands.command(name="paka")
-    async def maxime(self, ctx):
-        voice = ctx.message.author.voice
-        if(voice): 
-            voice_channel = voice.channel
-            await self.bot.play_sound("maxime.mp3",voice_channel)
+    async def maxime(self, ctx, voice : int = None):
+        await self. play_sound(ctx, voice,"maxime.mp3")
             
 def setup(bot):
     bot.add_cog(SoundBox(bot))
