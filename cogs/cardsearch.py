@@ -5,7 +5,7 @@ from models.cards import Cards, CardsRulling
 
 
 class CardSearch(commands.Cog):
-    """Manage cardmarket commands"""
+    """Manage cards commands"""
     def __init__(self,bot):
         self.bot = bot
         self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
@@ -92,6 +92,11 @@ class CardSearch(commands.Cog):
             cards += card['name'] + '\n'
         cards += '```'
         await ctx.send(cards)
+        
+    @commands.command(name="top")
+    async def topDL(self, ctx):
+        """List of top deck list"""
+        await ctx.send("https://docs.google.com/spreadsheets/u/0/d/1znCy7lybNXw9Ir3EEbr_XL1Dv2BkQ0jxct8_C4WFGT0/htmlview#")
         
         
 def setup(bot):
