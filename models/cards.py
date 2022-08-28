@@ -44,6 +44,12 @@ class Cards():
         if len(data) == 1:
             card = Cards(data[0])
             return card
+        elif len(data) <= 3:
+            cards = []
+            for card in data:
+                c = Cards(card)
+                cards.append(c)
+            return cards
         elif len(data) <= 50:
             message = f"```Listes des cartes trouvées ({len(data)}):\n"
             message += '--------------------------------\n'
