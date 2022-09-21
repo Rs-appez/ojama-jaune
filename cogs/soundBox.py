@@ -66,9 +66,10 @@ class SoundBox(commands.Cog):
         message = ' '.join( msg)
         voice = gTTS(text=message, lang='fr',slow=False)
         voice.save("audios/tts.mp3")
-        await self. play_sound(ctx, None,"tts.mp3")
         async for msg in ctx.channel.history(limit=1):
-            await msg.delete()
+             await msg.delete()
             
+        await self. play_sound(ctx, None,"tts.mp3")
+
 def setup(bot):
     bot.add_cog(SoundBox(bot))
