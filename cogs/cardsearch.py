@@ -96,7 +96,7 @@ class CardSearch(commands.Cog):
     @commands.command(name="top")
     async def topDL(self, ctx):
         """List of top deck list"""
-        await ctx.send("https://docs.google.com/spreadsheets/u/0/d/1znCy7lybNXw9Ir3EEbr_XL1Dv2BkQ0jxct8_C4WFGT0/htmlview#")
+        await ctx.send("https://docs.google.com/spreadsheets/d/1_n9g8vh3RnohxTGQx0Cel8BvjznrX5SKfw838_54Sz4/edit#gid=0")
         
         
 def setup(bot):
