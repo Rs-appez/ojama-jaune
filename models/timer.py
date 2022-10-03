@@ -12,14 +12,20 @@ class Timer():
     def get_time_remianing(self) :
         return (self.time - (T.time() - self.started_time)).__floor__()
 
-    async def get_time(self):
+    async def get_time(self, response = None):
         time_remaining = self.get_time_remianing()
         mins, secs = divmod(time_remaining, 60)
         time = '{:02d}:{:02d} min'.format(mins, secs)
-        if(not self.freezed):
-            await self.ctx.send("il reste " + time)
+        if response :
+            if(not self.freezed):
+                await response.send_message("il reste " + time)
+            else :
+                await response.send_message("il reste " + time  +" (timer en pause)")
         else :
-            await self.ctx.send("il reste " + time  +" (timer en pause)")
+            if(not self.freezed):
+                await self.channel.send("il reste " + time)
+            else :
+                await self.channel.send("il reste " + time  +" (timer en pause)")
 
     def stop(self):
         self.started = False
@@ -37,16 +43,16 @@ class Timer():
             elif time_remaining%600 == 0 : 
                 await self.get_time()
 
-    async def launch_timer(self, ctx, time):
+    async def launch_timer(self, interaction, time):
 
-        self.ctx = ctx
+        self.channel = interaction.channel
                 
         role_id = int(DUELIST_ID)
-        duelist_role : Role = ctx.guild.get_role(role_id)
+        duelist_role : Role = interaction.guild.get_role(role_id)
 
         self.time = time
         self.started = True
-        message = await ctx.send(5)
+        message = await self.channel.send(5)
         for i in range(4):           
             await asyncio.sleep(1)
             await message.edit(content=4-i)
@@ -54,13 +60,13 @@ class Timer():
         await message.delete()
 
         if(duelist_role):
-            await ctx.send(content=f"TIME TO DUEL {duelist_role.mention}")
+            await self.channel.send(content=f"TIME TO DUEL {duelist_role.mention}")
         else : 
-            await ctx.send(content=f"TIME TO DUEL")
+            await self.channel.send(content=f"TIME TO DUEL")
 
         await self.start()
 
         if(duelist_role):
-            await ctx.send(f"TIME !!!!!!!!!!!!!! {duelist_role.mention}")
+            await self.channel.send(f"TIME !!!!!!!!!!!!!! {duelist_role.mention}")
         else : 
-            await ctx.send(f"TIME !!!!!!!!!!!!!!")
+            await self.channel.send(f"TIME !!!!!!!!!!!!!!")

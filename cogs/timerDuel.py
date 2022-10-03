@@ -1,4 +1,7 @@
+from re import I
 from nextcord.ext import commands
+from nextcord.interactions import Interaction
+from nextcord import slash_command
 from models.timer import Timer
  
 
@@ -8,26 +11,25 @@ class TimerDuel(commands.Cog):
         self.bot = bot
         self.timer = Timer()
 
-    
-
-    @commands.command(name="timer")
-    async def launch_timer(self,ctx, temps:int = 40):
+    @slash_command(name='launch_timer',description='Launch timer')
+    async def launch_timer(self,interaction : Interaction, minutes:int = 40):
         """Timer for a duel"""
         if(not self.timer.started):  
-         await self.timer.launch_timer(ctx, temps*60)
+            await interaction.response.send_message(content="le timer est lancé !",ephemeral=True)
+            await self.timer.launch_timer(interaction, minutes*60)
         else :
-            await ctx.send("le timer est déja lancé !")
+            await interaction.response.send_message("le timer est déja lancé !",ephemeral=True)
       
 
-    @commands.command(name="time")
-    async def show_time(self,ctx):
+    @slash_command(name='time',description='Get remaining time of the timer')
+    async def show_time(self,interaction):
         """get remaining time"""
 
         if(self.timer.started): 
-            await self.timer.get_time()
+            await self.timer.get_time(interaction.response)
             
         else :
-            await ctx.send("le timer n'est pas lancé !")
+            await interaction.response.send_message("le timer n'est pas lancé !")
 
     @commands.command()
     async def stop(self,ctx):
