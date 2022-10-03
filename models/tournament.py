@@ -342,7 +342,8 @@ class Tournament():
         for tournament in tournaments:
             
             url = tournament['tournament']["url"]
-            if not url == 'bgt49rwj':
+            if not (url == 'bgt49rwj' or url =='7oq169e7'):
+                
                 await Tournament.delete_tournament(url,ctx)
 
     @staticmethod

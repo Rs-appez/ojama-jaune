@@ -11,10 +11,10 @@ class TimerDuel(commands.Cog):
     
 
     @commands.command(name="timer")
-    async def launch_timer(self,ctx, temps:int = 2400):
+    async def launch_timer(self,ctx, temps:int = 40):
         """Timer for a duel"""
         if(not self.timer.started):  
-         await self.timer.launch_timer(ctx, temps)
+         await self.timer.launch_timer(ctx, temps*60)
         else :
             await ctx.send("le timer est déja lancé !")
       
