@@ -18,12 +18,12 @@ class CardSearch(commands.Cog):
     @slash_command(name='card',description='Recherche de carte') 
     async def search_cards(self, interaction : Interaction, name : str):
         """Search a card"""
-        
+        await interaction.response.defer(with_message=True)
         value : str = name
-        card = Cards.search(self, value)
+        card = Cards.search(value)
         ## AFFICHAGE
         if isinstance(card, Cards):
-            await interaction.response.send_message(embed = card.embed(), view=RullingView(card))
+            await interaction.followup.send(embed = card.embed(), view=RullingView(card))
             if 'Ojama' in card.name:
                 await interaction.channel.send(content='https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003')
         elif isinstance(card, str):

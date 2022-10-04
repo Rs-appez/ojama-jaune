@@ -36,13 +36,17 @@ class Cards():
             id = r[self.name.lower()][0]
         self.id_rulling = id
 
-    def search(self, name : str):
+    @staticmethod
+    def search(name : str):
+        print(1)
         response_en = requests.get(
             Cards._url_ygopro + "cardinfo.php?fname=" + name
         )
+        print(2)
         response_fr = requests.get(
             Cards._url_ygopro + "cardinfo.php?fname=" + name + '&language=fr'
         )
+        print(3)
         if response_en.status_code == 200:
             response = response_en
         elif response_fr.status_code == 200:
