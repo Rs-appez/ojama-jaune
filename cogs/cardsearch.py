@@ -2,6 +2,8 @@ import requests
 from nextcord import Embed
 from nextcord.ext import commands
 from models.cards import Cards, CardsRulling
+from nextcord.interactions import Interaction
+from nextcord import slash_command
 
 
 class CardSearch(commands.Cog):
@@ -11,30 +13,22 @@ class CardSearch(commands.Cog):
         self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
         self.url_ygorga ="https://db.ygorganization.com/data/"
         
-    @commands.command(name="card")
-    async def search_cards(self, ctx, *name):
+    @slash_command(name='card',description='Recherche de carte') 
+    async def search_cards(self, interaction : Interaction, name : str):
         """Search a card"""
-        if name != '':
-            value : str = "%20".join(name)
-            card = Cards.search(self, value)
-            ## AFFICHAGE
-            if isinstance(card, Cards):
-                await ctx.send(embed = card.embed())
-            else:
-                await ctx.send(card)
+        
+        value : str = name
+        card = Cards.search(self, value)
+        ## AFFICHAGE
+        if isinstance(card, Cards):
+            await interaction.response.send_message(embed = card.embed())
+            if 'Ojama' in card.name:
+                await interaction.channel.send(content='https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003')
+        elif isinstance(card, str):
+            await interaction.response.send_message(content=card)
         else:
-            await ctx.send("J'ai besoin d'un nom de carte à rechercher !")
-
-
-    @commands.command(name="random")
-    async def randomcards(self, ctx):
-        """Get a random cards"""
-        response = requests.get(
-            self.url_ygopro + "randomcard.php"
-        )
-        if response.status_code == 200:
-            card = Cards(response.json())
-            await ctx.send(embed = card.embed())
+            for c in card:
+                await interaction.response.send_message(embed = c.embed())
 
     @commands.command(name="rulling")
     async def rulling(self, ctx, *name):
@@ -99,5 +93,15 @@ class CardSearch(commands.Cog):
         await ctx.send("https://docs.google.com/spreadsheets/d/1_n9g8vh3RnohxTGQx0Cel8BvjznrX5SKfw838_54Sz4/edit#gid=0")
         
         
+    @commands.command(name="random")
+    async def randomcards(self, ctx):
+        """Get a random cards"""
+        response = requests.get(
+            self.url_ygopro + "randomcard.php"
+        )
+        if response.status_code == 200:
+            card = Cards(response.json())
+            await ctx.send(embed = card.embed())
+            
 def setup(bot):
     bot.add_cog(CardSearch(bot))

@@ -1,5 +1,5 @@
 from typing import List
-from nextcord import Embed
+from nextcord import Embed, Message
 import requests
 import json
 
@@ -15,13 +15,16 @@ class Cards():
         self.race = data['race']
         self.img = data['card_images'][0]['image_url']
         self.cm = data['card_prices'][0]['cardmarket_price']
-        try:
+        
+        if self.type != 'Spell Card' and self.type != 'Trap Card':
             self.atk = data['atk']
-            self.defe = data['def']
-            self.level = data['level']
             self.attribute = data['attribute']
-        except:
-            pass
+            if self.type == 'Link Monster':
+                self.level = data['linkval']
+            else:
+                self.defe = data['def']
+                self.level = data['level']
+        
         self.id_rulling = None
 
     def search(self, name : str):
@@ -49,6 +52,7 @@ class Cards():
             for card in data:
                 c = Cards(card)
                 cards.append(c)
+            
             return cards
         elif len(data) <= 50:
             message = f"```Listes des cartes trouvées ({len(data)}):\n"
@@ -70,9 +74,14 @@ class Cards():
         embed.set_thumbnail(url=self.img)
         embed.set_author(name=self.id)
         if 'Monster' in self.type:
-            embed.add_field(name=self.race, value=f'Level {self.level} / {self.attribute}', inline=True)
-            embed.add_field(name="Atk / Def", value=f'{self.atk} / {self.defe}', inline=True)
-            embed.add_field(name=self.type, value=self.desc, inline=False)
+            if 'Link' in self.type:
+                embed.add_field(name=self.race, value=f'Link - {self.level} / {self.attribute}', inline=True)
+                embed.add_field(name="Atk", value=f'{self.atk}', inline=True)
+                embed.add_field(name=self.type, value=self.desc, inline=False)
+            else:
+                embed.add_field(name=self.race, value=f'Level {self.level} / {self.attribute}', inline=True)
+                embed.add_field(name="Atk / Def", value=f'{self.atk} / {self.defe}', inline=True)
+                embed.add_field(name=self.type, value=self.desc, inline=False)
         elif 'Spell' in self.type or 'Trap' in self.type:
             embed.add_field(name=f'{self.type} - {self.race}', value=self.desc, inline=False)
         embed.set_footer(text=f'Prix cardmarket : {self.cm} €')
