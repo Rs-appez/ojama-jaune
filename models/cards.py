@@ -30,21 +30,24 @@ class Cards():
             self._url_ygorga + "idx/card/name/en"
         )
         if response_en.status_code == 200:
-            value : str = " ".join(self.name)
-            card = Cards.search(self, value)
+           
             result = dict(response_en.json())
             r = dict((k.lower(), v) for k,v in result.items())
             
             id = r[self.name.lower()][0]
         self.id_rulling = id
 
-    def search(self, name : str):
+    @staticmethod
+    def search(name : str):
+        print(1)
         response_en = requests.get(
             Cards._url_ygopro + "cardinfo.php?fname=" + name
         )
+        print(2)
         response_fr = requests.get(
             Cards._url_ygopro + "cardinfo.php?fname=" + name + '&language=fr'
         )
+        print(3)
         if response_en.status_code == 200:
             response = response_en
         elif response_fr.status_code == 200:
