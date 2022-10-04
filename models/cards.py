@@ -88,8 +88,7 @@ class Cards():
             rullings = list()
             
             if len(resp) > 10:
-                await interaction.channel.send(f"Trop de résultat : {len(resp)}")
-                await interaction.channel.send(f"https://db.ygorganization.com/card#{self.id_rulling}")
+                await interaction.followup.send(f"Trop de résultat : {len(resp)} \n https://db.ygorganization.com/card#{self.id_rulling}")
             else:
                 for value in resp:
                     response_r = requests.get(
@@ -109,7 +108,7 @@ class Cards():
                 for r in rullings:
                     await interaction.channel.send(embed=r)
                 
-            await interaction.followup.send(content = str(len(rullings)) + ' rullings trouvés !')
+                await interaction.followup.send(content = str(len(rullings)) + ' rullings trouvés !')
         except KeyError:
             await interaction.channel.send("Erreur")
         
