@@ -11,7 +11,7 @@ class TimerDuel(commands.Cog):
         self.bot = bot
         self.timer = Timer()
 
-    @slash_command(name='launch_timer',description='Launch timer')
+    @slash_command(name='start_timer',description='Start timer')
     async def launch_timer(self,interaction : Interaction, minutes:int = 40):
         """Timer for a duel"""
         if(not self.timer.started):  
