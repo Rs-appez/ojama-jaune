@@ -2,6 +2,7 @@ from typing import List
 from nextcord import Embed, Message
 import requests
 import json
+from nextcord.interactions import Interaction
 
 class Cards():
     _url_ygopro = "https://db.ygoprodeck.com/api/v7/"
@@ -24,8 +25,18 @@ class Cards():
             else:
                 self.defe = data['def']
                 self.level = data['level']
-        
-        self.id_rulling = None
+                
+        response_en = requests.get(
+            self._url_ygorga + "idx/card/name/en"
+        )
+        if response_en.status_code == 200:
+            value : str = " ".join(self.name)
+            card = Cards.search(self, value)
+            result = dict(response_en.json())
+            r = dict((k.lower(), v) for k,v in result.items())
+            
+            id = r[self.name.lower()][0]
+        self.id_rulling = id
 
     def search(self, name : str):
         response_en = requests.get(
@@ -46,13 +57,16 @@ class Cards():
             data = response.json()[0]
         if len(data) == 1:
             card = Cards(data[0])
+            
+            resp = requests.get(
+                Cards._url_ygopro + "idx/card/name/en"
+            )
             return card
         elif len(data) <= 3:
             cards = []
             for card in data:
                 c = Cards(card)
                 cards.append(c)
-            
             return cards
         elif len(data) <= 50:
             message = f"```Listes des cartes trouvées ({len(data)}):\n"
@@ -65,8 +79,40 @@ class Cards():
             return message
 
 
-    def rulling(self):
-        pass
+    async def rulling(self, interaction : Interaction):
+        response_rulling = requests.get(
+                f'{self._url_ygorga}card/{self.id_rulling}'
+            )
+        try:
+            resp = response_rulling.json()['qaIndex']
+            rullings = list()
+            
+            if len(resp) > 10:
+                await interaction.channel.send(f"Trop de résultat : {len(resp)}")
+                await interaction.channel.send(f"https://db.ygorganization.com/card#{self.id_rulling}")
+            else:
+                for value in resp:
+                    response_r = requests.get(
+                        f'{self._url_ygorga}qa/{value}'
+                    )
+                    data = response_r.json()
+                    cards = data['cards']
+                    id = data['qaData']['en']['id']
+                    question = data['qaData']['en']['question']
+                    answer = data['qaData']['en']['answer']
+                    
+                    rulling = CardsRulling(id, cards, question, answer)
+                    embed = Embed(title = self.name, url=rulling.url, color=0xff0000)
+                    embed.add_field(name="Question", value=rulling.question, inline=False)
+                    embed.add_field(name="Answer", value=rulling.answer)
+                    rullings.append(embed)
+                for r in rullings:
+                    await interaction.channel.send(embed=r)
+                
+            await interaction.followup.send(content = str(len(rullings)) + ' rullings trouvés !')
+        except KeyError:
+            await interaction.channel.send("Erreur")
+        
 
     def embed(self):
         """Return a discord.Embed"""

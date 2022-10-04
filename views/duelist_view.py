@@ -16,8 +16,6 @@ class DuelistView(nextcord.ui.View):
     async def start(self):
        await self.tournament.start()
 
-
-
     @nextcord.ui.button(label="commencer le tournoi",emoji="✅" ,style=nextcord.ButtonStyle.primary, disabled=False)
     async def participate_button(self,button : nextcord.ui.Button ,interaction):
 
