@@ -30,8 +30,6 @@ class Cards():
             self._url_ygorga + "idx/card/name/en"
         )
         if response_en.status_code == 200:
-            value : str = " ".join(self.name)
-            card = Cards.search(self, value)
             result = dict(response_en.json())
             r = dict((k.lower(), v) for k,v in result.items())
             
