@@ -33,26 +33,6 @@ class Ambiance(commands.Cog):
         await asyncio.sleep(5)
         await ctx.send("de marquer ses cartes")
         
-    @commands.command()
-    async def ojamaSucks(self,ctx):
-        await ctx.author.edit(nick="ojama slave")
-
-    @commands.command()
-    async def tgjustin(self, ctx : commands.Context):
-        async for msg in ctx.channel.history(limit=1):
-            await msg.delete()
-        user = ctx.guild.get_member(JUSTIN_ID)
-        
-        nbr = random.randrange(1, 100, 1)
-        if nbr >= 10:
-            await ctx.send("Comme ça on essaie de kick Justin ?")
-            await ctx.author.edit(voice_channel=None)
-        else:
-            await user.edit(voice_channel=None)
-            
-    @commands.command(name="bot")
-    async def teepot(self, ctx):
-        await ctx.send("I'm a teapot !")
         
     @commands.command(name="tg")
     async def tg(self, ctx, mention : Member):
