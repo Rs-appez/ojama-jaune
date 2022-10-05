@@ -15,7 +15,8 @@ class Ambiance(commands.Cog):
             return
 
         if 'ojama' in message.content.lower():
-            await message.add_reaction('👀')
+            emoji =  message.guild.emojis[0]
+            await message.add_reaction(emoji)
 
 
     @commands.command()
