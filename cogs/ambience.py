@@ -2,23 +2,26 @@ import asyncio
 from nextcord import Member
 from nextcord.ext import commands
 import random
-from config import JUSTIN_ID
 
 class Ambiance(commands.Cog):
     """Manage ambience with ojama"""
     def __init__(self,bot):
         self.bot = bot
 
+
+    @commands.Cog.listener()
+    async def on_message(self,message):
+        if message.author == self.bot:
+            return
+
+        if 'ojama' in message.content.lower():
+            await message.add_reaction('👀')
+
+
     @commands.command()
     async def hello(self,ctx):
         member = ctx.author
         await ctx.send(f'hello {member.mention}')
-
-    @commands.command()
-    async def mp (self,ctx):
-        member : Member =  ctx.author
-        dm_chan = await member.create_dm()
-        await dm_chan.send("https://static.wikia.nocookie.net/yugioh-gx/images/3/38/Ojama_Delta_Combin%C3%A9.png/revision/latest?cb=20140311110956&path-prefix=fr")
 
     @commands.command()
     async def ojama(self,ctx):
