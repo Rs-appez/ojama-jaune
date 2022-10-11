@@ -32,8 +32,10 @@ class Cards():
         if response_en.status_code == 200:
             result = dict(response_en.json())
             r = dict((k.lower(), v) for k,v in result.items())
-            
-            id = r[self.name.lower()][0]
+            try :
+                id = r[self.name.lower()][0]
+            except :
+                id = 0
         self.id_rulling = id
 
     @staticmethod
