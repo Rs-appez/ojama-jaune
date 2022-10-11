@@ -27,10 +27,10 @@ class CardSearch(commands.Cog):
             if 'Ojama' in card.name:
                 await interaction.channel.send(content='https://tenor.com/view/yu-gi-oh-gx-ojama-anime-monster-gif-17847003')
         elif isinstance(card, str):
-            await interaction.response.send_message(content=card)
+            await interaction.followup.send(content=card)
         else:
             for c in card:
-                await interaction.response.send_message(embed = c.embed())
+                await interaction.followup.send(embed = c.embed())
 
     @commands.command(name="archetype")
     async def archetype(self, ctx, *archetype):
