@@ -1,2 +1,3 @@
 call venv\Scripts\activate
-call py main.py
+call py main_test.py
+pause

@@ -1,6 +1,6 @@
 import os
 import bots.ojamaBot as ojamaBot
-import config
+from decouple import config
 
 #------------BOT DEV--------------------------
 
