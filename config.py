@@ -4,7 +4,6 @@ from decouple import config
 
 #token
 OJAMA_JAUNE_TOKEN =config('TOKEN_OJAMA_JAUNE')
-OJAMA_ROUGE_TOKEN = config('TOKEN_OJAMA_ROUGE')
 CHALLONGE_TOKEN = config('CHALLONGE_TOKEN')
 
 

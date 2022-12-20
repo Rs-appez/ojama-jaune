@@ -10,4 +10,4 @@ for file in os.listdir("./cogs"):
     if(file.endswith(".py")):
         ojama_rouge.load_extension(f"cogs.{file[:-3]}")
 
-ojama_rouge.run(config.OJAMA_ROUGE_TOKEN)
+ojama_rouge.run(config('TOKEN_OJAMA_ROUGE'))
