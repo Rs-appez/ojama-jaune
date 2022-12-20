@@ -2,6 +2,9 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio
+
+FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn'}
+
 class OjamaBot(commands.Bot):
 
     def __init__(self, command_prefix ):
@@ -37,7 +40,7 @@ class OjamaBot(commands.Bot):
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
 
         self.voice_client = await self.join_vocal(voice_channel)
-        source =  FFmpegPCMAudio( source = f'audios/{sound}', executable="ffmpeg/ffmpeg.exe")
+        source =  FFmpegPCMAudio( source = f'audios/{sound}', executable="ffmpeg/ffmpeg.exe", options=FFMPEG_OPTIONS)
         self.voice_client.play(source, after= self.after_sound )
         
     
