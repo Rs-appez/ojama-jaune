@@ -5,8 +5,6 @@ __pycache__/
 *$py.class
 .vscode/launch.json
 
-ffmpeg/
-images/
-audios/
 cogs/test.py
 .env
+audios/tts.mp3
