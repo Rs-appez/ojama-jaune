@@ -37,7 +37,7 @@ class OjamaBot(commands.Bot):
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
 
         self.voice_client = await self.join_vocal(voice_channel)
-        source =  FFmpegPCMAudio( source = f'audios/{sound}')
+        source =  FFmpegPCMAudio( source = f'audios/{sound}', executable="ffmpeg/ffmpeg.exe")
         self.voice_client.play(source, after= self.after_sound )
         
     
