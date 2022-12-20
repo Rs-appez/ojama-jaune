@@ -49,7 +49,7 @@ class SoundBox(commands.Cog):
     @commands.command()
     async def feur(self, ctx, voice : int = None):
 
-        await self. play_sound(ctx, voice,"FEUR.wav")
+        # await self. play_sound(ctx, voice,"FEUR.wav")
         await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
 
     @commands.command()
