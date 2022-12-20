@@ -8,4 +8,5 @@ EXPOSE 8080
 COPY requirements.txt /ojama_jaune/
 RUN pip install -r requirements.txt
 COPY . /ojama_jaune/
+RUN apk add ffmpeg
 CMD python main.py
