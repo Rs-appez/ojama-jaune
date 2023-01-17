@@ -47,6 +47,10 @@ class SoundBox(commands.Cog):
         await self. play_sound(ctx, voice,"gogole.mp3")
 
     @commands.command()
+    async def jmbun(self, ctx, voice : int = None):
+        await self. play_sound(ctx, voice,"jaimebun.m4a")
+
+    @commands.command()
     async def feur(self, ctx, voice : int = None):
 
         await self. play_sound(ctx, voice,"FEUR.wav")
