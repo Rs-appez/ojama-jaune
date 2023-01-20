@@ -25,6 +25,11 @@ class SoundBox(commands.Cog):
 
             await self.bot.play_sound(sound,voice_channel)
 
+    def tts (self, msg):
+        voice = gTTS(text=msg, lang='fr',slow=False)
+        voice.save("audios/tts.mp3")
+
+
     @commands.command()
     async def baobaboon(self, ctx : commands.Context, voice : int = None):
         await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
@@ -68,8 +73,7 @@ class SoundBox(commands.Cog):
     async def speak_tts(self,ctx : commands.Context, *msg : str):
        
         message = ' '.join( msg)
-        voice = gTTS(text=message, lang='fr',slow=False)
-        voice.save("audios/tts.mp3")
+        self.tts(message)
         async for msg in ctx.channel.history(limit=1):
              await msg.delete()
             
@@ -79,7 +83,8 @@ class SoundBox(commands.Cog):
     @commands.command()
     async def jujujustin(self, ctx):
         member = ctx.guild.get_member(377207249937891329)
-        await this.speak_tts(ctx, 'Ju Ju Just1 4 !')
+        self.tts('Ju Ju Just1 4 !')
+        await self. play_sound(ctx, None,"tts.mp3")
         await ctx.send(f'Ju Ju {member.mention} !')
         await ctx.send("https://media.discordapp.net/attachments/696053977070043247/1064940462684786709/jujujustin.png")
 
