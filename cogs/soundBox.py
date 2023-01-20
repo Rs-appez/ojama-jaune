@@ -79,7 +79,7 @@ class SoundBox(commands.Cog):
     @commands.command()
     async def jujujustin(self, ctx):
         member = ctx.guild.get_member(377207249937891329)
-        await SoundBox.speak_tts(ctx, 'Ju Ju Just1 4 !')
+        await this.speak_tts(ctx, 'Ju Ju Just1 4 !')
         await ctx.send(f'Ju Ju {member.mention} !')
         await ctx.send("https://media.discordapp.net/attachments/696053977070043247/1064940462684786709/jujujustin.png")
 
