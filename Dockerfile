@@ -6,6 +6,7 @@ RUN apt-get update \
 
 WORKDIR /ojama_jaune
 
+EXPOSE 8080
 EXPOSE 53
 EXPOSE 22
 
