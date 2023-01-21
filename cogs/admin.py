@@ -16,12 +16,13 @@ class Admin(commands.Cog):
       
     
     @commands.command()
-    @commands.has_role(int(ADMIN_ID)
+    @commands.has_role(int(ADMIN_ID))
     async def speak(self,ctx : commands.Context, channel :int, *msg : str):
 
         text_channel = self.bot.get_channel(channel)
         message = ' '.join( msg)
         await text_channel.send(message)
+          
           
     @commands.command("tts_admin")
     @commands.has_role(int(ADMIN_ID)
