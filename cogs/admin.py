@@ -25,7 +25,7 @@ class Admin(commands.Cog):
           
           
     @commands.command("tts_admin")
-    @commands.has_role(int(ADMIN_ID)
+    @commands.has_role(int(ADMIN_ID))
     async def  speak_tts(self,ctx : commands.Context, channel :int, *msg : str):
 
         voice_channel = self.bot.get_channel(channel)
