@@ -68,6 +68,10 @@ class SoundBox(commands.Cog):
     @commands.command(name="paka")
     async def maxime(self, ctx, voice : int = None):
         await self. play_sound(ctx, voice,"maxime.mp3")
+
+    @commands.command(name="bm")
+    async def baton_magique(self, ctx, voice : int = None):
+        await self. play_sound(ctx, voice,"baton magique.m4a")
     
     @commands.command("tts")
     async def speak_tts(self,ctx : commands.Context, *msg : str):
