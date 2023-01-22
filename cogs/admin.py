@@ -1,6 +1,5 @@
 from nextcord.ext import commands
 from gtts import gTTS
-from config import ADMIN_ID
 
 class Admin(commands.Cog):
     """Admin cmd"""
