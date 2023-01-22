@@ -14,18 +14,16 @@ class Admin(commands.Cog):
         chn = ctx.channel
         test = await chn.tgger_rityping()
       
-    
+    @commands.is_owner()
     @commands.command()
-    @commands.has_role(int(ADMIN_ID))
     async def speak(self,ctx : commands.Context, channel :int, *msg : str):
 
         text_channel = self.bot.get_channel(channel)
         message = ' '.join( msg)
         await text_channel.send(message)
           
-          
+    @commands.is_owner()     
     @commands.command("tts_admin")
-    @commands.has_role(int(ADMIN_ID))
     async def  speak_tts(self,ctx : commands.Context, channel :int, *msg : str):
 
         voice_channel = self.bot.get_channel(channel)
