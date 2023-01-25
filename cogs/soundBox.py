@@ -25,7 +25,7 @@ class SoundBox(commands.Cog):
 
             await self.bot.play_sound(sound,voice_channel)
 
-    def tts (self, msg):
+    def tts (self, msg, lang='fr'):
         voice = gTTS(text=msg, lang='fr',slow=False)
         voice.save("audios/tts.mp3")
 
@@ -73,11 +73,9 @@ class SoundBox(commands.Cog):
     async def baton_magique(self, ctx, voice : int = None):
         await self. play_sound(ctx, voice,"baton magique.m4a")
     
-    @commands.command("tts")
-    async def speak_tts(self,ctx : commands.Context, *msg : str):
-       
-        message = ' '.join( msg)
-        self.tts(message)
+    @slash_command(name='tts',description='Text to speak')
+    async def speak_tts(self,ctx : commands.Context, lang : str = 'fr', *msg : str):
+        self.tts(' '.join( msg), lang)
         async for msg in ctx.channel.history(limit=1):
              await msg.delete()
             
