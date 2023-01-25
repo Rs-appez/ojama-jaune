@@ -1,6 +1,6 @@
 from discord import VoiceChannel
 import nextcord
-from nextcord.ext import commands
+from nextcord.ext import commands, slash_command
 from gtts import gTTS
 
 
@@ -75,7 +75,8 @@ class SoundBox(commands.Cog):
     
     @slash_command(name='tts',description='Text to speak')
     async def speak_tts(self,ctx : commands.Context, lang : str = 'fr', *msg : str):
-        self.tts(' '.join( msg), lang)
+        message = ' '.join(msg)
+        self.tts(message, lang)
         async for msg in ctx.channel.history(limit=1):
              await msg.delete()
             
