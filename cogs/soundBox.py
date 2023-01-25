@@ -26,8 +26,8 @@ class SoundBox(commands.Cog):
 
             await self.bot.play_sound(sound,voice_channel)
 
-    def tts (self, msg, lang='fr'):
-        voice = gTTS(text=msg, lang='fr',slow=False)
+    def tts (self, msg, lan='fr'):
+        voice = gTTS(text=msg, lang=lan,slow=False)
         voice.save("audios/tts.mp3")
 
 
