@@ -1,8 +1,8 @@
-from discord import VoiceChannel
 import nextcord
 from nextcord.ext import commands
 from nextcord import slash_command
 from gtts import gTTS
+from nextcord.interactions import Interaction
 
 
 class SoundBox(commands.Cog):
@@ -10,12 +10,12 @@ class SoundBox(commands.Cog):
     def __init__(self,bot):
         self.bot : commands.Bot = bot
 
-    async def play_sound(self, ctx, voice,sound):
+    async def play_sound(self, author, voice,sound):
 
         voice_channel = None
 
         if(not voice):
-            voice = ctx.message.author.voice
+            voice = author.voice
             if(voice): 
                 voice_channel = voice.channel
         else :
@@ -35,53 +35,51 @@ class SoundBox(commands.Cog):
     async def baobaboon(self, ctx : commands.Context, voice : int = None):
         await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
         
-        await self. play_sound(ctx, voice,"baobaboon.wav")
+        await self. play_sound(ctx.author, voice,"baobaboon.wav")
 
     @commands.command()
     async def orelsan(self, ctx, voice : int = None):
 
-        await self. play_sound(ctx, voice,"orelsan.m4a")
+        await self. play_sound(ctx.author, voice,"orelsan.m4a")
 
     @commands.command()
     async def fdp(self, ctx, voice : int = None):
 
-        await self. play_sound(ctx, voice,"FDP.mp3")
+        await self. play_sound(ctx.author, voice,"FDP.mp3")
         await ctx.send(file=nextcord.File("images/fdp.png"))
 
     @commands.command()
     async def gogole(self, ctx, voice : int = None):
-        await self. play_sound(ctx, voice,"gogole.mp3")
+        await self. play_sound(ctx.author, voice,"gogole.mp3")
 
     @commands.command()
     async def jmbun(self, ctx, voice : int = None):
-        await self. play_sound(ctx, voice,"jaimebun.m4a")
+        await self. play_sound(ctx.author, voice,"jaimebun.m4a")
 
     @commands.command()
     async def feur(self, ctx, voice : int = None):
 
-        await self. play_sound(ctx, voice,"FEUR.wav")
+        await self. play_sound(ctx.author, voice,"FEUR.wav")
         await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
 
     @commands.command()
     async def emotional(self, ctx, voice : int = None):
-        await self. play_sound(ctx, voice,"emotional-damage.mp3")
+        await self. play_sound(ctx.author, voice,"emotional-damage.mp3")
 
     @commands.command(name="paka")
     async def maxime(self, ctx, voice : int = None):
-        await self. play_sound(ctx, voice,"maxime.mp3")
+        await self. play_sound(ctx.author, voice,"maxime.mp3")
 
     @commands.command(name="bm")
     async def baton_magique(self, ctx, voice : int = None):
-        await self. play_sound(ctx, voice,"baton magique.m4a")
+        await self. play_sound(ctx.author, voice,"baton magique.m4a")
     
     @slash_command(name='tts',description='Text to speak')
-    async def speak_tts(self,ctx : commands.Context, *msg : str, lang : str = 'fr'):
+    async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
         message = ' '.join(msg)
         self.tts(message, lang)
-        async for msg in ctx.channel.history(limit=1):
-             await msg.delete()
-            
-        await self. play_sound(ctx, None,"tts.mp3")
+
+        await self. play_sound(interaction.user, None,"tts.mp3")
 
 
     @commands.command()
