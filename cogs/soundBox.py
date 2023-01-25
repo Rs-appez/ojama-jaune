@@ -75,7 +75,7 @@ class SoundBox(commands.Cog):
         await self. play_sound(ctx, voice,"baton magique.m4a")
     
     @slash_command(name='tts',description='Text to speak')
-    async def speak_tts(self,ctx : commands.Context, lang : str = 'fr', *msg : str):
+    async def speak_tts(self,ctx : commands.Context, *msg : str, lang : str = 'fr'):
         message = ' '.join(msg)
         self.tts(message, lang)
         async for msg in ctx.channel.history(limit=1):
