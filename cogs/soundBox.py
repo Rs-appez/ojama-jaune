@@ -1,6 +1,7 @@
 from discord import VoiceChannel
 import nextcord
-from nextcord.ext import commands, slash_command
+from nextcord.ext import commands
+from nextcord import slash_command
 from gtts import gTTS
 
 
