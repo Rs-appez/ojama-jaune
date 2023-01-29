@@ -78,8 +78,11 @@ class SoundBox(commands.Cog):
     async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
         self.tts(msg, lang)
         await self. play_sound(interaction.user, None,"tts.mp3")
-        await interaction.response.send_message(content=":ojama_jaune: J'ai dit ton message :ojama_jaune:",ephemeral=True)
-
+        emoji =  msg.guild.emojis[0]
+        if emoji:
+            await interaction.response.send_message(content=emoji+"J'ai dit ton message"+emoji,ephemeral=True)
+        else :
+            await interaction.response.send_message(":upside_down: J'ai dit ton message :upside_down: ",ephemeral=True)
 
     @commands.command()
     async def jujujustin(self, ctx):
