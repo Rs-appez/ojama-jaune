@@ -76,9 +76,7 @@ class SoundBox(commands.Cog):
     
     @slash_command(name='tts',description='Text to speak')
     async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
-        message = ' '.join(msg)
-        self.tts(message, lang)
-
+        self.tts(msg, lang)
         await self. play_sound(interaction.user, None,"tts.mp3")
 
 
