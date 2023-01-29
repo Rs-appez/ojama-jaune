@@ -78,6 +78,7 @@ class SoundBox(commands.Cog):
     async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
         self.tts(msg, lang)
         await self. play_sound(interaction.user, None,"tts.mp3")
+        await interaction.response.send_message(content=":ojama_jaune: J'ai dit ton message :ojama_jaune:",ephemeral=True)
 
 
     @commands.command()
