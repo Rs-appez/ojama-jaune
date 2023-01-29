@@ -1,6 +1,6 @@
 import nextcord
 from nextcord.ext import commands
-from nextcord import slash_command
+from nextcord import slash_command,Emoji
 from gtts import gTTS
 from nextcord.interactions import Interaction
 
@@ -31,67 +31,79 @@ class SoundBox(commands.Cog):
         voice.save("audios/tts.mp3")
 
 
-    @commands.command()
-    async def baobaboon(self, ctx : commands.Context, voice : int = None):
-        await ctx.send("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
+    @slash_command(name="baobaboon",description="THE CALL OF BAOBABOON")
+    async def baobaboon(self,interaction : Interaction):
         
-        await self. play_sound(ctx.author, voice,"baobaboon.wav")
+        await self. play_sound(interaction.user, None,"baobaboon.wav")
+        await interaction.response.send_message("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
 
-    @commands.command()
-    async def orelsan(self, ctx, voice : int = None):
+    @slash_command(name="dimtri_shōkan",description="⚠ DANGER ⚠ ")
+    async def fdp(self, interaction : Interaction):
 
-        await self. play_sound(ctx.author, voice,"orelsan.m4a")
+        await self. play_sound(interaction.user, None,"FDP.mp3")
+        await interaction.response.send_message(content="https://media.discordapp.net/attachments/964951777273339914/1069104836177580062/fdp.png?width=1039&height=528")
 
-    @commands.command()
-    async def fdp(self, ctx, voice : int = None):
+    @slash_command(name="gogole",description="⚠ ALERTE ⚠ ")
+    async def gogole(self, interaction : Interaction):
 
-        await self. play_sound(ctx.author, voice,"FDP.mp3")
-        await ctx.send(file=nextcord.File("images/fdp.png"))
+        await self. play_sound(interaction.user, None,"gogole.mp3")
+        await interaction.response.send_message(content="https://tenor.com/view/lol-crazy-alerte-garrison-south-park-gif-14631935")
 
-    @commands.command()
-    async def gogole(self, ctx, voice : int = None):
-        await self. play_sound(ctx.author, voice,"gogole.mp3")
 
-    @commands.command()
-    async def jmbun(self, ctx, voice : int = None):
-        await self. play_sound(ctx.author, voice,"jaimebun.m4a")
+    @slash_command(name="jmbun",description="J'AIME BIEN !")
+    async def jmbun(self, interaction : Interaction):
 
-    @commands.command()
-    async def feur(self, ctx, voice : int = None):
+        await self. play_sound(interaction.user, None,"jaimebun.m4a")
 
-        await self. play_sound(ctx.author, voice,"FEUR.wav")
-        await ctx.send(file=nextcord.File("images/IMG_20220416_205138_438.jpg"))
+        if interaction.user.nick:
+            name = interaction.user.nick
+        else :
+            name = interaction.user.name
 
-    @commands.command()
-    async def emotional(self, ctx, voice : int = None):
-        await self. play_sound(ctx.author, voice,"emotional-damage.mp3")
+        await interaction.response.send_message(content=f"{name} a bien aimé !")
 
-    @commands.command(name="paka")
-    async def maxime(self, ctx, voice : int = None):
-        await self. play_sound(ctx.author, voice,"maxime.mp3")
+    @slash_command(name="feur",description="☣ NE PAS UTILISER ☣")
+    async def feur(self, interaction : Interaction):
 
-    @commands.command(name="bm")
-    async def baton_magique(self, ctx, voice : int = None):
-        await self. play_sound(ctx.author, voice,"baton magique.m4a")
+        await self. play_sound(interaction.user, None,"FEUR.wav")
+        await interaction.response.send_message(content="https://media.discordapp.net/attachments/964951777273339914/1069105361035993278/IMG_20220416_205138_438.jpg?width=1173&height=528")
+
+    @slash_command(name="emotional_damage",description="AIE")
+    async def emotional(self, interaction : Interaction):
+
+        await self. play_sound(interaction.user, None,"emotional-damage.mp3")
+        await interaction.response.send_message(content="https://tenor.com/view/emotional-damage-meme-gif-25259043")
+
+    @slash_command(name="paka",description="NICAIZIZ")
+    async def maxime(self, interaction : Interaction):
+
+        await self. play_sound(interaction.user, None,"maxime.mp3")
+        await interaction.response.send_message(content="aka nicolas")
+
+    @slash_command(name="baton_magique",description="TUN TUN TUN TINTIN")
+    async def baton_magique(self, interaction : Interaction):
+
+        await self. play_sound(interaction.user, None,"baton magique.m4a")
+        await interaction.response.send_message(content="https://tenor.com/view/goku-gif-26185626")
+
     
     @slash_command(name='tts',description='Text to speak')
     async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
         self.tts(msg, lang)
         await self. play_sound(interaction.user, None,"tts.mp3")
-        emoji =  interaction.guild.emojis[0]
-        if emoji:
-            await interaction.response.send_message(content=f"{emoji} J'ai dit ton message {emoji}",ephemeral=True)
+        if self.bot.oj_emoji:
+            await interaction.response.send_message(content=f"{self.bot.oj_emoji} J'ai dit ton message {self.bot.oj_emoji}",ephemeral=True)
         else :
             await interaction.response.send_message(":upside_down: J'ai dit ton message :upside_down: ",ephemeral=True)
 
-    @commands.command()
-    async def jujujustin(self, ctx):
-        member = ctx.guild.get_member(377207249937891329)
-        self.tts('Ju Ju Just1 4 !')
-        await self. play_sound(ctx.author, None,"tts.mp3")
-        if member:
-            await ctx.send(f'Ju Ju {member.mention} !')
-        await ctx.send("https://media.discordapp.net/attachments/696053977070043247/1064940462684786709/jujujustin.png")
+    # @commands.command()
+    # async def jujujustin(self, ctx):
+    #     member = ctx.guild.get_member(377207249937891329)
+    #     self.tts('Ju Ju Just1 4 !')
+    #     await self. play_sound(ctx.author, None,"tts.mp3")
+    #     if member:
+    #         await ctx.send(f'Ju Ju {member.mention} !')
+    #     await ctx.send("https://media.discordapp.net/attachments/696053977070043247/1064940462684786709/jujujustin.png")
 
 def setup(bot):
     bot.add_cog(SoundBox(bot))
