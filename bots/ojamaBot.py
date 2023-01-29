@@ -1,7 +1,7 @@
 import asyncio
 import nextcord
 from nextcord.ext import commands
-from nextcord import FFmpegPCMAudio
+from nextcord import FFmpegPCMAudio,Emoji
 from config import BOT_TEST_CHANNEL, GUILD_ID
 
 class OjamaBot(commands.Bot):
@@ -13,17 +13,18 @@ class OjamaBot(commands.Bot):
         intents = nextcord.Intents.default()
         intents.members = True
         intents.voice_states = True
+        self.oj_emoji = None
         super().__init__(command_prefix, intents=intents)
 
+        
 
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
         guild = self.get_guild(int(GUILD_ID))
         if guild :
+            self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
             msg = await guild.get_channel(int(BOT_TEST_CHANNEL)).send("UP !")
-            emoji =  msg.guild.emojis[0]
-            await msg.add_reaction(emoji)
-
+            await msg.add_reaction(self.oj_emoji)
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
 
         return await voice_channel.connect()
@@ -43,11 +44,13 @@ class OjamaBot(commands.Bot):
 
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
 
-        self.voice_client = await self.join_vocal(voice_channel)
         if self.production :
             source =  FFmpegPCMAudio(source = f'audios/{sound}')
         else :
             source =  FFmpegPCMAudio( source = f'audios/{sound}',executable='ffmpeg\\ffmpeg.exe')
+        
+        self.voice_client = await self.join_vocal(voice_channel)
+
         self.voice_client.play(source, after= self.after_sound )
         
     
