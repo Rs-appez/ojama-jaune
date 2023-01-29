@@ -37,7 +37,7 @@ class SoundBox(commands.Cog):
         await self. play_sound(interaction.user, None,"baobaboon.wav")
         await interaction.response.send_message("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
 
-    @slash_command(name="dimtri_shōkan",description="⚠ DANGER ⚠ ")
+    @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"FDP.mp3")
