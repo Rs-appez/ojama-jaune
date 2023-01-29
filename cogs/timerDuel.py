@@ -1,4 +1,3 @@
-from re import I
 from nextcord.ext import commands
 from nextcord.interactions import Interaction
 from nextcord import slash_command
