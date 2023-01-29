@@ -4,7 +4,7 @@ from decouple import config
 
 #------------BOT DEV--------------------------
 
-ojama_rouge = ojamaBot.OjamaBot("§")
+ojama_rouge = ojamaBot.OjamaBot("§",False)
 
 for file in os.listdir("./cogs"):
     if(file.endswith(".py")):

@@ -3,7 +3,7 @@ import bots.ojamaBot as ojamaBot
 import config
 #------------BOT PROD--------------------------
 
-ojama_jaune = ojamaBot.OjamaBot("!")
+ojama_jaune = ojamaBot.OjamaBot("!",True)
 
 for file in os.listdir("./cogs"):
     if(file.endswith(".py")):
