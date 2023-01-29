@@ -14,9 +14,9 @@ class Ambiance(commands.Cog):
         if message.author == self.bot:
             return
 
-        if 'ojama' in message.content.lower():
-            emoji =  message.guild.emojis[0]
-            await message.add_reaction(emoji)
+        if self.bot.oj_emoji:
+            if 'ojama' in message.content.lower():
+                await message.add_reaction(self.bot.oj_emoji)
 
 
     @commands.command()
