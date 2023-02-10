@@ -37,6 +37,12 @@ class SoundBox(commands.Cog):
         await self. play_sound(interaction.user, None,"baobaboon.wav")
         await interaction.response.send_message("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
 
+    @slash_command(name="blue",description="Da Ba Dee")
+    async def blue(self,interaction : Interaction):
+        
+        await self. play_sound(interaction.user, None,"bluedabedi.m4a")
+        await interaction.response.send_message("https://tenor.com/view/yass-slayy-blue-subway-gif-26002963")
+
     @slash_command(name="dimtri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
 
