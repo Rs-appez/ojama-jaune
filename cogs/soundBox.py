@@ -42,6 +42,13 @@ class SoundBox(commands.Cog):
         
         await self. play_sound(interaction.user, None,"bluedabedi.m4a")
         await interaction.response.send_message("https://tenor.com/view/yass-slayy-blue-subway-gif-26002963")
+    
+    
+    @slash_command(name="delu",description="le deni")
+    async def desillusion(self,interaction : Interaction,target):
+  
+        await self. play_sound(interaction.user, None,"delu.m4a")
+        await interaction.response.send_message(f"{target} est dans le denis")
 
     @slash_command(name="dimtri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
