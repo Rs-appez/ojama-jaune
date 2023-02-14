@@ -2,7 +2,7 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Emoji
-from config import BOT_TEST_CHANNEL, GUILD_ID
+from config import BOT_TEST_CHANNEL, GUILD_ID , CLOWN_ID ,CANARD_ID
 
 class OjamaBot(commands.Bot):
 
@@ -16,8 +16,14 @@ class OjamaBot(commands.Bot):
         self.oj_emoji = None
         super().__init__(command_prefix, intents=intents)
 
-        
+    async def on_voice_state_update(self,member,before,after):
 
+        if after.channel :
+            if any(role.id == int(CLOWN_ID) for role in member.roles):
+                await self.play_sound("circus.m4a",after.channel)
+            
+            elif any(role.id == int(CANARD_ID) for role in member.roles):
+                await self.play_sound("bruit-de-canard-pour-montage.m4a",after.channel)
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
         guild = self.get_guild(int(GUILD_ID))
