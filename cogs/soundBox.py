@@ -54,6 +54,8 @@ class SoundBox(commands.Cog):
     async def karadoc(self,interaction : Interaction):
   
         await self. play_sound(interaction.user, None,"c dlamerde.m4a")
+        await interaction.response.send_message(content="https://tenor.com/view/karadoc-kaamelott-gif-18243163")
+
 
     @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
