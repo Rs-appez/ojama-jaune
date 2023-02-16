@@ -51,7 +51,7 @@ class SoundBox(commands.Cog):
         await interaction.response.send_message(f"{target} est dans le denis")    
 
     @slash_command(name="cdlamerde",description="'-'")
-    async def karadoc(self,interaction : Interaction,target):
+    async def karadoc(self,interaction : Interaction):
   
         await self. play_sound(interaction.user, None,"c dlamerde.m4a")
 
