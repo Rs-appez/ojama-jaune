@@ -50,7 +50,7 @@ class SoundBox(commands.Cog):
         await self. play_sound(interaction.user, None,"delu.m4a")
         await interaction.response.send_message(f"{target} est dans le denis")
 
-    @slash_command(name="dimtri_shōkan",description="⚠ DANGER ⚠ ")
+    @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"FDP.mp3")
