@@ -48,7 +48,12 @@ class SoundBox(commands.Cog):
     async def desillusion(self,interaction : Interaction,target):
   
         await self. play_sound(interaction.user, None,"delu.m4a")
-        await interaction.response.send_message(f"{target} est dans le denis")
+        await interaction.response.send_message(f"{target} est dans le denis")    
+
+    @slash_command(name="cdlamerde",description="'-'")
+    async def karadoc(self,interaction : Interaction,target):
+  
+        await self. play_sound(interaction.user, None,"c dlamerde.m4a")
 
     @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ")
     async def fdp(self, interaction : Interaction):
