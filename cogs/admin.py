@@ -1,6 +1,8 @@
 from nextcord.ext import commands
 from gtts import gTTS
 
+from config import GUILD_ID
+
 class Admin(commands.Cog):
     """Admin cmd"""
     def __init__(self,bot):
@@ -20,6 +22,16 @@ class Admin(commands.Cog):
         text_channel = self.bot.get_channel(channel)
         message = ' '.join( msg)
         await text_channel.send(message)
+
+    @commands.is_owner()
+    @commands.command()
+    async def mp(self,ctx : commands.Context, player, *msg : str):
+
+        guild = self.bot.get_guild(int(GUILD_ID))
+        member = await guild.fetch_member(player)
+        dm = await member.create_dm()
+        message = ' '.join( msg)
+        await dm.send(message)
           
     @commands.is_owner()     
     @commands.command("tts_admin")
