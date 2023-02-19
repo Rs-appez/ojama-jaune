@@ -39,4 +39,4 @@ CATEGORY_TOURNAMENT_ID_SPEED = 978042278536949820
 
 URL_ygopro = "https://db.ygoprodeck.com/api/v7/"
 URL_ygorga = "https://db.ygorganization.com/data/"
-URL_top_dl = "https://docs.google.com/spreadsheets/d/1MkivdBa_z0NSkjybUhA4IRKeVdqs4JDok4h5zolhyvo/edit#gid=1990402218"
+URL_top_dl = "https://docs.google.com/spreadsheets/d/1qzo0aVRlb0Rb1uJNYpoZqQgoW8I99o4E2Lj7t4cu_8A/edit#gid=0"
