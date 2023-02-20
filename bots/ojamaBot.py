@@ -49,7 +49,7 @@ class OjamaBot(commands.Bot):
 
             guild = self.get_guild(int(GUILD_ID))
             if guild :
-                await guild.get_channel(int(BOT_TEST_CHANNEL)).send(f"{message.author} mp me : \n{message}")
+                await guild.get_channel(int(BOT_TEST_CHANNEL)).send(f"{message.author} mp me : \n{message.content}")
                     
 
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
