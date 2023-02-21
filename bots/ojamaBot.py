@@ -29,7 +29,7 @@ class OjamaBot(commands.Bot):
                 await self.play_sound("loup.m4a",after.channel)
 
             elif any(role.id == int(NINJA_ID) for role in member.roles):
-                await self.play_sound("ninja.m4a",after.channel)
+                await self.play_sound("ninja.mp3",after.channel)
 
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
