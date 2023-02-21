@@ -2,7 +2,7 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
-from config import BOT_TEST_CHANNEL, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID
+from config import BOT_TEST_CHANNEL, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID
 
 class OjamaBot(commands.Bot):
 
@@ -30,6 +30,9 @@ class OjamaBot(commands.Bot):
 
             elif any(role.id == int(NINJA_ID) for role in member.roles):
                 await self.play_sound("ninja.mp3",after.channel)
+
+            elif any(role.id == int(BAOBABOON_ID) for role in member.roles):
+                await self.play_sound("baobaboon.wav",after.channel)
 
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
