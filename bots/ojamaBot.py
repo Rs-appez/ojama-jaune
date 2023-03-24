@@ -79,6 +79,8 @@ class OjamaBot(commands.Bot):
             print(e)
 
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
+        # temp fix until find how to fix '-'
+        return
 
         if self.production :
             source =  FFmpegPCMAudio(source = f'audios/{sound}')
