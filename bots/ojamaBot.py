@@ -13,6 +13,7 @@ class OjamaBot(commands.Bot):
         intents = nextcord.Intents.default()
         intents.members = True
         intents.voice_states = True
+        intents.message_content = True
         self.oj_emoji = None
         super().__init__(command_prefix, intents=intents)
 
@@ -79,8 +80,6 @@ class OjamaBot(commands.Bot):
             print(e)
 
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
-        # temp fix until find how to fix '-'
-        return
 
         if self.production :
             source =  FFmpegPCMAudio(source = f'audios/{sound}')
