@@ -1,7 +1,7 @@
 import requests
 from nextcord import Embed
 from nextcord.ext import commands
-from config import URL_top_dl
+from config import URL_top_dl,URL_top_ycs
 from models.cards import Cards, CardsRulling
 from nextcord.interactions import Interaction
 from nextcord import slash_command
@@ -49,8 +49,8 @@ class CardSearch(commands.Cog):
     @commands.command(name="top")
     async def topDL(self, ctx):
         """List of top deck list"""
-        await ctx.send(URL_top_dl)
-        
+        await ctx.send("ALL => " + URL_top_dl)
+        await ctx.send("YCS => " + URL_top_ycs)
         
     @commands.command(name="random")
     async def randomcards(self, ctx):
