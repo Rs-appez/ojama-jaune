@@ -18,7 +18,9 @@ class Admin(commands.Cog):
     @commands.has_role(int(BOT_DEV_ID))
     @commands.command()
     async def speak(self,ctx : commands.Context, channel :int, *msg : str):
-
+        """Send a message in a channel
+            !speak id:channel msg
+        """
         text_channel = self.bot.get_channel(channel)
         message = ' '.join( msg)
         await text_channel.send(message)
