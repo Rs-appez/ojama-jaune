@@ -32,6 +32,8 @@ class Ambiance(commands.Cog):
     
     @commands.command(name="blague")
     async def joke(self, ctx):
+        """Ask me my best joke"""
+
         await ctx.send("Quel est le comble pour un joueur branded")
         await asyncio.sleep(5)
         await ctx.send("de marquer ses cartes")
