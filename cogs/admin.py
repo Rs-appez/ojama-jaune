@@ -1,7 +1,7 @@
 from nextcord.ext import commands
 from gtts import gTTS
 
-from config import GUILD_ID
+from config import GUILD_ID,BOT_DEV_ID
 
 class Admin(commands.Cog):
     """Admin cmd"""
@@ -15,7 +15,7 @@ class Admin(commands.Cog):
         chn = ctx.channel
         test = await chn.tgger_rityping()
       
-    @commands.is_owner()
+    @commands.has_role(int(BOT_DEV_ID))
     @commands.command()
     async def speak(self,ctx : commands.Context, channel :int, *msg : str):
 
