@@ -17,29 +17,29 @@ class Admin(commands.Cog):
       
     @commands.has_role(int(BOT_DEV_ID))
     @commands.command()
-    async def speak(self,ctx : commands.Context, channel :int, *msg : str):
+    async def speak(self,ctx : commands.Context, channel_id :int, *msg : str):
         """Send a message in a channel"""
-        text_channel = self.bot.get_channel(channel)
+        text_channel = self.bot.get_channel(channel_id)
         message = ' '.join( msg)
         await text_channel.send(message)
 
     @commands.has_role(int(BOT_DEV_ID))
     @commands.command()
-    async def mp(self,ctx : commands.Context, player, *msg : str):
+    async def mp(self,ctx : commands.Context, player_id, *msg : str):
         """Send a message in dm"""
 
         guild = self.bot.get_guild(int(GUILD_ID))
-        member = await guild.fetch_member(player)
+        member = await guild.fetch_member(player_id)
         dm = await member.create_dm()
         message = ' '.join( msg)
         await dm.send(message)
           
     @commands.has_role(int(BOT_DEV_ID))
     @commands.command("tts_admin")
-    async def  speak_tts(self,ctx : commands.Context, channel :int, *msg : str):
+    async def  speak_tts(self,ctx : commands.Context, channel_id :int, *msg : str):
         """Send a vocal message in a channel"""
 
-        voice_channel = self.bot.get_channel(channel)
+        voice_channel = self.bot.get_channel(channel_id)
         message = ' '.join( msg)
         voice = gTTS(text=message, lang='fr',slow=False)
         voice.save("audios/tts.mp3")
