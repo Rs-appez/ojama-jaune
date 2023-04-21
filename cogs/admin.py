@@ -23,7 +23,7 @@ class Admin(commands.Cog):
         message = ' '.join( msg)
         await text_channel.send(message)
 
-    @commands.is_owner()
+    @commands.has_role(int(BOT_DEV_ID))
     @commands.command()
     async def mp(self,ctx : commands.Context, player, *msg : str):
 
@@ -33,7 +33,7 @@ class Admin(commands.Cog):
         message = ' '.join( msg)
         await dm.send(message)
           
-    @commands.is_owner()     
+    @commands.has_role(int(BOT_DEV_ID))
     @commands.command("tts_admin")
     async def  speak_tts(self,ctx : commands.Context, channel :int, *msg : str):
 
