@@ -15,6 +15,13 @@ class CardSearch(commands.Cog):
         self.bot = bot
         self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
         self.url_ygorga ="https://db.ygorganization.com/data/"
+
+    def get_random_card(self):
+        response = requests.get(
+            self.url_ygopro + "randomcard.php"
+        )
+        if response.status_code == 200:
+            return Cards(response.json())
         
     @slash_command(name='card',description='Recherche de carte') 
     async def search_cards(self, interaction : Interaction, name : str):
@@ -55,11 +62,7 @@ class CardSearch(commands.Cog):
     @commands.command(name="random")
     async def randomcards(self, ctx):
         """Get a random cards"""
-        response = requests.get(
-            self.url_ygopro + "randomcard.php"
-        )
-        if response.status_code == 200:
-            card = Cards(response.json())
+            card = self.get_random_card
             await ctx.send(embed = card.embed())
             
 def setup(bot):
