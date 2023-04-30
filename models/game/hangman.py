@@ -1,5 +1,8 @@
 from views.hangman.letter_view import Letter_view
 from nextcord.ui import View
+
+from views.hangman.reload_view import ReloadView
+
 class Hangman():
     __letter = "abcdefghilklmnopqrstuvwxyz"
     __hangman = [
@@ -19,8 +22,9 @@ class Hangman():
     __vowel_msg = None
     __consonant_msg = None
 
-    def __init__(self, word : str,interaction, item = None):
+    def __init__(self, word : str,interaction,gm ,item = None):
         self.word = word.lower()
+        self.gm = gm
         self.item = item
         self.interaction = interaction
         self.__init_word()
@@ -82,3 +86,4 @@ class Hangman():
             await self.interaction.channel.send(f"Le mot était : {self.word}")
 
         if self.item : await self.interaction.channel.send(self.item)
+        await self.interaction.channel.send(view=ReloadView(self.gm))
