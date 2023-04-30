@@ -13,7 +13,7 @@ class Game(commands.Cog):
     @slash_command(name="pendu_yugioh",description="Crois en l'âme des cartes!")
     async def hangman(self,interaction : Interaction ):
         card = Cards.get_random_card()
-        hangman = Hangman("a",interaction,card.img)
+        hangman = Hangman(card.name,interaction,card.img)
         await hangman.start()
 
 def setup(bot):
