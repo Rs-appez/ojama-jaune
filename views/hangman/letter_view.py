@@ -27,6 +27,9 @@ class Letter_view(View):
         super().__init__(timeout=None)
         self.__init_button(vowel)
 
+        if vowel : hangman.vowel_view = self
+        else : hangman.consonant_view = self
+
     def __init_button(self,vowel):
         if vowel : letters = self.__letter_vowel
         else : letters = self.__letter_consonant
