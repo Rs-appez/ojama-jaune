@@ -62,8 +62,8 @@ class CardSearch(commands.Cog):
     @commands.command(name="random")
     async def randomcards(self, ctx):
         """Get a random cards"""
-            card = self.get_random_card
-            await ctx.send(embed = card.embed())
+        card = self.get_random_card()
+        await ctx.send(embed = card.embed())
             
 def setup(bot):
     bot.add_cog(CardSearch(bot))
