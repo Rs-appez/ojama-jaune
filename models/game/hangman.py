@@ -47,17 +47,14 @@ class Hangman():
     async def add_error(self):
         self.__error+=1 
         if self.__error >= 10:
-            await self.interaction.channel.send("https://tenor.com/view/dead-gif-18865199")
-            await self.interaction.channel.send(f"Le mot était : {self.word}")
-            await self.finish()
+            await self.finish(False)
 
 
     async def add_letter (self,letter):
         for index,l in enumerate(self.word):
             if l == letter :  self.game_word =  self.game_word[:index] + l + self.game_word[index+1:]
         if not "_" in self.game_word:
-            await self.interaction.channel.send("https://tenor.com/view/sweet-victory-spongebob-sweet-sweet-victory-superbowl-gif-13419935")
-            await self.finish()
+            await self.finish(True)
 
     async def check_letter(self, letter : str):
         succes = letter.lower() in self.word
@@ -68,9 +65,8 @@ class Hangman():
         await self.__game_msg.edit(self.dispaly())
         return succes
     
-    async def finish(self):
-
-
+    async def finish(self,win):
+        
         for button in self.vowel_view.children:
             button.disabled = True
 
@@ -79,4 +75,10 @@ class Hangman():
 
         await self.__consonant_msg.edit(view=self.consonant_view)
         await self.__vowel_msg.edit(view=self.vowel_view)
+
+        if win : await self.interaction.channel.send("https://tenor.com/view/sweet-victory-spongebob-sweet-sweet-victory-superbowl-gif-13419935")
+        else : 
+            await self.interaction.channel.send("https://tenor.com/view/dead-gif-18865199")
+            await self.interaction.channel.send(f"Le mot était : {self.word}")
+
         if self.item : await self.interaction.channel.send(self.item)

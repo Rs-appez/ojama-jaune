@@ -9,15 +9,19 @@ class Letter_view(View):
         def __init__(self, letter ,current_view):
             self.letter = letter
             self.current_view = current_view
+            self.click = False
             super().__init__(label=letter,style=ButtonStyle.primary)
 
         async def callback(self,interaction):
-            self.disabled=True
-            
-            if await self.current_view.hangman.check_letter(self.letter) : self.style = ButtonStyle.green
-            else : self.style = ButtonStyle.danger
+            if not self.click:
+                self.click = True
+                self.disabled=True
+                
+                if await self.current_view.hangman.check_letter(self.letter) : self.style = ButtonStyle.green
+                else : self.style = ButtonStyle.danger
 
-            await interaction.response.edit_message(view=self.current_view)
+                await interaction.response.edit_message(view=self.current_view)
+                self.click=False
 
     # __letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     __letter_vowel = "AEIOUY"
