@@ -2,7 +2,7 @@ import requests
 from nextcord import Embed
 from nextcord.ext import commands
 from config import URL_top_dl,URL_top_ycs
-from models.cards import Cards, CardsRulling
+from models.cards import Cards
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 
@@ -16,12 +16,6 @@ class CardSearch(commands.Cog):
         self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
         self.url_ygorga ="https://db.ygorganization.com/data/"
 
-    def get_random_card(self):
-        response = requests.get(
-            self.url_ygopro + "randomcard.php"
-        )
-        if response.status_code == 200:
-            return Cards(response.json())
         
     @slash_command(name='card',description='Recherche de carte') 
     async def search_cards(self, interaction : Interaction, name : str):
@@ -62,7 +56,7 @@ class CardSearch(commands.Cog):
     @commands.command(name="random")
     async def randomcards(self, ctx):
         """Get a random cards"""
-        card = self.get_random_card()
+        card = Cards.get_random_card()
         await ctx.send(embed = card.embed())
             
 def setup(bot):

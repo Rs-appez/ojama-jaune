@@ -37,7 +37,14 @@ class Cards():
             except :
                 id = 0
         self.id_rulling = id
-
+    @staticmethod
+    def get_random_card():
+        response = requests.get(
+            Cards._url_ygopro + "randomcard.php"
+        )
+        if response.status_code == 200:
+            return Cards(response.json())
+        
     @staticmethod
     def search(name : str):
         response_en = requests.get(
