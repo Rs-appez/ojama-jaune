@@ -3,7 +3,7 @@
 import nextcord
 from config import ADMIN_SPEED, TEAM_ID
 
-from models.tournament import Tournament
+from models.tournament.tournament import Tournament
 
 class DuelistView(nextcord.ui.View):
 

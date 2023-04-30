@@ -2,7 +2,7 @@ import requests
 from nextcord import Embed
 from nextcord.ext import commands
 from config import URL_top_dl,URL_top_ycs
-from models.cards import Cards
+from models.card.cards import Cards
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 
