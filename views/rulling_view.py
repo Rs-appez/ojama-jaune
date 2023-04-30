@@ -3,7 +3,7 @@ import nextcord
 from nextcord.ext import commands
 from nextcord.interactions import Interaction
 
-from models.cards import Cards
+from models.card.cards import Cards
 
 
 class RullingView(nextcord.ui.View):

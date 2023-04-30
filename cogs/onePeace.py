@@ -1,5 +1,5 @@
 from nextcord.ext import commands
-from models.opDeck import OpDeck 
+from models.card.opDeck import OpDeck 
 class OnePeace(commands.Cog):
     """One piece cmd"""
     def __init__(self,bot):

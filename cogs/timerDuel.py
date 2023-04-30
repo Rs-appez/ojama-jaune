@@ -1,7 +1,7 @@
 from nextcord.ext import commands
 from nextcord.interactions import Interaction
 from nextcord import slash_command
-from models.timer import Timer
+from models.tournament.timer import Timer
  
 
 class TimerDuel(commands.Cog):

@@ -2,7 +2,7 @@
 import nextcord
 from nextcord.ext import commands
 from config import ADMIN_SPEED, DUELIST_ID, DUELIST_ID_SPEED, TEAM_ID
-from models.tournament import Tournament
+from models.tournament.tournament import Tournament
 from views.duelist_view import DuelistView
 
 from views.start_tournament_view import StartTournamentView
