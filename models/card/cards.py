@@ -15,6 +15,7 @@ class Cards():
         self.desc = data['desc']
         self.race = data['race']
         self.img = data['card_images'][0]['image_url']
+        self.img_cropped = data['card_images'][0]['image_url_cropped']
         self.cm = data['card_prices'][0]['cardmarket_price']
         
         if self.type != 'Spell Card' and self.type != 'Trap Card':
