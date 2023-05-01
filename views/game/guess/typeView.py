@@ -12,13 +12,25 @@ class TypeView(View):
 
         def __init__(self, type, current_view):
             self.type_card = type
-            self.curent_view = current_view
-            super().__init__(style=ButtonStyle.primary,emoji=current_view.guess.game_emojis[type])
+            self.current_view = current_view
+            super().__init__(label=type.upper(),style=ButtonStyle.primary,emoji=current_view.guess.game_emojis[type])
 
-    __card_types = ["monster_effect","spell","trap"]
+        async def callback(self,interaction):
+            if not self.current_view.click:
+                self.current_view.click = True
+                if self.current_view.guess.check_type(self.type_card) : self.style = ButtonStyle.green
+                else : self.style = ButtonStyle.danger
+
+                for btn in self.current_view.children:
+                    btn.disabled = True
+                await interaction.response.edit_message(view=self.current_view)
+                await self.current_view.guess.finish()
+
+    __card_types = ["monster","spell","trap"]
 
     def __init__(self,guess,):
         self.guess = guess
+        self.click=False
         super().__init__(timeout=None)
 
         self.__init_button()

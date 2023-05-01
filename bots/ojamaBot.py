@@ -52,7 +52,7 @@ class OjamaBot(commands.Bot):
     async def __get_game_emoji(self):
         guild = self.get_guild(int(GUILD_APPEZ_ID))
         if guild :
-            self.game_emojis["monster_effect"] = await guild.fetch_emoji(1102722303936176178)
+            self.game_emojis["monster"] = await guild.fetch_emoji(1102722303936176178)
             self.game_emojis["spell"] = await guild.fetch_emoji(1102733166923497572)
             self.game_emojis["trap"] = await guild.fetch_emoji(1102733194819809400)
 
