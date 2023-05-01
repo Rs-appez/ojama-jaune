@@ -1,4 +1,3 @@
-from typing import Optional
 from discord import ButtonStyle
 from nextcord.ui import View, button
 

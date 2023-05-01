@@ -2,7 +2,7 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
-from config import BOT_TEST_CHANNEL, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID,SINGE_ID
+from config import BOT_TEST_CHANNEL, GUILD_APPEZ_ID, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID,SINGE_ID
 
 class OjamaBot(commands.Bot):
 
@@ -15,6 +15,8 @@ class OjamaBot(commands.Bot):
         intents.voice_states = True
         intents.message_content = True
         self.oj_emoji = None
+        self.game_emojis = {}
+
         super().__init__(command_prefix, intents=intents)
 
     async def on_voice_state_update(self,member,before,after):
@@ -45,7 +47,14 @@ class OjamaBot(commands.Bot):
             self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
             msg = await guild.get_channel(int(BOT_TEST_CHANNEL)).send("UP !")
             await msg.add_reaction(self.oj_emoji)
+        await self.__get_game_emoji()
 
+    async def __get_game_emoji(self):
+        guild = self.get_guild(int(GUILD_APPEZ_ID))
+        if guild :
+            self.game_emojis["monster_effect"] = await guild.fetch_emoji(1102722303936176178)
+            self.game_emojis["spell"] = await guild.fetch_emoji(1102733166923497572)
+            self.game_emojis["trap"] = await guild.fetch_emoji(1102733194819809400)
 
     async def on_message(self,message : Message):
 

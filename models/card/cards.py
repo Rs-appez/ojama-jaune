@@ -4,9 +4,11 @@ import requests
 import json
 from nextcord.interactions import Interaction
 
+from config import URL_YGOPRO, URL_YGORGA
+
 class Cards():
-    _url_ygopro = "https://db.ygoprodeck.com/api/v7/"
-    _url_ygorga = "https://db.ygorganization.com/data/"
+    _url_ygopro = URL_YGOPRO
+    _url_ygorga = URL_YGORGA
     
     def __init__(self, data : json):
         self.id = data['id']

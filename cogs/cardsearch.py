@@ -1,7 +1,7 @@
 import requests
 from nextcord import Embed
 from nextcord.ext import commands
-from config import URL_top_dl,URL_top_ycs
+from config import URL_TOP_DL, URL_TOP_YCS, URL_YGOPRO, URL_YGORGA
 from models.card.cards import Cards
 from nextcord.interactions import Interaction
 from nextcord import slash_command
@@ -13,8 +13,8 @@ class CardSearch(commands.Cog):
     """Manage cards commands"""
     def __init__(self,bot):
         self.bot = bot
-        self.url_ygopro ="https://db.ygoprodeck.com/api/v7/"
-        self.url_ygorga ="https://db.ygorganization.com/data/"
+        self.url_ygopro =URL_YGOPRO
+        self.url_ygorga =URL_YGORGA
 
         
     @slash_command(name='card',description='Recherche de carte') 
@@ -50,8 +50,8 @@ class CardSearch(commands.Cog):
     @commands.command(name="top")
     async def topDL(self, ctx):
         """List of top deck list"""
-        await ctx.send("ALL => " + URL_top_dl)
-        await ctx.send("YCS => " + URL_top_ycs)
+        await ctx.send("ALL => " + URL_TOP_DL)
+        await ctx.send("YCS => " + URL_TOP_YCS)
         
     @commands.command(name="random")
     async def randomcards(self, ctx):
