@@ -21,7 +21,6 @@ class Letter_view(View):
                 else : self.style = ButtonStyle.danger
 
                 await interaction.response.edit_message(view=self.current_view)
-                self.click=False
 
     # __letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     __letter_vowel = "AEIOUY"
