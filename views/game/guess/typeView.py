@@ -5,7 +5,6 @@ from nextcord.emoji import Emoji
 from nextcord.enums import ButtonStyle
 from nextcord.partial_emoji import PartialEmoji
 from nextcord.ui import View , Button
-GAME_EMOJI = None
 class TypeView(View):
 
     class Button_type(Button):
