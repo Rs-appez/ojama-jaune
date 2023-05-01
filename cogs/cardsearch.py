@@ -6,7 +6,7 @@ from models.card.cards import Cards
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 
-from views.rulling_view import RullingView
+from views.card.rulling_view import RullingView
 
 
 class CardSearch(commands.Cog):

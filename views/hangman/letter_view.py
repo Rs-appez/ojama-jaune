@@ -1,5 +1,5 @@
 
-from discord import ButtonStyle, Interaction
+from discord import ButtonStyle
 from nextcord.ui import View, Button
 
 class Letter_view(View):

@@ -1,6 +1,4 @@
 from views.hangman.letter_view import Letter_view
-from nextcord.ui import View
-
 from views.hangman.reload_view import ReloadView
 
 class Hangman():
