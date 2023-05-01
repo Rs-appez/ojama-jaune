@@ -4,7 +4,7 @@ from nextcord.ui import View
 from views.hangman.reload_view import ReloadView
 
 class Hangman():
-    __letter = "abcdefghilklmnopqrstuvwxyz"
+    __letter = "abcdefghijklmnopqrstuvwxyz"
     __hangman = [
                    "            \n\n\n\n\n\n   ",
                    "            \n\n\n\n\n\n/-\\   ",
