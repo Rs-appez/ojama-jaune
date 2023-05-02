@@ -1,1 +1,1 @@
-bot discord for managing a yugioh tournament
+bot discord for managing a yugioh tournament and more
