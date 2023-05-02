@@ -62,6 +62,13 @@ class OjamaBot(commands.Bot):
             self.game_emojis["normal"] = await guild.fetch_emoji(1102754356287254628)
             self.game_emojis["quick-play"] = await guild.fetch_emoji(1102754593294786601)
             self.game_emojis["ritual"] = await guild.fetch_emoji(1102754359462346823)
+            self.game_emojis["dark"] = await guild.fetch_emoji(1102754347575681084)
+            self.game_emojis["divine"] = await guild.fetch_emoji(1102754349702193172)
+            self.game_emojis["fire"] = await guild.fetch_emoji(1102754588685254667)
+            self.game_emojis["water"] = await guild.fetch_emoji(1102754596721541270)
+            self.game_emojis["wind"] = await guild.fetch_emoji(1102754598227296316)
+            self.game_emojis["light"] = await guild.fetch_emoji(1102754591549952000)
+            self.game_emojis["earth"] = await guild.fetch_emoji(1102860006610702376)
 
     async def on_message(self,message : Message):
 

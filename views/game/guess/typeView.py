@@ -24,6 +24,7 @@ class TypeView(View):
     __card_types = ["monster","spell","trap"]
     __spell_types = ["normal","continuous","equip","field","quick-play","ritual"]
     __trap_types = ["normal","continuous","counter"]
+    __attribute_types = ["light","dark","water","fire","earth","wind","divine"]
 
     def __init__(self,guess,cat = ""):
         self.guess = guess
@@ -35,6 +36,8 @@ class TypeView(View):
             self.__init_button(self.__spell_types)
         elif cat == "trap":
             self.__init_button(self.__trap_types)
+        elif cat == "attribute":
+            self.__init_button(self.__attribute_types)
         else :
             self.__init_button(self.__card_types)
 

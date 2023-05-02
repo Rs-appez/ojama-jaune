@@ -26,9 +26,14 @@ class Guess():
                 elif "trap" in type:
                     await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
                 else :
-                    await self.interaction.send(self.card.img_cropped,view=TypeView(self))
+                    if True :
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
+                    else :
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self))
     def check_type(self,type,cat):
         if cat :
+            if cat == "attribute":
+                return type in self.card.attribute.lower()
             return type in self.card.race.lower()
         return type in self.card.type.lower()
     
