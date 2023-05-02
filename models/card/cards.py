@@ -42,9 +42,14 @@ class Cards():
         self.id_rulling = id
     @staticmethod
     def get_random_card():
-        response = requests.get(
-            Cards._url_ygopro + "randomcard.php"
-        )
+        response_type = "skill"
+        while "skill" in response_type.lower() or "token" in response_type.lower():
+            response = requests.get(
+                Cards._url_ygopro + "randomcard.php"
+            )
+            if response.status_code == 200:
+                response_type = response.json()['type']
+            else : break
         if response.status_code == 200:
             return Cards(response.json())
         
