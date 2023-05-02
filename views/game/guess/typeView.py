@@ -19,17 +19,36 @@ class TypeView(View):
                 for btn in self.current_view.children:
                     btn.disabled = True
                 await interaction.response.edit_message(view=self.current_view)
+
+                if self.current_view.second_view:
+                    for btn in self.current_view.second_view.children:
+                        btn.disabled = True
+                    await self.current_view.guess.second_msg.edit(view=self.current_view.second_view)
+
+                elif self.current_view.first_view:
+                    for btn in self.current_view.first_view.children:
+                        btn.disabled = True
+                    await self.current_view.guess.first_msg.edit(view=self.current_view.first_view)
+
                 await self.current_view.guess.finish()
 
     __card_types = ["monster","spell","trap"]
     __spell_types = ["normal","continuous","equip","field","quick-play","ritual"]
     __trap_types = ["normal","continuous","counter"]
     __attribute_types = ["light","dark","water","fire","earth","wind","divine"]
+    __race_types1 = ["aqua","beast","beast-warrior","creator god","cyberse","dinosaur","divine-beast","dragon","fairy","fiend",
+                     "fish","illusionist","insect","machine","plant","psychic","pyro","reptile","rock","sea serpent","spellcaster",
+                     "thunder","warrior","winged beast","wyrm"]
+    __race_types2 = ["zombie"]
 
-    def __init__(self,guess,cat = ""):
+    def __init__(self,guess,cat = "",first_view= None):
         self.guess = guess
         self.click=False
         self.cat = cat
+        self.first_view = first_view
+        self.second_view = None
+        if first_view:
+            self.first_view.__add_second_view(self)
         super().__init__()
 
         if cat == "spell":
@@ -38,6 +57,11 @@ class TypeView(View):
             self.__init_button(self.__trap_types)
         elif cat == "attribute":
             self.__init_button(self.__attribute_types)
+        elif cat == "race1":
+            self.guess.first_view = self
+            self.__init_button(self.__race_types1)
+        elif cat == "race2":
+            self.__init_button(self.__race_types2)
         else :
             self.__init_button(self.__card_types)
 
@@ -46,3 +70,5 @@ class TypeView(View):
             button = self.Button_type(type,self)
             self.add_item(button)
 
+    def __add_second_view(self,second_view):
+        self.second_view = second_view

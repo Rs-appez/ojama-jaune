@@ -52,9 +52,11 @@ class OjamaBot(commands.Bot):
     async def __get_game_emoji(self):
         guild = self.get_guild(int(GUILD_APPEZ_ID))
         if guild :
+            #type card
             self.game_emojis["monster"] = await guild.fetch_emoji(1102722303936176178)
             self.game_emojis["spell"] = await guild.fetch_emoji(1102733166923497572)
             self.game_emojis["trap"] = await guild.fetch_emoji(1102733194819809400)
+            #type spell/card
             self.game_emojis["continuous"] = await guild.fetch_emoji(1102754344698384505)
             self.game_emojis["counter"] = await guild.fetch_emoji(1102754346220912710)
             self.game_emojis["equip"] = await guild.fetch_emoji(1102754351254089820)
@@ -62,6 +64,7 @@ class OjamaBot(commands.Bot):
             self.game_emojis["normal"] = await guild.fetch_emoji(1102754356287254628)
             self.game_emojis["quick-play"] = await guild.fetch_emoji(1102754593294786601)
             self.game_emojis["ritual"] = await guild.fetch_emoji(1102754359462346823)
+            #attribute
             self.game_emojis["dark"] = await guild.fetch_emoji(1102754347575681084)
             self.game_emojis["divine"] = await guild.fetch_emoji(1102754349702193172)
             self.game_emojis["fire"] = await guild.fetch_emoji(1102754588685254667)
@@ -69,6 +72,33 @@ class OjamaBot(commands.Bot):
             self.game_emojis["wind"] = await guild.fetch_emoji(1102754598227296316)
             self.game_emojis["light"] = await guild.fetch_emoji(1102754591549952000)
             self.game_emojis["earth"] = await guild.fetch_emoji(1102860006610702376)
+            #type monster
+            self.game_emojis["aqua"] = await guild.fetch_emoji(1102864888159809566)
+            self.game_emojis["beast"] = await guild.fetch_emoji(1102864889447465070)
+            self.game_emojis["beast-warrior"] = await guild.fetch_emoji(1102878729673396246)
+            self.game_emojis["creator god"] = await guild.fetch_emoji(1102878731451764746)
+            self.game_emojis["cyberse"] = await guild.fetch_emoji(1102878734165475368)
+            self.game_emojis["dinosaur"] = await guild.fetch_emoji(1102878735474118686)
+            self.game_emojis["divine-beast"] = await guild.fetch_emoji(1102878737822912542)
+            self.game_emojis["dragon"] = await guild.fetch_emoji(1102878800829755443)
+            self.game_emojis["fairy"] = await guild.fetch_emoji(1102878803275022336)
+            self.game_emojis["fiend"] = await guild.fetch_emoji(1102878804705284167)
+            self.game_emojis["fish"] = await guild.fetch_emoji(1102878806315900938)
+            self.game_emojis["illusionist"] = await guild.fetch_emoji(1102878896900296716)
+            self.game_emojis["insect"] = await guild.fetch_emoji(1102878808337555486)
+            self.game_emojis["machine"] = await guild.fetch_emoji(1102878809784594463)
+            self.game_emojis["plant"] = await guild.fetch_emoji(1102878845318746122)
+            self.game_emojis["psychic"] = await guild.fetch_emoji(1102878847734644736)
+            self.game_emojis["pyro"] = await guild.fetch_emoji(1102878849307529267)
+            self.game_emojis["reptile"] = await guild.fetch_emoji(1102878850708426782)
+            self.game_emojis["rock"] = await guild.fetch_emoji(1102878852969152572)
+            self.game_emojis["sea serpent"] = await guild.fetch_emoji(1102878854210666537)
+            self.game_emojis["spellcaster"] = await guild.fetch_emoji(1102878896900296716)
+            self.game_emojis["thunder"] = await guild.fetch_emoji(1102878899223937024)
+            self.game_emojis["warrior"] = await guild.fetch_emoji(1102878902210281552)
+            self.game_emojis["winged beast"] = await guild.fetch_emoji(1102878904433246291)
+            self.game_emojis["wyrm"] = await guild.fetch_emoji(1102878906245189704)
+            self.game_emojis["zombie"] = await guild.fetch_emoji(1102878907725795349)
 
     async def on_message(self,message : Message):
 
