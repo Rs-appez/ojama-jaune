@@ -3,7 +3,6 @@ from typing import Optional, Union
 from discord import ButtonStyle
 from nextcord.emoji import Emoji
 from nextcord.enums import ButtonStyle
-from nextcord.partial_emoji import PartialEmoji
 from nextcord.ui import View , Button
 class TypeView(View):
 
