@@ -99,6 +99,17 @@ class OjamaBot(commands.Bot):
             self.game_emojis["winged beast"] = await guild.fetch_emoji(1102878904433246291)
             self.game_emojis["wyrm"] = await guild.fetch_emoji(1102878906245189704)
             self.game_emojis["zombie"] = await guild.fetch_emoji(1102878907725795349)
+            #monster card type
+            self.game_emojis["effect"] = await guild.fetch_emoji(1102722303936176178)
+            self.game_emojis["tuner"] = await guild.fetch_emoji(1102722303936176178)
+            self.game_emojis["normal monster"] = await guild.fetch_emoji(1102933726754770954)
+            self.game_emojis["fusion"] = await guild.fetch_emoji(1102754338163654716)
+            self.game_emojis["ritual monster"] = await guild.fetch_emoji(1102755626469298208)
+            self.game_emojis["link"] = await guild.fetch_emoji(1102754339086401538)
+            self.game_emojis["pendulum"] = await guild.fetch_emoji(1102934236702457917)
+            self.game_emojis["synchro"] = await guild.fetch_emoji(1102754341313577020)
+            self.game_emojis["xyz"] = await guild.fetch_emoji(1102754342626410627)
+
 
     async def on_message(self,message : Message):
 

@@ -31,15 +31,18 @@ class Guess():
                     elif  self.rdm < 2:
                         self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
                         self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
+                    elif self.rdm < 3 :
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
                     else :
-                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
-
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
     def check_type(self,type,cat):
         if cat :
             if cat == "attribute":
                 return type in self.card.attribute.lower()
             elif "race" in cat:
                 return type == self.card.race.lower()
+            elif cat == "type_monster_card":
+                return type in self.card.type.lower()
             return type in self.card.race.lower()
         return type in self.card.type.lower()
     

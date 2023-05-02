@@ -40,6 +40,7 @@ class TypeView(View):
                      "fish","illusionist","insect","machine","plant","psychic","pyro","reptile","rock","sea serpent","spellcaster",
                      "thunder","warrior","winged beast","wyrm"]
     __race_types2 = ["zombie"]
+    __monster_card_types = ["normal monster","effect","tuner","fusion","synchro","xyz","link","ritual monster","pendulum"]
 
     def __init__(self,guess,cat = "",first_view= None):
         self.guess = guess
@@ -62,6 +63,8 @@ class TypeView(View):
             self.__init_button(self.__race_types1)
         elif cat == "race2":
             self.__init_button(self.__race_types2)
+        elif cat == "type_monster_card":
+            self.__init_button(self.__monster_card_types)
         else :
             self.__init_button(self.__card_types)
 
