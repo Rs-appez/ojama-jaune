@@ -29,7 +29,7 @@ class TypeView(View):
     def __init__(self,guess,):
         self.guess = guess
         self.click=False
-        super().__init__(timeout=None)
+        super().__init__()
 
         self.__init_button()
 
