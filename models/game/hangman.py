@@ -27,8 +27,8 @@ class Hangman():
         self.interaction = interaction
         self.__init_word()
 
-        vowel_view = None
-        consonant_view = None
+        self.vowel_view = None
+        self.consonant_view = None
 
     def __init_word(self):
         self.game_word = ""
@@ -85,3 +85,6 @@ class Hangman():
 
         if self.item : await self.interaction.channel.send(self.item)
         await self.interaction.channel.send(view=ReloadView(self.gm))
+
+        self.vowel_view.stop()
+        self.consonant_view.stop()
