@@ -26,14 +26,14 @@ class Guess():
                 elif "trap" in type:
                     await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
                 else :
-                    # if self.rdm < 1 :
-                    #     await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
-                    # elif  self.rdm < 2:
-                    #     self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
-                    #     self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
-                    # elif self.rdm < 3 :
-                    #     await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
-                    if self.rdm < 4 or True:
+                    if self.rdm < 1 :
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
+                    elif  self.rdm < 2:
+                        self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
+                        self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
+                    elif self.rdm < 3 :
+                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
+                    if self.rdm < 4 :
                         if "link" in type:
                             await self.interaction.send(self.card.img_cropped,view=TypeView(self,"link"))
                         elif "xyz" in type:
