@@ -104,17 +104,18 @@ class OjamaBot(commands.Bot):
             #monster card type
             self.game_emojis["effect"] = await guild.fetch_emoji(1102722303936176178)
             self.game_emojis["tuner"] = await guild.fetch_emoji(1102722303936176178)
-            self.game_emojis["normal monster"] = await guild.fetch_emoji(1102933726754770954)
+            self.game_emojis["normal "] = await guild.fetch_emoji(1102933726754770954)
             self.game_emojis["fusion"] = await guild.fetch_emoji(1102754338163654716)
-            self.game_emojis["ritual monster"] = await guild.fetch_emoji(1102755626469298208)
+            self.game_emojis["ritual "] = await guild.fetch_emoji(1102755626469298208)
             self.game_emojis["link"] = await guild.fetch_emoji(1102754339086401538)
             self.game_emojis["pendulum"] = await guild.fetch_emoji(1102934236702457917)
             self.game_emojis["synchro"] = await guild.fetch_emoji(1102754341313577020)
             self.game_emojis["xyz"] = await guild.fetch_emoji(1102754342626410627)
         if guild_cellar :
             #star level/rank
-            self.game_emojis["level"] = await guild.fetch_emoji(1103330664272638052)
-            self.game_emojis["rank"] = await guild.fetch_emoji(1103330630701428857)
+            self.game_emojis["level"] = await guild_cellar.fetch_emoji(1103435693130252428)
+            self.game_emojis["rank"] = await guild_cellar.fetch_emoji(1103435695185473586)
+        print("emo charged")
 
     async def on_message(self,message : Message):
 
