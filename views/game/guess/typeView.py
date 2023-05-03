@@ -45,7 +45,7 @@ class TypeView(View):
         self.second_view = None
         if first_view:
             self.first_view.__add_second_view(self)
-        super().__init__(timeout=10)
+        super().__init__(timeout=60)
 
         if cat == "spell":
             self.__init_button_type(self.__spell_types)
