@@ -2,7 +2,7 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
-from config import BOT_TEST_CHANNEL, GUILD_APPEZ_ID, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID,SINGE_ID
+from config import BOT_TEST_CHANNEL, GUILD_APPEZ_ID, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID,SINGE_ID,GUILD_APPEZ_CELLAR_ID
 
 class OjamaBot(commands.Bot):
 
@@ -51,6 +51,8 @@ class OjamaBot(commands.Bot):
 
     async def __get_game_emoji(self):
         guild = self.get_guild(int(GUILD_APPEZ_ID))
+        guild_cellar = self.get_guild(int(GUILD_APPEZ_CELLAR_ID))
+
         if guild :
             #type card
             self.game_emojis["monster"] = await guild.fetch_emoji(1102722303936176178)
@@ -109,7 +111,10 @@ class OjamaBot(commands.Bot):
             self.game_emojis["pendulum"] = await guild.fetch_emoji(1102934236702457917)
             self.game_emojis["synchro"] = await guild.fetch_emoji(1102754341313577020)
             self.game_emojis["xyz"] = await guild.fetch_emoji(1102754342626410627)
-
+        if guild_cellar :
+            #star level/rank
+            self.game_emojis["level"] = await guild.fetch_emoji(1103330664272638052)
+            self.game_emojis["rank"] = await guild.fetch_emoji(1103330630701428857)
 
     async def on_message(self,message : Message):
 
