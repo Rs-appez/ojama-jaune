@@ -84,7 +84,7 @@ class Hangman():
             await self.interaction.channel.send(f"Le mot était : {self.word}")
 
         if self.item : await self.interaction.channel.send(self.item)
-        await self.interaction.channel.send(view=ReloadView(self.gm))
+        self.reload_msg = await self.interaction.channel.send(view=ReloadView(self.gm,self))
 
         self.vowel_view.stop()
         self.consonant_view.stop()
