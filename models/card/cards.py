@@ -4,9 +4,11 @@ import requests
 import json
 from nextcord.interactions import Interaction
 
+from config import URL_YGOPRO, URL_YGORGA
+
 class Cards():
-    _url_ygopro = "https://db.ygoprodeck.com/api/v7/"
-    _url_ygorga = "https://db.ygorganization.com/data/"
+    _url_ygopro = URL_YGOPRO
+    _url_ygorga = URL_YGORGA
     
     def __init__(self, data : json):
         self.id = data['id']
@@ -15,6 +17,7 @@ class Cards():
         self.desc = data['desc']
         self.race = data['race']
         self.img = data['card_images'][0]['image_url']
+        self.img_cropped = self.img.replace("cards","cards_cropped")
         self.cm = data['card_prices'][0]['cardmarket_price']
         
         if self.type != 'Spell Card' and self.type != 'Trap Card':
@@ -39,9 +42,14 @@ class Cards():
         self.id_rulling = id
     @staticmethod
     def get_random_card():
-        response = requests.get(
-            Cards._url_ygopro + "randomcard.php"
-        )
+        response_type = "skill"
+        while "skill" in response_type.lower() or "token" in response_type.lower():
+            response = requests.get(
+                Cards._url_ygopro + "randomcard.php"
+            )
+            if response.status_code == 200:
+                response_type = response.json()['type']
+            else : break
         if response.status_code == 200:
             return Cards(response.json())
         

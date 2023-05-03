@@ -1,5 +1,5 @@
-from views.hangman.letter_view import Letter_view
-from views.hangman.reload_view import ReloadView
+from views.game.hangman.letter_view import Letter_view
+from views.game.reload_view import ReloadView
 
 class Hangman():
     __letter = "abcdefghijklmnopqrstuvwxyz"
@@ -27,8 +27,8 @@ class Hangman():
         self.interaction = interaction
         self.__init_word()
 
-        vowel_view = None
-        consonant_view = None
+        self.vowel_view = None
+        self.consonant_view = None
 
     def __init_word(self):
         self.game_word = ""
@@ -84,4 +84,7 @@ class Hangman():
             await self.interaction.channel.send(f"Le mot était : {self.word}")
 
         if self.item : await self.interaction.channel.send(self.item)
-        await self.interaction.channel.send(view=ReloadView(self.gm))
+        self.reload_msg = await self.interaction.channel.send(view=ReloadView(self.gm,self))
+
+        self.vowel_view.stop()
+        self.consonant_view.stop()
