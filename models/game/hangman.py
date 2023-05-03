@@ -1,5 +1,5 @@
 from views.game.hangman.letter_view import Letter_view
-from views.game.hangman.reload_view import ReloadView
+from views.game.reload_view import ReloadView
 
 class Hangman():
     __letter = "abcdefghijklmnopqrstuvwxyz"
