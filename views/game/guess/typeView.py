@@ -34,7 +34,7 @@ class TypeView(View):
                      "thunder","warrior","winged beast","wyrm"]
     __race_types2 = ["zombie"]
     __monster_card_types = ["normal ","effect","tuner","fusion","synchro","xyz","link","ritual ","pendulum"]
-    __level_monster = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    __level_monster = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
     __linkrating_monster = [1,2,3,4,5,6,7,8]
     
     def __init__(self,guess,cat = "",first_view= None):
