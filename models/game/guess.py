@@ -12,34 +12,36 @@ class Guess():
         self.gm = gm
         self.game_emojis = game_emojis
         self.started = False
+        self.first_msg = None
+        self.msg = None
         self.rdm = random.randrange(0,10)
 
     async def start(self):
         if not self.started:
             self.started = True
-            if self.rdm > 8 :
-                await self.interaction.send(self.card.img_cropped,view=TypeView(self))
+            if self.rdm > 8:
+                self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self))
             else : 
                 type = self.card.type.lower()
                 if "spell" in type: 
-                    await self.interaction.send(self.card.img_cropped,view=TypeView(self,"spell"))
+                    self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"spell"))
                 elif "trap" in type:
-                    await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
+                     self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
                 else :
                     if self.rdm < 2 :
-                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
+                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
                     elif  self.rdm < 4:
                         self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
                         self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
                     elif self.rdm < 6 :
-                        await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
+                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
                     else :
                         if "link" in type:
-                            await self.interaction.send(self.card.img_cropped,view=TypeView(self,"link"))
+                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"link"))
                         elif "xyz" in type:
-                            await self.interaction.send(self.card.img_cropped,view=TypeView(self,"rank"))
+                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"rank"))
                         else :
-                            await self.interaction.send(self.card.img_cropped,view=TypeView(self,"level"))
+                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"level"))
                    
     def check_type(self,type,cat):
         if cat :

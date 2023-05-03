@@ -45,7 +45,7 @@ class TypeView(View):
         self.second_view = None
         if first_view:
             self.first_view.__add_second_view(self)
-        super().__init__()
+        super().__init__(timeout=10)
 
         if cat == "spell":
             self.__init_button_type(self.__spell_types)
@@ -102,3 +102,17 @@ class TypeView(View):
 
     def __add_second_view(self,second_view):
         self.second_view = second_view
+    
+    async def on_timeout(self):
+        for btn in self.children:
+                btn.disabled = True
+        if self.first_view:
+            await self.guess.first_msg.edit(view=self.first_view)
+        elif self.second_view:
+            for btn in self.second_view.children:
+                btn.disabled = True
+            await self.guess.second_msg.edit(view=self.second_view)
+        else :
+            await self.guess.msg.edit(view=self)
+        
+        return await super().on_timeout()
