@@ -99,6 +99,7 @@ class TypeView(View):
                 await self.guess.first_msg.edit(view=self.first_view)
 
             await self.guess.finish()
+            self.stop()
 
     def __add_second_view(self,second_view):
         self.second_view = second_view
