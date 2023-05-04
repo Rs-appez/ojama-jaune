@@ -33,7 +33,7 @@ class TypeView(View):
                      "fish","illusionist","insect","machine","plant","psychic","pyro","reptile","rock","sea serpent","spellcaster",
                      "thunder","warrior","winged beast","wyrm"]
     __race_types2 = ["zombie"]
-    __monster_card_types = ["normal ","effect","tuner","fusion","synchro","xyz","link","ritual ","pendulum"]
+    __monster_card_types = ["normal ","effect","tuner","spirit","toon","fusion","synchro","xyz","link","ritual ","pendulum"]
     __level_monster = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
     __linkrating_monster = [1,2,3,4,5,6,7,8]
     
