@@ -79,15 +79,16 @@ class Guess():
 
         stat_tab = []
         pos = random.randrange(1,6)
+        diff = random.randrange(1,10) * 100
         for i in range(pos):
-            n_stat = stat - (i * 100)
+            n_stat = stat - (i * diff)
             if n_stat >= 0 :
                 stat_tab.append(n_stat)
         
         stat_tab.sort()
 
         while stat_tab.__len__() < 5:
-            next_stat = stat_tab[-1]+100
+            next_stat = stat_tab[-1] + diff
             stat_tab.append(next_stat)
 
         return stat_tab
