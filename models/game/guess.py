@@ -14,12 +14,12 @@ class Guess():
         self.started = False
         self.first_msg = None
         self.msg = None
-        self.rdm = random.randrange(0,10)
+        self.rdm = random.randrange(0,8)
 
     async def start(self):
         if not self.started:
             self.started = True
-            if self.rdm > 8:
+            if self.rdm > 6:
                 self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self))
             else : 
                 type = self.card.type.lower()
@@ -28,20 +28,25 @@ class Guess():
                 elif "trap" in type:
                      self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
                 else :
-                    if self.rdm < 2 :
+                    if self.rdm < 1 :
                         self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
-                    elif  self.rdm < 4:
+                    elif  self.rdm < 2:
                         self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
                         self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
-                    elif self.rdm < 6 :
+                    elif self.rdm < 3 :
                         self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
-                    else :
+                    elif self.rdm < 4 and not ("link" in type) :
+                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"def"))
+                    elif self.rdm < 5 :
                         if "link" in type:
                             self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"link"))
                         elif "xyz" in type:
                             self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"rank"))
                         else :
                             self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"level"))
+                    else :
+
+                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"atk"))
                    
     def check_type(self,type,cat):
         if cat :
@@ -53,9 +58,36 @@ class Guess():
                 return type in self.card.type.lower()
             elif cat in ["level","rank","link"]:
                 return self.card.level == type
+            elif cat == "atk":
+                return self.card.atk == int(type)
+            elif cat == "def":
+                return self.card.defe == int(type)
             return type in self.card.race.lower()
         return type in self.card.type.lower()
     
     async def finish(self):
          await self.interaction.channel.send(self.card.img)
          await self.gm.reload(self.interaction,self.game_emojis)
+
+
+    def generate_stat(self,cat):
+
+        if cat == "atk":
+            stat = self.card.atk
+        else :
+            stat = self.card.defe
+
+        stat_tab = []
+        pos = random.randrange(1,6)
+        for i in range(pos):
+            n_stat = stat - (i * 100)
+            if n_stat >= 0 :
+                stat_tab.append(n_stat)
+        
+        stat_tab.sort()
+
+        while stat_tab.__len__() < 5:
+            next_stat = stat_tab[-1]+100
+            stat_tab.append(next_stat)
+
+        return stat_tab

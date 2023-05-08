@@ -6,9 +6,19 @@ class TypeView(View):
     class Button_type(Button):
 
         def __init__(self, type, current_view):
+
             self.type_card = type
             self.current_view = current_view
-            super().__init__(label=type.upper(),style=ButtonStyle.primary,emoji=current_view.guess.game_emojis[type])
+
+            emoji = None
+            if type in current_view.guess.game_emojis :
+                emoji = current_view.guess.game_emojis[type]
+
+            label = str(type)
+            if current_view.cat in ["atk","def"]:
+                label += f" {current_view.cat}"
+
+            super().__init__(label=label.upper(),style=ButtonStyle.primary,emoji=emoji)
 
         async def callback(self,interaction):
             await self.current_view.btn_callback(interaction,self)
@@ -18,7 +28,10 @@ class TypeView(View):
         def __init__(self, type, current_view,val):
             self.type_card = val
             self.current_view = current_view
-            super().__init__(label=val,style=ButtonStyle.primary,emoji=current_view.guess.game_emojis[type])
+            emoji = None
+            if type in current_view.guess.game_emojis :
+                emoji = current_view.guess.game_emojis[type]
+            super().__init__(label=val,style=ButtonStyle.primary,emoji=emoji)
 
         async def callback(self,interaction):
             await self.current_view.btn_callback(interaction,self)
@@ -64,6 +77,8 @@ class TypeView(View):
             self.__init_button_val(self.__linkrating_monster)
         elif cat == "type_monster_card":
             self.__init_button_type(self.__monster_card_types)
+        elif cat in ["atk","def"]:
+            self.__init_button_type(self.guess.generate_stat(cat))
         else :
             self.__init_button_type(self.__card_types)
 
