@@ -20,11 +20,11 @@ class Hangman():
     __vowel_msg = None
     __consonant_msg = None
 
-    def __init__(self, word : str,interaction,gm ,item = None):
+    def __init__(self, word : str,game_channel,gm ,item = None):
         self.word = word.lower()
         self.gm = gm
         self.item = item
-        self.interaction = interaction
+        self.game_channel = game_channel
         self.__init_word()
 
         self.vowel_view = None
@@ -40,9 +40,9 @@ class Hangman():
 
     async def start(self):
         if not self.__game_msg:
-            self.__game_msg = await self.interaction.send(self.dispaly())
-            self.__vowel_msg = await self.interaction.channel.send("Voyelle :",view=Letter_view(self,True))
-            self.__consonant_msg = await self.interaction.channel.send("Consonne :",view=Letter_view(self,False))
+            self.__game_msg = await self.game_channel.send(self.dispaly())
+            self.__vowel_msg = await self.game_channel.send("Voyelle :",view=Letter_view(self,True))
+            self.__consonant_msg = await self.game_channel.send("Consonne :",view=Letter_view(self,False))
     def dispaly(self):
         return f"```-> {self.game_word}\n{self.__hangman[self.__error]}```"
     
@@ -78,13 +78,13 @@ class Hangman():
         await self.__consonant_msg.edit(view=self.consonant_view)
         await self.__vowel_msg.edit(view=self.vowel_view)
 
-        if win : await self.interaction.channel.send("https://tenor.com/view/sweet-victory-spongebob-sweet-sweet-victory-superbowl-gif-13419935")
+        if win : await self.game_channel.send("https://tenor.com/view/sweet-victory-spongebob-sweet-sweet-victory-superbowl-gif-13419935")
         else : 
-            await self.interaction.channel.send("https://tenor.com/view/dead-gif-18865199")
-            await self.interaction.channel.send(f"Le mot était : {self.word}")
+            await self.game_channel.send("https://tenor.com/view/dead-gif-18865199")
+            await self.game_channel.send(f"Le mot était : {self.word}")
 
-        if self.item : await self.interaction.channel.send(self.item)
-        self.reload_msg = await self.interaction.channel.send(view=ReloadView(self.gm,self))
+        if self.item : await self.game_channel.send(self.item)
+        self.reload_msg = await self.game_channel.send(view=ReloadView(self.gm,self))
 
         self.vowel_view.stop()
         self.consonant_view.stop()
