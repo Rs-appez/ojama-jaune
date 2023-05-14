@@ -14,19 +14,24 @@ class Game(commands.Cog):
 
     @slash_command(name="pendu_yugioh",description="Crois en l'âme des cartes!")
     async def hangman(self,interaction : Interaction ):
-        gm = GameManager()
-        game_channel = await self.create_game_channel(interaction,"pendu")
-        await gm.hangman_yugioh(game_channel)
-        await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
-
+        await self.start_game(interaction,"pendu_yugioh")
 
     @slash_command(name="guess_the_card",description="Crois en l'âme des cartes!")
     async def guess(self,interaction : Interaction ):
-        gm = GameManager()
-        game_channel = await self.create_game_channel(interaction,"guess the card")
-        await gm.guess_the_card(game_channel,self.bot.game_emojis)
-        await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
+       await self.start_game(interaction,"guess_the_card")
         
+
+    async def start_game(self,interaction,game):
+        gm = GameManager()
+        game_channel = await self.create_game_channel(interaction,game)
+
+        if game == "guess_the_card":
+            await gm.guess_the_card(game_channel,self.bot.game_emojis)
+        elif game == "pendu_yugioh" :
+            await gm.hangman_yugioh(game_channel)
+
+        await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
+
     async def create_game_channel(self,interaction : Interaction,name_channel):
 
         if interaction.channel.type == ChannelType.private :
