@@ -33,7 +33,6 @@ class Game(commands.Cog):
             game_channel = interaction.channel
         else :
             game_channel = await interaction.channel.create_thread(name=name_channel,reason = f"{name_channel} started",auto_archive_duration=60,type=ChannelType.public_thread)
-            game_channel.auto_archive_duration = 1
         return game_channel
 
 def setup(bot):
