@@ -2,8 +2,7 @@ import asyncio
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
-from config import BOT_TEST_CHANNEL, GUILD_APPEZ_ID, GUILD_ID , CLOWN_ID ,CANARD_ID,LOUP_ID,NINJA_ID,BAOBABOON_ID,SINGE_ID,GUILD_APPEZ_CELLAR_ID
-
+import config
 class OjamaBot(commands.Bot):
 
     def __init__(self, command_prefix ,production):
@@ -22,36 +21,36 @@ class OjamaBot(commands.Bot):
     async def on_voice_state_update(self,member,before,after):
 
         if (after.channel and not before.channel) or (before.self_mute and not after.self_mute) :
-            if any(role.id == int(CLOWN_ID) for role in member.roles):
+            if any(role.id == int(config.CLOWN_ID) for role in member.roles):
                 await self.play_sound("circus.m4a",after.channel)
             
-            elif any(role.id == int(CANARD_ID) for role in member.roles):
+            elif any(role.id == int(config.CANARD_ID) for role in member.roles):
                 await self.play_sound("bruit-de-canard-pour-montage.m4a",after.channel)
 
-            elif any(role.id == int(LOUP_ID) for role in member.roles):
+            elif any(role.id == int(config.LOUP_ID) for role in member.roles):
                 await self.play_sound("loup.m4a",after.channel)
 
-            elif any(role.id == int(NINJA_ID) for role in member.roles):
+            elif any(role.id == int(config.NINJA_ID) for role in member.roles):
                 await self.play_sound("ninja.mp3",after.channel)
 
-            elif any(role.id == int(BAOBABOON_ID) for role in member.roles):
+            elif any(role.id == int(config.BAOBABOON_ID) for role in member.roles):
                 await self.play_sound("baobaboon.wav",after.channel)
 
-            elif any(role.id == int(SINGE_ID) for role in member.roles):
+            elif any(role.id == int(config.SINGE_ID) for role in member.roles):
                 await self.play_sound("baton magique.m4a",after.channel)
 
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
-        guild = self.get_guild(int(GUILD_ID))
+        guild = self.get_guild(int(config.GUILD_ID))
         if guild :
             self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
-            msg = await guild.get_channel(int(BOT_TEST_CHANNEL)).send("UP !")
+            msg = await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send("UP !")
             await msg.add_reaction(self.oj_emoji)
         await self.__get_game_emoji()
 
     async def __get_game_emoji(self):
-        guild = self.get_guild(int(GUILD_APPEZ_ID))
-        guild_cellar = self.get_guild(int(GUILD_APPEZ_CELLAR_ID))
+        guild = self.get_guild(int(config.GUILD_APPEZ_ID))
+        guild_cellar = self.get_guild(int(config.GUILD_APPEZ_CELLAR_ID))
 
         if guild :
             #type card
@@ -129,9 +128,9 @@ class OjamaBot(commands.Bot):
 
         elif message.channel.type == ChannelType.private:
 
-            guild = self.get_guild(int(GUILD_ID))
+            guild = self.get_guild(int(config.GUILD_ID))
             if guild :
-                await guild.get_channel(int(BOT_TEST_CHANNEL)).send(f"{message.author} mp me : \n{message.content}")
+                await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send(f"{message.author} mp me : \n{message.content}")
                     
 
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):

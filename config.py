@@ -1,6 +1,8 @@
 import os
 from decouple import config
 
+#debug
+DEBUG = config('DEBUG',default=False)
 
 #token
 OJAMA_JAUNE_TOKEN =config('TOKEN_OJAMA_JAUNE')

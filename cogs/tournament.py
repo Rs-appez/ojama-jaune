@@ -1,7 +1,7 @@
 
 import nextcord
 from nextcord.ext import commands
-from config import ADMIN_SPEED, DUELIST_ID, DUELIST_ID_SPEED, TEAM_ID
+import config
 from models.tournament.tournament import Tournament
 from views.tournament.duelist_view import DuelistView
 
@@ -16,7 +16,7 @@ class TournamentCog(commands.Cog):
         self.tournament = None
 
     @commands.command("tournament")
-    @commands.has_role(int(TEAM_ID) or int(ADMIN_SPEED))
+    @commands.has_role(int(config.TEAM_ID) or int(config.ADMIN_SPEED))
     async def create_tournament(self, ctx : commands.Context ):
         """Create a tournament"""
 
@@ -25,15 +25,15 @@ class TournamentCog(commands.Cog):
     
         
     @commands.command("start")
-    @commands.has_role(int(TEAM_ID) or int(ADMIN_SPEED))
+    @commands.has_role(int(config.TEAM_ID) or int(config.ADMIN_SPEED))
     async def start_tournament(self, ctx : commands.Context ):
         """start the tournament"""
 
         duelists = []
         duelists_str = []
 
-        role_id = int(DUELIST_ID)
-        role_id_speed = int(DUELIST_ID_SPEED)
+        role_id = int(config.DUELIST_ID)
+        role_id_speed = int(config.DUELIST_ID_SPEED)
 
         if ctx.guild.get_role(role_id):
             role = ctx.guild.get_role(role_id)
@@ -75,7 +75,7 @@ class TournamentCog(commands.Cog):
 
                 
     @commands.command("win")
-    @commands.has_role(int(DUELIST_ID) or int(DUELIST_ID_SPEED))
+    @commands.has_role(int(config.DUELIST_ID) or int(config.DUELIST_ID_SPEED))
     async def set_win(self, ctx, *score : int):
         if(self.tournament):
             if(score and score[0] > score[1] and 
@@ -89,7 +89,7 @@ class TournamentCog(commands.Cog):
 
                 
     @commands.command("fwin")
-    @commands.has_role(int(TEAM_ID) or int(ADMIN_SPEED))
+    @commands.has_role(int(config.TEAM_ID) or int(config.ADMIN_SPEED))
     async def force_win(self, ctx, *score ):
 
         duelist = ctx.guild.get_member(int(score[0][2:-1]))
@@ -107,7 +107,7 @@ class TournamentCog(commands.Cog):
         else:
             await ctx.send("fguguUtiliser la commande comme ceci :\n !fwin @jouer 2 0\n ou\n !fwin @jouer 2 1")
     @commands.command("draw")
-    @commands.has_role(int(DUELIST_ID) or int(DUELIST_ID_SPEED))
+    @commands.has_role(int(config.DUELIST_ID) or int(config.DUELIST_ID_SPEED))
     async def set_draw(self, ctx, *score : int):
         if(self.tournament):
 
@@ -122,7 +122,7 @@ class TournamentCog(commands.Cog):
             await ctx.send("Pas de tournoi en cours")
     
     @commands.command("finish")
-    @commands.has_role(int(TEAM_ID) or int(ADMIN_SPEED))
+    @commands.has_role(int(config.TEAM_ID) or int(config.ADMIN_SPEED))
     async def finish_tournament(self,ctx):
         await self.tournament.finish_tournament()
     
@@ -138,7 +138,7 @@ class TournamentCog(commands.Cog):
 
         await Tournament.dell_vocal(ctx)
 
-        role_id = int(DUELIST_ID)
+        role_id = int(config.DUELIST_ID)
         role = ctx.guild.get_role(role_id)
         assert isinstance(role,nextcord.Role)   
 
@@ -152,7 +152,7 @@ class TournamentCog(commands.Cog):
     
     
     @commands.command("launch_vocal_round")
-    @commands.has_role(int(TEAM_ID) or int(ADMIN_SPEED))
+    @commands.has_role(int(config.TEAM_ID) or int(config.ADMIN_SPEED))
     async def launch_vocal_round(self,ctx):
         if self.tournament:
             await self.tournament.launch_vocal_round()

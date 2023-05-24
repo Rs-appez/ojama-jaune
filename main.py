@@ -1,9 +1,16 @@
 import os
 import bots.ojamaBot as ojamaBot
 import config
-#------------BOT PROD--------------------------
 
-ojama_jaune = ojamaBot.OjamaBot("!",True)
+debug = config.DEBUG
+
+if debug :
+    cmd_prefix = "§"
+else :
+    cmd_prefix = "!"
+
+
+ojama_jaune = ojamaBot.OjamaBot(cmd_prefix,not debug)
 
 for file in os.listdir("./cogs"):
     if(file.endswith(".py")):
