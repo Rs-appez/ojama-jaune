@@ -1,5 +1,4 @@
 import asyncio
-import sys
 import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
@@ -43,12 +42,10 @@ class OjamaBot(commands.Bot):
 
     async def on_ready(self):
         print(f"{self.user.display_name} est pret")
-        print(sys.flags.dev_mode)
         guild = self.get_guild(int(GUILD_ID))
         if guild :
             self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
             msg = await guild.get_channel(int(BOT_TEST_CHANNEL)).send("UP !")
-            await guild.get_channel(int(BOT_TEST_CHANNEL)).send(sys.flags.dev_mode)
             await msg.add_reaction(self.oj_emoji)
         await self.__get_game_emoji()
 
