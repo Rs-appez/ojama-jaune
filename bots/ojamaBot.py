@@ -5,10 +5,9 @@ from nextcord import FFmpegPCMAudio,Message,ChannelType
 import config
 class OjamaBot(commands.Bot):
 
-    def __init__(self, command_prefix ,production):
+    def __init__(self, command_prefix):
 
         self.voice_client = None
-        self.production = production
         intents = nextcord.Intents.default()
         intents.members = True
         intents.voice_states = True
@@ -152,7 +151,7 @@ class OjamaBot(commands.Bot):
 
     async def play_sound(self, sound : str, voice_channel : nextcord.VoiceChannel):
 
-        if self.production :
+        if not config.DEBUG :
             source =  FFmpegPCMAudio(source = f'audios/{sound}')
         else :
             source =  FFmpegPCMAudio( source = f'audios/{sound}',executable='ffmpeg\\ffmpeg.exe')

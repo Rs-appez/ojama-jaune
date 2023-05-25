@@ -10,7 +10,7 @@ else :
     cmd_prefix = "!"
 
 
-ojama_jaune = ojamaBot.OjamaBot(cmd_prefix,not debug)
+ojama_jaune = ojamaBot.OjamaBot(cmd_prefix)
 
 for file in os.listdir("./cogs"):
     if(file.endswith(".py")):
