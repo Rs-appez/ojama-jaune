@@ -1,5 +1,6 @@
 import asyncio
 from nextcord import Member
+from nextcord import slash_command
 from nextcord.ext import commands
 import random
 
@@ -23,6 +24,11 @@ class Ambiance(commands.Cog):
     async def hello(self,ctx):
         member = ctx.author
         await ctx.send(f'hello {member.mention}')
+
+    @slash_command()
+    async def ninja(self,interaction):
+        await interaction.response.send_message("https://cdn.discordapp.com/attachments/932758310187323406/965365644663074856/260149168_195516529440233_5949446936699436585_n.png")
+
 
     @commands.command()
     async def ojama(self,ctx):
