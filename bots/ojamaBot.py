@@ -129,8 +129,10 @@ class OjamaBot(commands.Bot):
 
             guild = self.get_guild(int(config.GUILD_ID))
             if guild :
-                await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send(f"{message.author} mp me : \n{message.content}")
-                    
+                files = []
+                for file in message.attachments:
+                    files.append(await file.to_file())
+                await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send(content=f"{message.author} mp me : \n{message.content}",embeds=message.embeds,files=files) 
 
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
 
