@@ -50,7 +50,7 @@ class CardSearch(commands.Cog):
     @commands.command(name="top")
     async def topDL(self, ctx):
         """List of top deck list"""
-        await ctx.send("ALL => " + URL_TOP_DL)
+        await ctx.send("ALL => " + config.URL_TOP_DL)
         #await ctx.send("YCS => " + config.URL_TOP_YCS)
         #await ctx.send("REGIO => " + config.URL_TOP_REGIO)
 
