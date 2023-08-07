@@ -6,11 +6,11 @@ from views.game.guess.typeView import TypeView
 class Guess():
 
 
-    def __init__(self,card : Cards,interaction,gm,game_emojis):
+    def __init__(self,card : Cards,game_thread,gm,game_emojis):
         self.card = card
-        self.interaction = interaction
         self.gm = gm
         self.game_emojis = game_emojis
+        self.game_thread = game_thread
         self.started = False
         self.first_msg = None
         self.msg = None
@@ -20,33 +20,33 @@ class Guess():
         if not self.started:
             self.started = True
             if self.rdm > 6:
-                self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self))
+                self.msg = await self.game_thread.send(self.card.img_cropped,view=TypeView(self))
             else : 
                 type = self.card.type.lower()
                 if "spell" in type: 
-                    self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"spell"))
+                    self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"spell"))
                 elif "trap" in type:
-                     self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"trap"))
+                     self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"trap"))
                 else :
                     if self.rdm < 1 :
-                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"attribute"))
+                        self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"attribute"))
                     elif  self.rdm < 2:
-                        self.first_msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"race1"))
-                        self.second_msg = await self.interaction.channel.send(view=TypeView(self,cat="race2",first_view=self.first_view))
+                        self.first_msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"race1"))
+                        self.second_msg = await  self.game_thread.send(view=TypeView(self,cat="race2",first_view=self.first_view))
                     elif self.rdm < 3 :
-                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
+                        self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
                     elif self.rdm < 4 and not ("link" in type) :
-                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"def"))
+                        self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"def"))
                     elif self.rdm < 5 :
                         if "link" in type:
-                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"link"))
+                            self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"link"))
                         elif "xyz" in type:
-                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"rank"))
+                            self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"rank"))
                         else :
-                            self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"level"))
+                            self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"level"))
                     else :
 
-                        self.msg = await self.interaction.send(self.card.img_cropped,view=TypeView(self,"atk"))
+                        self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"atk"))
                    
     def check_type(self,type,cat):
         if cat :
@@ -66,8 +66,8 @@ class Guess():
         return type in self.card.type.lower()
     
     async def finish(self):
-         await self.interaction.channel.send(self.card.img)
-         await self.gm.reload(self.interaction,self.game_emojis)
+         await self.game_thread.send(self.card.img)
+         await self.gm.reload(self.game_thread,self.game_emojis)
 
 
     def generate_stat(self,cat):
