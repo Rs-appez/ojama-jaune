@@ -3,7 +3,7 @@ from nextcord.interactions import Interaction
 from nextcord import slash_command,ChannelType
 
 from models.game.gameManager import GameManager
-# from models.game.scheduler import Scheduler
+from models.game.scheduler import Scheduler
 
 import config
 
@@ -12,7 +12,7 @@ class Game(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot  
-        # self.scheduler = Scheduler(self.bot)
+        self.scheduler = Scheduler(self.bot)
 
 
     @slash_command(name="pendu_yugioh",description="Crois en l'âme des cartes!")
