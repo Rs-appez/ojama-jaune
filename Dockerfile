@@ -1,6 +1,8 @@
 
 FROM python:3.10
 
+ENV TZ="Europe/Brussels"
+
 RUN apt-get update \
     && apt-get install -y ffmpeg
 
