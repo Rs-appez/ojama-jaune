@@ -3,13 +3,16 @@ from nextcord.interactions import Interaction
 from nextcord import slash_command,ChannelType
 
 from models.game.gameManager import GameManager
+# from models.game.scheduler import Scheduler
 
+import config
 
 class Game(commands.Cog):
     """some games"""
 
     def __init__(self,bot):
-        self.bot = bot
+        self.bot = bot  
+        # self.scheduler = Scheduler(self.bot)
 
 
     @slash_command(name="pendu_yugioh",description="Crois en l'âme des cartes!")
@@ -37,7 +40,12 @@ class Game(commands.Cog):
         if interaction.channel.type == ChannelType.private :
             game_channel = interaction.channel
         else :
-            game_channel = await interaction.channel.create_thread(name=name_channel,reason = f"{name_channel} started",auto_archive_duration=60,type=ChannelType.public_thread)
+            guild = self.bot.get_guild(int(config.GUILD_ID))
+            if guild:
+                chan = guild.get_channel(int(config.OJAMA_CHANNEL))
+            else :
+                chan = interaction.channel
+            game_channel = await chan.create_thread(name=name_channel,reason = f"{name_channel} started",auto_archive_duration=60,type=ChannelType.public_thread)
         return game_channel
 
 def setup(bot):
