@@ -1,6 +1,8 @@
 from models.card.cards import Cards
+from models.game.battleGuess import BattleGuess
 from models.game.guess import Guess
 from models.game.hangman import Hangman
+
 class GameManager():
 
     def __init__(self) -> None:
@@ -26,3 +28,8 @@ class GameManager():
         card = Cards.get_random_card()
         guess = Guess(card,game_channel,self,game_emojis)
         await guess.start()
+        
+    async def guess_battle(self,author,game_channel,game_emojis):
+        self.last = "guess_battle"
+        battle = BattleGuess(author,game_channel,game_emojis)
+        await battle.setup()
