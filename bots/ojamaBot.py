@@ -19,7 +19,7 @@ class OjamaBot(commands.Bot):
 
     async def on_voice_state_update(self,member,before,after):
 
-        if (after.channel and not before.channel) or (before.self_mute and not after.self_mute) :
+        if (after.channel and not before.channel) :
             if any(role.id == int(config.CLOWN_ID) for role in member.roles):
                 await self.play_sound("circus.m4a",after.channel)
             
