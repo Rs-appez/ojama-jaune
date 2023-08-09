@@ -23,14 +23,14 @@ class Game(commands.Cog):
     async def guess(self,interaction : Interaction ):
        await self.__start_game(interaction,"guess_the_card")
         
-    @slash_command(name="guess_battle",description="Crois en l'âme des cartes! (plus fort que tes adversaires)")
+    @slash_command(name="guess_battle",description="Crois en l'âme des cartes! (plus fort que tes adversaires)",dm_permission=False)
     async def guess_battle(self,interaction : Interaction ):
        await self.__start_game(interaction,"guess_battle")
         
 
     async def __start_game(self,interaction,game):
         gm = GameManager()
-        
+
         game_channel = await self.__create_game_channel(interaction,game)
         await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
 
