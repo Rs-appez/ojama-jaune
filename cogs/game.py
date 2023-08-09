@@ -30,7 +30,9 @@ class Game(commands.Cog):
 
     async def __start_game(self,interaction,game):
         gm = GameManager()
+        
         game_channel = await self.__create_game_channel(interaction,game)
+        await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
 
         if game == "guess_the_card":
             await gm.guess_the_card(game_channel,self.bot.game_emojis)
@@ -39,7 +41,7 @@ class Game(commands.Cog):
         elif game == "guess_battle" :
             await gm.guess_battle(interaction.user,game_channel,self.bot.game_emojis)
 
-        await interaction.response.send_message(f"GAME ! {self.bot.oj_emoji}")
+        
 
     async def __create_game_channel(self,interaction : Interaction,name_channel):
 
