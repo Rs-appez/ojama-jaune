@@ -1,5 +1,5 @@
 from typing import List
-from nextcord import Embed, Message
+from nextcord import Embed
 import requests
 import json
 from nextcord.interactions import Interaction
