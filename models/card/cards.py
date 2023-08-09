@@ -3,6 +3,8 @@ from nextcord import Embed, Message
 import requests
 import json
 from nextcord.interactions import Interaction
+import threading
+import time
 
 from config import URL_YGOPRO, URL_YGORGA
 
@@ -53,6 +55,11 @@ class Cards():
         if response.status_code == 200:
             return Cards(response.json())
         
+    @staticmethod
+    def get_random_cards(cards_list,nb_cards):
+        CardThreading(cards_list,nb_cards)
+
+
     @staticmethod
     def search(name : str):
         response_en = requests.get(
@@ -174,3 +181,20 @@ class CardsRulling():
         self.cards = names
         self.id = id
         self.url = "https://db.ygorganization.com/qa#" + str(id)
+
+class CardThreading(object):
+
+    def __init__(self, cards_list, nb_cards):
+        self.cards_list = cards_list
+        self.nb_cards = nb_cards
+
+        thread = threading.Thread(target=self.run, args=())
+        thread.daemon = True
+        thread.start()
+
+    def run(self):
+        for i in range(self.nb_cards):
+            if  i != 0 and i%5 == 0 :
+                time.sleep(5)
+            
+            self.cards_list.append(Cards.get_random_card())
