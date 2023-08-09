@@ -14,18 +14,10 @@ class BattleGuess():
         self.cards = []
 
     async def setup(self):
+        Cards.get_random_cards(self.cards,20)
         msg = await self.channel.send('Player : \npersonne 😭')
         await self.channel.send('Join the party !',view=RegisterView(self.players,self.emojis["aqua"],msg))
-        self.get_cards()
         await self.author.send('Demarrer la partie pour tout les joueurs.',view=StarterView(self))
-        print(self.cards)
 
     async def start(self):
-        print('ok')
-
-    def get_cards(self):
-        
-        for i in range(5):
-            self.cards.append(Cards.get_random_card())
-
-        
+        print(self.cards)
