@@ -1,6 +1,5 @@
 from models.card.cards import Cards
 from views.game.battle.registerView import RegisterView
-import asyncio
 
 from views.game.battle.starterView import StarterView
 
@@ -21,3 +20,11 @@ class BattleGuess():
 
     async def start(self):
         print(self.cards)
+
+
+class GuessBattleManager():
+    
+    def __init__(self,battle_guess,player) -> None:
+        self.cards = battle_guess.cards
+        self.emojis = battle_guess.emojis
+        self.player = player
