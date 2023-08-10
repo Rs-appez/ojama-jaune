@@ -6,7 +6,7 @@ from views.game.guess.typeView import TypeView
 class Guess():
 
 
-    def __init__(self,card : Cards,game_thread,gm,game_emojis):
+    def __init__(self,card : Cards,game_thread,gm,game_emojis,rdm = None):
         self.card = card
         self.gm = gm
         self.game_emojis = game_emojis
@@ -14,7 +14,9 @@ class Guess():
         self.started = False
         self.first_msg = None
         self.msg = None
-        self.rdm = random.randrange(0,8)
+        self.rdm = rdm
+        if not rdm :
+            self.rdm = random.randrange(0,8)
         self.correct = None
 
     async def start(self):
