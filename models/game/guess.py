@@ -15,6 +15,7 @@ class Guess():
         self.first_msg = None
         self.msg = None
         self.rdm = random.randrange(0,8)
+        self.correct = None
 
     async def start(self):
         if not self.started:
@@ -51,20 +52,23 @@ class Guess():
     def check_type(self,type,cat):
         if cat :
             if cat == "attribute":
-                return type in self.card.attribute.lower()
+                self.correct =  type in self.card.attribute.lower()
             elif "race" in cat:
-                return type == self.card.race.lower()
+                self.correct =  type == self.card.race.lower()
             elif cat == "type_monster_card":
-                return type in self.card.type.lower()
+                self.correct =  type in self.card.type.lower()
             elif cat in ["level","rank","link"]:
-                return self.card.level == type
+                self.correct =  self.card.level == type
             elif cat == "atk":
-                return self.card.atk == int(type)
+                self.correct =  self.card.atk == int(type)
             elif cat == "def":
-                return self.card.defe == int(type)
-            return type in self.card.race.lower()
-        return type in self.card.type.lower()
-    
+                self.correct =  self.card.defe == int(type)
+            else :
+                self.correct =  type in self.card.race.lower()
+        else : self.correct =  type in self.card.type.lower()
+
+        return self.correct
+        
     async def finish(self):
          await self.game_thread.send(self.card.img)
          await self.gm.reload(self.game_thread,self.game_emojis)
