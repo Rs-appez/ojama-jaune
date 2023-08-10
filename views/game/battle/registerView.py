@@ -15,7 +15,7 @@ class RegisterView(View):
             if not [p for p in self.view.players if p.member.id == interaction.user.id] :
                 self.view.players.append(Player(interaction.user))
 
-                await interaction.response.send_message(f"Tu as été ajouté au jeu",ephemeral=True)
+                await interaction.response.send_message(f"Tu as été ajouté au jeu\nDès que le jeu commencera j'enverai les questions en mp\nTiens toi prêt !",ephemeral=True)
 
                 await self.update_message()
 
