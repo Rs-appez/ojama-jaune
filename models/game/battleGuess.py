@@ -4,6 +4,7 @@ from models.game.player import PlayerTimerThreading,Player
 from views.game.battle.starterView import StarterView
 from views.game.battle.registerView import RegisterView
 from views.game.reload_view import ReloadView
+from itertools import groupby
 
 import asyncio
 
@@ -41,12 +42,15 @@ class BattleGuess():
 
             result = "**__Resultats__** :\n\n"
             medals = {0 : "🥇", 1 : "🥈",2 : "🥉" , 3 : "🤿"}
-            for index,player in enumerate(sorted(self.players,key= lambda p : p.points , reverse=True)):
+            groupes = groupby(sorted(self.players,key= lambda p : p.points , reverse=True), key=lambda p : p.points)
+            for index,player in enumerate(groupes):
                 if index < 4 :
                     result += f"{medals[index]} "
                 else :
                     result += f"{index+1} "
-                result += f": {player.member.mention} ({player.points} points !)\n"
+                noms = ", ".join(p.member.mention for p in player)
+                result += f": {noms} ({player.points} points !)\n"
+
             await self.channel.send(result)
             await self.channel.send(view=ReloadView(self.gm,self,emojis=self.emojis,others=self.author))
 
