@@ -19,7 +19,7 @@ class BattleGuess():
         self.gm = game_manager
 
     async def setup(self):
-        Cards.get_random_cards(self.cards,5)
+        Cards.get_random_cards(self.cards,30)
         msg = await self.channel.send('Player : \npersonne 😭')
         emoji = None
         if "millennium" in self.emojis : emoji = self.emojis["millennium"]
@@ -71,7 +71,7 @@ class GuessBattleManager():
         else : 
             await self.bg.end()
 
-    async def start(self, time = 10):
+    async def start(self, time = 60):
         await self.player.dm("Let's go !")
         loop = asyncio.get_running_loop()
         self.timer = PlayerTimerThreading(time,self.player,self.bg,loop)
