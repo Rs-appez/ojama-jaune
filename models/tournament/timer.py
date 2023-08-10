@@ -75,7 +75,6 @@ class Timer():
 class TimerThreading(object):
 
     def __init__(self, seconds):
-        self.channel = channel
         self.seconds = seconds
         self.start_time = T.time()
         self.finished = False
