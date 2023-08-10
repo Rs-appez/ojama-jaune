@@ -1,7 +1,9 @@
 from models.card.cards import Cards
-from views.game.battle.registerView import RegisterView
+
+from models.game.guess import Guess
 
 from views.game.battle.starterView import StarterView
+from views.game.battle.registerView import RegisterView
 
 class BattleGuess():
 
@@ -11,7 +13,6 @@ class BattleGuess():
         self.players = []
         self.author = author
         self.cards = []
-
     async def setup(self):
         Cards.get_random_cards(self.cards,20)
         msg = await self.channel.send('Player : \npersonne 😭')
@@ -19,8 +20,9 @@ class BattleGuess():
         await self.author.send('Demarrer la partie pour tout les joueurs.',view=StarterView(self))
 
     async def start(self):
-        print(self.cards)
-
+        for player in self.players :
+            gbm = GuessBattleManager(self, player)
+            await gbm.start()
 
 class GuessBattleManager():
     
@@ -28,3 +30,17 @@ class GuessBattleManager():
         self.cards = battle_guess.cards
         self.emojis = battle_guess.emojis
         self.player = player
+        self.card_number = 0
+    
+    async def reload(self,game_channel,correct = None ,emojis = None):
+        self.card_number += 1
+        if self.card_number < len(self.cards):
+            await self.__launch_guess()
+
+    async def start(self):
+        await self.player.dm("Let's go !")
+        await self.__launch_guess()
+
+    async def __launch_guess(self):
+        guess = Guess(self.cards[self.card_number],self.player.dm_chan,self,self.emojis)
+        await guess.start()
