@@ -3,10 +3,11 @@ from nextcord.ui import View, button
 
 
 class ReloadView(View):
-    def __init__(self,gm,game) -> None:
+    def __init__(self,gm,game, others = None) -> None:
         self.gm = gm
         self.click = False
         self.game = game
+        self.others = others
         super().__init__()
 
     @button(label="AGAIN !",style=ButtonStyle.primary,emoji="🔁")
@@ -15,7 +16,7 @@ class ReloadView(View):
             self.click = True
             button.disabled = True
             await interaction.response.edit_message(view=self)
-            await self.gm.reload(interaction)
+            await self.gm.reload(interaction,others=self.others)
     
     async def on_timeout(self) :
         self.clear_items()
