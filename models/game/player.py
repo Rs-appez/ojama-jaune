@@ -6,6 +6,7 @@ class Player():
         self.member = member
         self.dm_chan = None
         self.points = 0
+        self.finished = False
 
     def __str__(self) -> str:
         if self.member.nick :
@@ -20,3 +21,6 @@ class Player():
 
     def add_point(self,points = 1):
         self.points += points
+    
+    def has_finish(self) -> bool:
+        return self.finished
