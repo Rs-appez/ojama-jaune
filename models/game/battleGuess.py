@@ -21,7 +21,9 @@ class BattleGuess():
     async def setup(self):
         Cards.get_random_cards(self.cards,5)
         msg = await self.channel.send('Player : \npersonne 😭')
-        await self.channel.send('Join the party !',view=RegisterView(self.players,self.emojis["aqua"],msg))
+        emoji = None
+        if self.emojis["millennium"] : emoji = self.emojis["millennium"]
+        await self.channel.send('Join the party !',view=RegisterView(self.players,emoji,msg))
         await self.author.send('Demarrer la partie pour tout les joueurs.',view=StarterView(self))
 
     async def start(self):
