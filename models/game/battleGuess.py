@@ -17,7 +17,7 @@ class BattleGuess():
         self.finished = False
 
     async def setup(self):
-        Cards.get_random_cards(self.cards,30)
+        Cards.get_random_cards(self.cards,5)
         msg = await self.channel.send('Player : \npersonne 😭')
         await self.channel.send('Join the party !',view=RegisterView(self.players,self.emojis["aqua"],msg))
         await self.author.send('Demarrer la partie pour tout les joueurs.',view=StarterView(self))
@@ -34,6 +34,16 @@ class BattleGuess():
         if not self.finished :
             self.finished = True
             await self.channel.send("TIME")
+
+            result = "**__Resultats__** :\n\n"
+            medals = {0 : "🥇", 1 : "🥈",2 : "🥉" , 3 : "🤿"}
+            for index,player in enumerate(sorted(self.players,key= lambda p : p.points , reverse=True)):
+                if index < 4 :
+                    result += f"{medals[index]} "
+                else :
+                    result += f"{index+1} "
+                result += f": {player.member.mention} ({player.points} points !)\n"
+            await self.channel.send(result)
 
 class GuessBattleManager():
     
@@ -56,7 +66,7 @@ class GuessBattleManager():
         else : 
             await self.bg.end()
 
-    async def start(self, time = 60):
+    async def start(self, time = 10):
         await self.player.dm("Let's go !")
         loop = asyncio.get_running_loop()
         self.timer = PlayerTimerThreading(time,self.player,self.bg,loop)
