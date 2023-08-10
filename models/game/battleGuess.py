@@ -3,18 +3,20 @@ from models.game.guess import Guess
 from models.game.player import PlayerTimerThreading,Player
 from views.game.battle.starterView import StarterView
 from views.game.battle.registerView import RegisterView
+from views.game.reload_view import ReloadView
 
 import asyncio
 
 class BattleGuess():
 
-    def __init__(self,author, game_channel,emojis) -> None:
+    def __init__(self,author, game_channel,game_manager,emojis) -> None:
         self.channel = game_channel 
         self.emojis = emojis
         self.players = []
         self.author = author
         self.cards = []
         self.finished = False
+        self.gm = game_manager
 
     async def setup(self):
         Cards.get_random_cards(self.cards,5)
@@ -44,6 +46,7 @@ class BattleGuess():
                     result += f"{index+1} "
                 result += f": {player.member.mention} ({player.points} points !)\n"
             await self.channel.send(result)
+            await self.channel.send(view=ReloadView(self.gm,self,emojis=self.emojis,others=self.author))
 
 class GuessBattleManager():
     
