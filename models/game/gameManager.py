@@ -8,12 +8,12 @@ class GameManager():
     def __init__(self) -> None:
         self.last = None
 
-    async def reload(self,game_channel,correct = None ,other = None):
+    async def reload(self,game_channel,correct = None ,emojis = None):
 
         if self.last == "hangman_yugioh":
             await self.hangman_yugioh(game_channel)
         elif self.last == "guess_the_card":
-            await self.guess_the_card(game_channel,other)
+            await self.guess_the_card(game_channel,emojis)
         
         
     async def hangman_yugioh(self,game_channel):

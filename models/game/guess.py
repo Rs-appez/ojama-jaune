@@ -71,7 +71,7 @@ class Guess():
 
     async def finish(self):
          await self.game_thread.send(self.card.img)
-         await self.gm.reload(self.game_thread,correct= self.correct, other = self.game_emojis)
+         await self.gm.reload(self.game_thread,correct= self.correct, emojis= self.game_emojis)
 
 
     def generate_stat(self,cat):
