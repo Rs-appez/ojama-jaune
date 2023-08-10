@@ -1,5 +1,4 @@
 import asyncio
-import threading
 import time as T
 from nextcord import  Role
 
@@ -71,22 +70,3 @@ class Timer():
             await self.channel.send(f"TIME !!!!!!!!!!!!!! {duelist_role.mention}")
         else : 
             await self.channel.send(f"TIME !!!!!!!!!!!!!!")
-
-class TimerThreading(object):
-
-    def __init__(self, seconds):
-        self.seconds = seconds
-        self.start_time = T.time()
-        self.finished = False
-
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = True
-        thread.start()
-
-    def run(self):
-        asyncio.run(self.timer())
-
-    async def timer(self):
-        while not self.finished :
-            if T.time() - self.start_time >= self.seconds:
-                self.finished = True

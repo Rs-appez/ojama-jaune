@@ -1,7 +1,6 @@
 from models.card.cards import Cards
 from models.game.guess import Guess
-from models.tournament.timer import TimerThreading
-
+from models.game.player import PlayerTimerThreading,Player
 from views.game.battle.starterView import StarterView
 from views.game.battle.registerView import RegisterView
 
@@ -13,6 +12,8 @@ class BattleGuess():
         self.players = []
         self.author = author
         self.cards = []
+        self.finished = False
+
     async def setup(self):
         Cards.get_random_cards(self.cards,30)
         msg = await self.channel.send('Player : \npersonne 😭')
@@ -24,11 +25,18 @@ class BattleGuess():
             gbm = GuessBattleManager(self, player)
             await gbm.start()
 
+    async def end(self):
+        for player in self.players:
+            if not player.has_finish():
+                return
+        if not self.finished :
+            self.finished = True
+            await self.channel.send("TIME")
+
 class GuessBattleManager():
     
-    def __init__(self,battle_guess,player) -> None:
-        self.cards = battle_guess.cards
-        self.emojis = battle_guess.emojis
+    def __init__(self,battle_guess,player : Player) -> None:
+        self.bg = battle_guess
         self.player = player
         self.card_number = 0
 
@@ -38,19 +46,21 @@ class GuessBattleManager():
         if not self.timer.finished :
             if correct : self.player.add_point()
             self.card_number += 1
-            if self.card_number < len(self.cards):
+            if self.card_number < len(self.bg.cards):
                 await self.__launch_guess()
 
             else : await self.player.dm(f"tu es trop fort ! 😱")
         
-        else : await self.player.dm(f"📯 TIME 📯")
+        else : 
+            await self.player.dm(f"📯 TIME 📯")
+            await self.bg.end()
 
     async def start(self, time = 20):
         await self.player.dm("Let's go !")
-        self.timer = TimerThreading(time)
+        self.timer = PlayerTimerThreading(time,self.player)
         await self.__launch_guess()
 
     async def __launch_guess(self):
-        guess = Guess(self.cards[self.card_number],self.player.dm_chan,self,self.emojis)
+        guess = Guess(self.bg.cards[self.card_number],self.player.dm_chan,self,self.bg.emojis)
         await guess.start()
 
