@@ -8,7 +8,7 @@ class GameManager():
     def __init__(self) -> None:
         self.last = None
 
-    async def reload(self,game_channel,other = None):
+    async def reload(self,game_channel,correct = None ,other = None):
 
         if self.last == "hangman_yugioh":
             await self.hangman_yugioh(game_channel)

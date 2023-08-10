@@ -68,10 +68,10 @@ class Guess():
         else : self.correct =  type in self.card.type.lower()
 
         return self.correct
-        
+
     async def finish(self):
          await self.game_thread.send(self.card.img)
-         await self.gm.reload(self.game_thread,self.game_emojis)
+         await self.gm.reload(self.game_thread,correct= self.correct, other = self.game_emojis)
 
 
     def generate_stat(self,cat):
