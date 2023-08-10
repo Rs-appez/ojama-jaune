@@ -14,7 +14,7 @@ class BattleGuess():
         self.author = author
         self.cards = []
     async def setup(self):
-        Cards.get_random_cards(self.cards,20)
+        Cards.get_random_cards(self.cards,5)
         msg = await self.channel.send('Player : \npersonne 😭')
         await self.channel.send('Join the party !',view=RegisterView(self.players,self.emojis["aqua"],msg))
         await self.author.send('Demarrer la partie pour tout les joueurs.',view=StarterView(self))
@@ -33,9 +33,12 @@ class GuessBattleManager():
         self.card_number = 0
     
     async def reload(self,game_channel,correct = None ,emojis = None):
+        if correct : self.player.add_point()
         self.card_number += 1
         if self.card_number < len(self.cards):
             await self.__launch_guess()
+
+        else : await self.player.dm(f"tu es trop fort ! 😱")
 
     async def start(self):
         await self.player.dm("Let's go !")

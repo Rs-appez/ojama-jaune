@@ -17,3 +17,6 @@ class Player():
         if not self.dm_chan :
             self.dm_chan = await self.member.create_dm()
         await self.dm_chan.send(msg,view=view)
+
+    def add_point(self,points = 1):
+        self.points += points
