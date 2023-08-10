@@ -1,6 +1,8 @@
 from nextcord import Member
 import threading
 import time
+import asyncio
+
 class Player():
 
     def __init__(self,member : Member) -> None:
@@ -28,18 +30,25 @@ class Player():
 
 class PlayerTimerThreading(object):
 
-    def __init__(self, seconds,player : Player):
+    def __init__(self, seconds,player : Player, battle_guess,loop ):
         self.player = player
         self.seconds = seconds
         self.start_time = time.time()
         self.finished = False
+        self.loop = loop
+        self.bg = battle_guess
 
-        thread = threading.Thread(target=self.run, args=())
+        thread = threading.Thread(target=self.run, args=[self.loop])
         thread.daemon = True
         thread.start()
 
-    def run(self):
+    def run(self,loop):
         while not self.finished :
             if time.time() - self.start_time >= self.seconds:
                 self.finished = True
         self.player.finished = True
+        asyncio.run_coroutine_threadsafe(self.send_time(), loop)
+
+    async def send_time(self):
+        await self.player.dm("📯 TIME 📯")
+        await self.bg.end()

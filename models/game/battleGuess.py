@@ -4,6 +4,8 @@ from models.game.player import PlayerTimerThreading,Player
 from views.game.battle.starterView import StarterView
 from views.game.battle.registerView import RegisterView
 
+import asyncio
+
 class BattleGuess():
 
     def __init__(self,author, game_channel,emojis) -> None:
@@ -52,12 +54,12 @@ class GuessBattleManager():
             else : await self.player.dm(f"tu es trop fort ! 😱")
         
         else : 
-            await self.player.dm(f"📯 TIME 📯")
             await self.bg.end()
 
-    async def start(self, time = 20):
+    async def start(self, time = 60):
         await self.player.dm("Let's go !")
-        self.timer = PlayerTimerThreading(time,self.player)
+        loop = asyncio.get_running_loop()
+        self.timer = PlayerTimerThreading(time,self.player,self.bg,loop)
         await self.__launch_guess()
 
     async def __launch_guess(self):
