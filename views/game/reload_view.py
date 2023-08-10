@@ -18,7 +18,7 @@ class ReloadView(View):
             self.click = True
             button.disabled = True
             await interaction.response.edit_message(view=self)
-            await self.gm.reload(interaction,others=self.others, emojis=self.emojis,correct=self.correct)
+            await self.gm.reload(interaction.channel,others=self.others, emojis=self.emojis,correct=self.correct)
     
     async def on_timeout(self) :
         self.clear_items()
