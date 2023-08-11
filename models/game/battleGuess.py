@@ -71,7 +71,7 @@ class GuessBattleManager():
             if self.card_number < len(self.bg.cards):
                 await self.__launch_guess()
 
-            else : await self.player.dm(f"tu es trop fort ! 😱")
+            else : await self.player.dm(f"tu es trop rapide ! 😱")
         
         else : 
             await self.bg.end()
@@ -83,6 +83,6 @@ class GuessBattleManager():
         await self.__launch_guess()
 
     async def __launch_guess(self):
-        guess = Guess(self.bg.cards[self.card_number],self.player.dm_chan,self,self.bg.emojis)
+        guess = Guess(self.bg.cards[self.card_number]['card'],self.player.dm_chan,self,self.bg.emojis,rdm=self.bg.cards[self.card_number]["rdm"])
         await guess.start()
 

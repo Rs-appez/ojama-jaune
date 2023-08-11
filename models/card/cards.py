@@ -5,6 +5,7 @@ import json
 from nextcord.interactions import Interaction
 import threading
 import time
+import random
 
 from config import URL_YGOPRO, URL_YGORGA
 
@@ -197,4 +198,4 @@ class CardThreading(object):
             if  i != 0 and i%5 == 0 :
                 time.sleep(5)
             
-            self.cards_list.append(Cards.get_random_card())
+            self.cards_list.append({'card' : Cards.get_random_card(), 'rdm' : random.randrange(0,8)})
