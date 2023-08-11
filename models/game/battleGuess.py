@@ -4,7 +4,6 @@ from models.game.player import PlayerTimerThreading,Player
 from views.game.battle.starterView import StarterView
 from views.game.battle.registerView import RegisterView
 from views.game.reload_view import ReloadView
-from itertools import groupby
 
 import asyncio
 
@@ -33,26 +32,28 @@ class BattleGuess():
             await gbm.start()
 
     async def end(self):
-        for player in self.players:
-            if not player.has_finish():
-                return
-        if not self.finished :
+        if not self.finished:
             self.finished = True
             await self.channel.send("TIME")
 
-            result = "**__Resultats__** :\n\n"
-            medals = {0 : "🥇", 1 : "🥈",2 : "🥉" , 3 : "🤿"}
-            groupes = groupby(sorted(self.players,key= lambda p : p.points , reverse=True), key=lambda p : p.points)
-            for index,player in enumerate(groupes):
-                if index < 4 :
-                    result += f"{medals[index]} "
-                else :
-                    result += f"{index+1} "
-                noms = ", ".join(p.member.mention for p in player)
-                result += f": {noms} ({player.points} points !)\n"
+            result = "**__Résultats__** :\n\n"
+            medals = {0: "🥇", 1: "🥈", 2: "🥉", 3: "🤿"}
+
+            sorted_players = sorted(self.players, key=lambda p: p.points, reverse=True)
+            current_rank = 0
+            for index, player in enumerate(sorted_players):
+                if index == 0 or player.points != sorted_players[index - 1].points:
+                    current_rank = index
+
+                if current_rank < 4:
+                    result += f"{medals[current_rank]} "
+                else:
+                    result += f"{current_rank + 1} "
+
+                result += f": {player.member.mention} ({player.points} points !)\n"
 
             await self.channel.send(result)
-            await self.channel.send(view=ReloadView(self.gm,self,emojis=self.emojis,others=self.author))
+            await self.channel.send(view=ReloadView(self.gm, self, emojis=self.emojis, others=self.author))
 
 class GuessBattleManager():
     
