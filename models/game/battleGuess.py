@@ -53,7 +53,7 @@ class BattleGuess():
                 result += f": {player.member.mention} ({player.points} points !)\n"
 
             await self.channel.send(result)
-            await self.channel.send(view=ReloadView(self.gm, self, emojis=self.emojis, others=self.author))
+            self.reload_msg = await self.channel.send(view=ReloadView(self.gm, self, emojis=self.emojis, others=self.author))
 
 class GuessBattleManager():
     

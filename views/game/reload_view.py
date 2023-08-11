@@ -21,6 +21,6 @@ class ReloadView(View):
             await self.gm.reload(interaction.channel,others=self.others, emojis=self.emojis,correct=self.correct)
     
     async def on_timeout(self) :
-        self.clear_items()
-        await self.game.reload_msg.edit(content="**GG!**",view=self)
+        self.children[0].disabled = True
+        await self.game.reload_msg.edit(view=self)
         return await super().on_timeout()
