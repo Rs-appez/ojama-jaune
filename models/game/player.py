@@ -18,15 +18,23 @@ class Player():
             return self.member.name
         
     async def dm(self,msg,view = None):
-        if not self.dm_chan :
-            self.dm_chan = await self.member.create_dm()
+        if not self.dm_chan:
+            await self.setup_dm_channel()
         await self.dm_chan.send(msg,view=view)
+
+    async def get_dm_url(self) :
+        if not self.dm_chan:
+            await self.setup_dm_channel()      
+        return self.dm_chan.jump_url
 
     def add_point(self,points = 1):
         self.points += points
     
     def has_finish(self) -> bool:
         return self.finished
+
+    async def setup_dm_channel(self):
+        self.dm_chan = await self.member.create_dm()
 
 class PlayerTimerThreading(object):
 

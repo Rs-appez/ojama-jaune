@@ -13,9 +13,11 @@ class RegisterView(View):
         async def callback(self,interaction):
 
             if not [p for p in self.view.players if p.member.id == interaction.user.id] :
-                self.view.players.append(Player(interaction.user))
+                player = Player(interaction.user)
+                dm_url = await player.get_dm_url()
+                self.view.players.append(player)
 
-                await interaction.response.send_message(f"Tu as été ajouté au jeu\nDès que le jeu commencera j'enverai les questions en mp\nTiens toi prêt !",ephemeral=True)
+                await interaction.response.send_message(f"Tu as été ajouté au jeu\nDès que le jeu commencera j'enverai les questions en mp ➡️ {dm_url} ⬅️\nTiens toi prêt !\n",ephemeral=True)
 
                 await self.update_message()
 
