@@ -45,6 +45,7 @@ class OjamaBot(commands.Bot):
             self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
             msg = await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send("UP !")
             await msg.add_reaction(self.oj_emoji)
+            self.game_emojis["millennium"] = await guild.fetch_emoji(1138544208974717000)
         await self.__get_game_emoji()
 
     async def __get_game_emoji(self):
