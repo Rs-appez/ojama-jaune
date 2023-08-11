@@ -34,8 +34,6 @@ class BattleGuess():
     async def end(self):
         if not self.finished:
             self.finished = True
-            await self.channel.send("TIME")
-
             result = "**__Résultats__** :\n\n"
             medals = {0: "🥇", 1: "🥈", 2: "🥉", 3: "🤿"}
 
