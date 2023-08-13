@@ -9,6 +9,7 @@ class Player():
         self.member = member
         self.dm_chan = None
         self.points = 0
+        self.answered = 0
         self.finished = False
 
     def __str__(self) -> str:
@@ -29,6 +30,9 @@ class Player():
 
     def add_point(self,points = 1):
         self.points += points
+
+    def get_accuracy(self):
+        return (self.points/self.answered)*100
     
     def has_finish(self) -> bool:
         return self.finished
@@ -59,4 +63,5 @@ class PlayerTimerThreading(object):
 
     async def send_time(self):
         await self.player.dm("📯 TIME 📯")
+        await self.player.dm(f"Retour au thread :\n➡{self.bg.channel.jump_url}⬅")
         await self.bg.end()

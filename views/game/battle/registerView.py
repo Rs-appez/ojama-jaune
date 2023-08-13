@@ -17,13 +17,15 @@ class RegisterView(View):
                 dm_url = await player.get_dm_url()
                 self.view.players.append(player)
 
-                await interaction.response.send_message(f"Tu as été ajouté au jeu\nDès que le jeu commencera j'enverai les questions en mp ➡️ {dm_url} ⬅️\nTiens toi prêt !\n",ephemeral=True)
+                await interaction.response.send_message(f"""Tu as été ajouté au jeu
+Dès que le jeu commencera j'enverai les questions en mp ➡️ {dm_url} ⬅️
+Tiens toi prêt !""",ephemeral=True)
 
                 await self.update_message()
 
         async def update_message(self):
             
-            msg = 'Player :\n'
+            msg = 'Players :\n'
 
             for player in self.view.players:
                 msg += str(player) + "\n"

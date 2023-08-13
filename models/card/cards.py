@@ -8,6 +8,7 @@ import time
 import random
 
 from config import URL_YGOPRO, URL_YGORGA
+from models.game.guess import Guess
 
 class Cards():
     _url_ygopro = URL_YGOPRO
@@ -197,5 +198,7 @@ class CardThreading(object):
         for i in range(self.nb_cards):
             if  i != 0 and i%5 == 0 :
                 time.sleep(5)
-            
-            self.cards_list.append({'card' : Cards.get_random_card(), 'rdm' : random.randrange(0,8)})
+            rdm = Guess.get_rdm_guess_nb()
+            pos = Guess.get_rdm_pos_nb()
+            diff = Guess.get_rdm_diff_nb()
+            self.cards_list.append({'card' : Cards.get_random_card(), 'rdm' : rdm, 'pos' : pos, 'diff' : diff})

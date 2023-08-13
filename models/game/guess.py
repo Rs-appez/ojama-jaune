@@ -1,12 +1,11 @@
 import random
-from models.card.cards import Cards
 from views.game.guess.typeView import TypeView
 
 
 class Guess():
 
 
-    def __init__(self,card : Cards,game_thread,gm,game_emojis,rdm = None):
+    def __init__(self,card ,game_thread,gm,game_emojis,rdm = None,pos = None,diff = None):
         self.card = card
         self.gm = gm
         self.game_emojis = game_emojis
@@ -14,9 +13,11 @@ class Guess():
         self.started = False
         self.first_msg = None
         self.msg = None
+        self.pos = pos
+        self.diff = diff
         self.rdm = rdm
         if rdm == None :
-            self.rdm = random.randrange(0,8)
+            self.rdm = Guess.get_rdm_guess_nb()
         self.correct = None
 
     async def start(self):
@@ -84,17 +85,31 @@ class Guess():
             stat = self.card.defe
 
         stat_tab = []
-        pos = random.randrange(1,6)
-        diff = random.randrange(1,10) * 100
-        for i in range(pos):
-            n_stat = stat - (i * diff)
+        if not self.pos :
+            self.pos = Guess.get_rdm_pos_nb()
+        if not self.diff:
+            self.diff = Guess.get_rdm_diff_nb()
+        for i in range(self.pos):
+            n_stat = stat - (i * self.diff)
             if n_stat >= 0 :
                 stat_tab.append(n_stat)
         
         stat_tab.sort()
 
         while stat_tab.__len__() < 5:
-            next_stat = stat_tab[-1] + diff
+            next_stat = stat_tab[-1] + self.diff
             stat_tab.append(next_stat)
 
         return stat_tab
+
+    @staticmethod
+    def get_rdm_guess_nb():
+        return random.randrange(0,8)
+    
+    @staticmethod
+    def get_rdm_pos_nb():
+        return random.randrange(1,6)
+    
+    @staticmethod
+    def get_rdm_diff_nb():
+        return random.randrange(1,10) * 100
