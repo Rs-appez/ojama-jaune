@@ -15,7 +15,7 @@ class Guess():
         self.first_msg = None
         self.msg = None
         self.rdm = rdm
-        if not rdm :
+        if rdm == None :
             self.rdm = random.randrange(0,8)
         self.correct = None
 
