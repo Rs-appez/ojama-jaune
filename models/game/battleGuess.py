@@ -84,6 +84,10 @@ class GuessBattleManager():
         await self.__launch_guess()
 
     async def __launch_guess(self):
-        guess = Guess(self.bg.cards[self.card_number]['card'],self.player.dm_chan,self,self.bg.emojis,rdm=self.bg.cards[self.card_number]["rdm"])
+        card = self.bg.cards[self.card_number]
+        guess = Guess(card['card'],self.player.dm_chan,self,self.bg.emojis,
+                      rdm=card["rdm"],
+                      pos=card['pos'],
+                      diff=card['diff'])
         await guess.start()
 
