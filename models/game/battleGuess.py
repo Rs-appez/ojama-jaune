@@ -36,7 +36,7 @@ class BattleGuess():
     async def end(self):
         if not self.finished:
             self.finished = True
-            result = "**__Résultats__** :\n\n"
+            result = "**__Résultats__** :\n"
             medals = {0: "🥇", 1: "🥈", 2: "🥉", 3: "🤿"}
 
             sorted_players = sorted(self.players, key=lambda p: p.points, reverse=True)
