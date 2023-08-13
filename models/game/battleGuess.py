@@ -1,3 +1,4 @@
+from math import floor
 from models.card.cards import Cards
 from models.game.guess import Guess
 from models.game.player import PlayerTimerThreading,Player
@@ -20,6 +21,7 @@ class BattleGuess():
 
     async def setup(self):
         Cards.get_random_cards(self.cards,30)
+        await self.channel.send('Règles :\nTu as une minute pour repondre à un maximum de question !')
         msg = await self.channel.send('Player : \npersonne 😭')
         emoji = None
         if "millennium" in self.emojis : emoji = self.emojis["millennium"]
@@ -48,7 +50,7 @@ class BattleGuess():
                 else:
                     result += f"{current_rank + 1} "
 
-                result += f": {player.member.mention} ({player.points} points !)\n"
+                result += f": {player.member.mention} ({player.points} points ! {floor(player.get_accuracy())}%)\n"
 
             await self.channel.send(result)
             self.reload_msg = await self.channel.send(view=ReloadView(self.gm, self, emojis=self.emojis, others=self.author))

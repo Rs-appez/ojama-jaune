@@ -30,6 +30,9 @@ class Player():
 
     def add_point(self,points = 1):
         self.points += points
+
+    def get_accuracy(self):
+        return (self.points/self.answered)*100
     
     def has_finish(self) -> bool:
         return self.finished
