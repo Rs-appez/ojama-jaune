@@ -63,4 +63,5 @@ class PlayerTimerThreading(object):
 
     async def send_time(self):
         await self.player.dm("📯 TIME 📯")
+        await self.player.dm(f"Retour au thread :\n➡{self.bg.channel.jump_url}⬅")
         await self.bg.end()
