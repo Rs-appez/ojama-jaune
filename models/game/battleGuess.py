@@ -64,6 +64,7 @@ class GuessBattleManager():
     
     async def reload(self,game_channel,correct = None ,emojis = None):
         if not self.timer.finished :
+            self.player.answered += 1
             if correct : self.player.add_point()
             self.card_number += 1
             if self.card_number < len(self.bg.cards):

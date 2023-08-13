@@ -9,6 +9,7 @@ class Player():
         self.member = member
         self.dm_chan = None
         self.points = 0
+        self.answered = 0
         self.finished = False
 
     def __str__(self) -> str:
