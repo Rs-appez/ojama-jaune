@@ -33,6 +33,19 @@ class Admin(commands.Cog):
         dm = await member.create_dm()
         message = ' '.join( msg)
         await dm.send(message)
+
+    
+    @commands.has_role(int(config.BOT_DEV_ID))
+    @commands.command(name="mphide")
+    async def mphide(self,ctx : commands.Context, player_id, nbr:int = 1, delete_after:float = 0.01, *msg : str):
+        """Send a message in dm"""
+
+        guild = self.bot.get_guild(int(config.GUILD_ID))
+        member = await guild.fetch_member(player_id)
+        dm = await member.create_dm()
+        message = ' '.join( msg)
+        for i in nbr:
+            await dm.send(message, delete_after=delete_after)
           
     @commands.has_role(int(config.BOT_DEV_ID))
     @commands.command("tts_admin")
