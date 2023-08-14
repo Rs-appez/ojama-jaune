@@ -15,9 +15,7 @@ class Guess():
         self.msg = None
         self.pos = pos
         self.diff = diff
-        self.rdm = rdm
-        if rdm == None :
-            self.rdm = Guess.get_rdm_guess_nb()
+        self.rdm = rdm if rdm != None else Guess.get_rdm_guess_nb()
         self.correct = None
 
     async def start(self):
