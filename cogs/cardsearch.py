@@ -52,7 +52,7 @@ class CardSearch(commands.Cog):
         """List of top deck list"""
         await ctx.send("ALL => " + config.URL_TOP_DL)
         #await ctx.send("YCS => " + config.URL_TOP_YCS)
-        #await ctx.send("REGIO => " + config.URL_TOP_REGIO)
+        await ctx.send("REGIO => " + config.URL_TOP_REGIO)
 
 
     @commands.command(name="random")
