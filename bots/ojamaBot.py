@@ -3,6 +3,8 @@ import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType
 import config
+import bleach
+
 class OjamaBot(commands.Bot):
 
     def __init__(self, command_prefix):
@@ -122,6 +124,9 @@ class OjamaBot(commands.Bot):
 
         if message.author == self.user:
             return
+
+        message.content = bleach.clean(message.content)
+
 
         if message.content.startswith(self.command_prefix):
             await self.process_commands(message)
