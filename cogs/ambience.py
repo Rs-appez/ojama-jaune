@@ -18,6 +18,9 @@ class Ambiance(commands.Cog):
         if self.bot.oj_emoji:
             if 'ojama' in message.content.lower():
                 await message.add_reaction(self.bot.oj_emoji)
+        
+        if 'ping' in message.content.lower():
+            await message.reply("pong 🙃")
 
 
     @commands.command()
