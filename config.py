@@ -44,9 +44,11 @@ DUELIST_ID_SPEED = 979124654105055252
 ADMIN_SPEED = 973978236688171078
 CATEGORY_TOURNAMENT_ID_SPEED = 978042278536949820 
 
-
+#url api
 URL_YGOPRO = "https://db.ygoprodeck.com/api/v7/"
 URL_YGORGA = "https://db.ygorganization.com/data/"
+URL_SHEET_API = "https://sheets.googleapis.com/v4/spreadsheets/"
+
 URL_TOP_DL = "https://docs.google.com/spreadsheets/d/1ZZH6k3stlhm6z-vUO4IIQK-enFwCbOmafFEExroDUT0/edit#gid=474159429"
 URL_TOP_YCS = "https://docs.google.com/spreadsheets/d/1yWtjcj2NeG4m9COt7sKDqTFaYCUc0-sBvGEhM2qXF0w/edit#gid=1373958324"
 URL_TOP_REGIO = "https://docs.google.com/spreadsheets/d/12dhcPy3Z4DoVNZHV7EJOQN4DlwaSxF0aK1Nim4BJSgo/edit#gid=0"

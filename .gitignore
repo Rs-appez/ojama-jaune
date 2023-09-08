@@ -8,3 +8,4 @@ __pycache__/
 cogs/test.py
 .env
 audios/tts.mp3
+test.json
