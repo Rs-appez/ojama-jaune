@@ -6,8 +6,8 @@ DEBUG = config('DEBUG',default=False)
 
 #token
 OJAMA_JAUNE_TOKEN =config('TOKEN_OJAMA_JAUNE')
-CHALLONGE_TOKEN = config('CHALLONGE_TOKEN')
-
+CHALLONGE_TOKEN = config('CHALLONGE_TOKEN',default=None)
+GOOGLE_API_KEY = config('GOOGLE_API_KEY',default=None)
 
 #role
 DUELIST_ID =964988897849380934
