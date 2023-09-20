@@ -17,7 +17,7 @@ class OjamaBot(commands.Bot):
         self.oj_emoji = None
         self.game_emojis = {}
 
-        super().__init__(command_prefix, intents=intents,activity=CustomActivity(name="Custom Status",state="seeks the meaning of life"))
+        super().__init__(command_prefix, intents=intents,activity=CustomActivity(name="Custom Status",state="seeking the meaning of life"))
 
     async def on_voice_state_update(self,member,before,after):
 
