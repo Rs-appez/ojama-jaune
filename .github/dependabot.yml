@@ -10,3 +10,4 @@ updates:
     schedule:
       interval: "weekly"
     milestone: 1
+    target-branch: "update"
