@@ -1,10 +1,10 @@
 
-FROM python:3.13-rc-slim
+FROM python:3.13-rc-alpine
 
 ENV TZ="Europe/Brussels"
 
-RUN apt-get update \
-    && apt-get install -y ffmpeg
+RUN apk update \
+    && apk add ffmpeg
 
 WORKDIR /ojama_jaune
 
