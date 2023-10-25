@@ -1,5 +1,5 @@
 
-FROM python:3.13-rc-alpine
+FROM python:3.10-alpine
 
 ENV TZ="Europe/Brussels"
 
