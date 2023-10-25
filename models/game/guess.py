@@ -15,7 +15,7 @@ class Guess():
         self.msg = None
         self.pos = pos
         self.diff = diff
-        self.rdm = rdm if rdm != None else Guess.get_rdm_guess_nb()
+        self.rdm = rdm if rdm is None else Guess.get_rdm_guess_nb()
         self.correct = None
 
     async def start(self):
@@ -94,7 +94,7 @@ class Guess():
         
         stat_tab.sort()
 
-        while stat_tab.__len__() < 5:
+        while len(stat_tab) < 5:
             next_stat = stat_tab[-1] + self.diff
             stat_tab.append(next_stat)
 
