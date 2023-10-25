@@ -6,7 +6,7 @@ DEBUG = config('DEBUG',default=False)
 
 #token
 OJAMA_JAUNE_TOKEN =config('TOKEN_OJAMA_JAUNE')
-CHALLONGE_TOKEN = config('CHALLONGE_TOKEN')
+CHALLONGE_TOKEN = config('CHALLONGE_TOKEN',default='')
 
 
 #role
