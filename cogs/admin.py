@@ -15,13 +15,10 @@ class Admin(commands.Cog):
         chn = ctx.channel
         test = await chn.tgger_rityping()
       
-    @commands.has_role(int(config.BOT_DEV_ID))
-    @commands.command()
-    async def speak(self,ctx : commands.Context, channel_id :int, *msg : str):
+    @slash_command(description="🎙️",dm_permission=False,default_member_permissions= 0)
+    async def speak(self, interaction):
         """Send a message in a channel"""
-        text_channel = self.bot.get_channel(channel_id)
-        message = ' '.join( msg)
-        await text_channel.send(message)
+        await interaction.response.send_modal(SpeakModal(self.bot))
 
     @commands.has_role(int(config.BOT_DEV_ID))
     @commands.command()
