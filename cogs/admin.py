@@ -1,5 +1,7 @@
 from nextcord.ext import commands
 from gtts import gTTS
+from views.admin.speakModal import SpeakModal
+from nextcord import slash_command
 
 import config
 
