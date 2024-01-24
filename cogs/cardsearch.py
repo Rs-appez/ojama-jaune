@@ -50,8 +50,7 @@ class CardSearch(commands.Cog):
     @commands.command(name="top")
     async def topDL(self, ctx):
         """List of top deck list"""
-        await ctx.send("LAMPI => " + config.URL_TOP_LAMPI)
-        await ctx.send("SEBTO => " + config.URL_TOP_SEBTO)
+        await ctx.send(config.URL_TOP_DL)
 
 
     @commands.command(name="random")

@@ -47,6 +47,6 @@ CATEGORY_TOURNAMENT_ID_SPEED = 978042278536949820
 
 URL_YGOPRO = "https://db.ygoprodeck.com/api/v7/"
 URL_YGORGA = "https://db.ygorganization.com/data/"
-URL_TOP_DL = "https://docs.google.com/spreadsheets/d/1ZZH6k3stlhm6z-vUO4IIQK-enFwCbOmafFEExroDUT0/edit#gid=474159429"
+URL_TOP_DL = "https://docs.google.com/spreadsheets/d/1vUh_qSBqpPH1Ak0OTwo-2YgeQjqtoQwJlNjpWgDe-ls/htmlview#"
 URL_TOP_LAMPI = "https://docs.google.com/spreadsheets/d/1yWtjcj2NeG4m9COt7sKDqTFaYCUc0-sBvGEhM2qXF0w/edit#gid=1373958324"
 URL_TOP_SEBTO = "https://docs.google.com/spreadsheets/d/1mCCb2BLY-FlQ8vrza433U622fapF7vvrF0xy8Qb12sY/edit#gid=0"
