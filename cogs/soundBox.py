@@ -31,46 +31,46 @@ class SoundBox(commands.Cog):
         voice.save("audios/tts.mp3")
 
 
-    @slash_command(name="baobaboon",description="THE CALL OF BAOBABOON")
+    @slash_command(name="baobaboon",description="THE CALL OF BAOBABOON",dm_permission=False)
     async def baobaboon(self,interaction : Interaction):
         
         await self. play_sound(interaction.user, None,"baobaboon.wav")
         await interaction.response.send_message("https://beyondtheduel.com/wp-content/uploads/2017/01/MACR-Baobaboon-Feature.jpg")
 
-    @slash_command(name="blue",description="Da Ba Dee")
+    @slash_command(name="blue",description="Da Ba Dee",dm_permission=False)
     async def blue(self,interaction : Interaction):
         
         await self. play_sound(interaction.user, None,"bluedabedi.m4a")
         await interaction.response.send_message("https://tenor.com/view/yass-slayy-blue-subway-gif-26002963")
     
     
-    @slash_command(name="delu",description="le deni")
+    @slash_command(name="delu",description="le deni",dm_permission=False)
     async def desillusion(self,interaction : Interaction,target):
   
         await self. play_sound(interaction.user, None,"delu.m4a")
         await interaction.response.send_message(f"{target} est dans le denis")    
 
-    @slash_command(name="cdlamerde",description="'-'")
+    @slash_command(name="cdlamerde",description="'-'",dm_permission=False)
     async def karadoc(self,interaction : Interaction):
   
         await self. play_sound(interaction.user, None,"c dlamerde.m4a")
         await interaction.response.send_message(content="https://tenor.com/view/karadoc-kaamelott-gif-18243163")
 
 
-    @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ")
+    @slash_command(name="dimitri_shōkan",description="⚠ DANGER ⚠ ",dm_permission=False)
     async def fdp(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"FDP.mp3")
         await interaction.response.send_message(content="https://media.discordapp.net/attachments/964951777273339914/1069104836177580062/fdp.png?width=1039&height=528")
 
-    @slash_command(name="gogole",description="⚠ ALERTE ⚠ ")
+    @slash_command(name="gogole",description="⚠ ALERTE ⚠ ",dm_permission=False)
     async def gogole(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"gogole.mp3")
         await interaction.response.send_message(content="https://tenor.com/view/lol-crazy-alerte-garrison-south-park-gif-14631935")
 
 
-    @slash_command(name="jmbun",description="J'AIME BIEN !")
+    @slash_command(name="jmbun",description="J'AIME BIEN !",dm_permission=False)
     async def jmbun(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"jaimebun.m4a")
@@ -82,32 +82,32 @@ class SoundBox(commands.Cog):
 
         await interaction.response.send_message(content=f"{name} a bien aimé !")
 
-    @slash_command(name="feur",description="☣ NE PAS UTILISER ☣")
+    @slash_command(name="feur",description="☣ NE PAS UTILISER ☣",dm_permission=False)
     async def feur(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"FEUR.wav")
         await interaction.response.send_message(content="https://media.discordapp.net/attachments/964951777273339914/1069105361035993278/IMG_20220416_205138_438.jpg?width=1173&height=528")
 
-    @slash_command(name="emotional_damage",description="AIE")
+    @slash_command(name="emotional_damage",description="AIE",dm_permission=False)
     async def emotional(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"emotional-damage.mp3")
         await interaction.response.send_message(content="https://tenor.com/view/emotional-damage-meme-gif-25259043")
 
-    @slash_command(name="paka",description="NICAIZIZ")
+    @slash_command(name="paka",description="NICAIZIZ",dm_permission=False)
     async def maxime(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"maxime.mp3")
         await interaction.response.send_message(content="aka nicolas")
 
-    @slash_command(name="baton_magique",description="TUN TUN TUN TINTIN")
+    @slash_command(name="baton_magique",description="TUN TUN TUN TINTIN",dm_permission=False)
     async def baton_magique(self, interaction : Interaction):
 
         await self. play_sound(interaction.user, None,"baton magique.m4a")
         await interaction.response.send_message(content="https://tenor.com/view/goku-gif-26185626")
 
     
-    @slash_command(name='tts',description='Text to speak')
+    @slash_command(name='tts',description='Text to speak',dm_permission=False)
     async def speak_tts(self,interaction : Interaction, msg : str, lang : str = 'fr'):
         self.tts(msg, lang)
         await self. play_sound(interaction.user, None,"tts.mp3")
@@ -115,15 +115,6 @@ class SoundBox(commands.Cog):
             await interaction.response.send_message(content=f"{self.bot.oj_emoji} J'ai dit ton message {self.bot.oj_emoji}",ephemeral=True)
         else :
             await interaction.response.send_message(":upside_down: J'ai dit ton message :upside_down: ",ephemeral=True)
-
-    # @commands.command()
-    # async def jujujustin(self, ctx):
-    #     member = ctx.guild.get_member(377207249937891329)
-    #     self.tts('Ju Ju Just1 4 !')
-    #     await self. play_sound(ctx.author, None,"tts.mp3")
-    #     if member:
-    #         await ctx.send(f'Ju Ju {member.mention} !')
-    #     await ctx.send("https://media.discordapp.net/attachments/696053977070043247/1064940462684786709/jujujustin.png")
 
 def setup(bot):
     bot.add_cog(SoundBox(bot))
