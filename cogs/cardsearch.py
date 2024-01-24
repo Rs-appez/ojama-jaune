@@ -46,7 +46,7 @@ class CardSearch(commands.Cog):
         cards += '```'
         await ctx.send(cards)
         
-    @slash_command(name='top_DL',description='GoogleDoc des decklists qui ont fait top')
+    @slash_command(name='top_dl',description='GoogleDoc des decklists qui ont fait top')
     async def topDL(self, interaction : Interaction):
         """List of top deck list"""
         await interaction.response.send_message(config.URL_TOP_DL)
