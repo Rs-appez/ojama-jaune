@@ -37,7 +37,7 @@ class Guess():
                         self.second_msg = await  self.game_thread.send(view=TypeView(self,cat="race2",first_view=self.first_view))
                     elif self.rdm < 3 :
                         self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"type_monster_card"))
-                    elif self.rdm < 4 and not ("link" in type) :
+                    elif self.rdm < 4 and "link" not in type :
                         self.msg = await  self.game_thread.send(self.card.img_cropped,view=TypeView(self,"def"))
                     elif self.rdm < 5 :
                         if "link" in type:
