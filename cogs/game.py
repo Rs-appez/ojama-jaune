@@ -30,7 +30,7 @@ class Game(commands.Cog):
 
     async def __start_game(self,interaction,game):
         if interaction.channel.type in [ChannelType.news_thread,ChannelType.public_thread,ChannelType.private_thread] :
-            await interaction.response.send_message(f"Tu ne peux pas lancer un jeu dans un thread",ephemeral=True)
+            await interaction.response.send_message("Tu ne peux pas lancer un jeu dans un thread",ephemeral=True)
             return
         gm = GameManager()
 

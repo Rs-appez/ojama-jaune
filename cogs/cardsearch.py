@@ -1,5 +1,4 @@
 import requests
-from nextcord import Embed
 from nextcord.ext import commands
 import config
 from models.card.cards import Cards

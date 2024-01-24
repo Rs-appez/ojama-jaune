@@ -5,7 +5,6 @@ import json
 from nextcord.interactions import Interaction
 import threading
 import time
-import random
 
 from config import URL_YGOPRO, URL_YGORGA
 from models.game.guess import Guess
@@ -41,7 +40,7 @@ class Cards():
             r = dict((k.lower(), v) for k,v in result.items())
             try :
                 id = r[self.name.lower()][0]
-            except :
+            except :  
                 id = 0
         self.id_rulling = id
     @staticmethod
