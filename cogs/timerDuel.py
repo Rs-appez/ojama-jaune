@@ -10,7 +10,7 @@ class TimerDuel(commands.Cog):
         self.bot = bot
         self.timer = Timer()
 
-    @slash_command(name='start_timer',description='Start timer')
+    @slash_command(name='start_timer',description='Start timer',dm_permission=False)
     async def launch_timer(self,interaction : Interaction, minutes:int = 40):
         """Timer for a duel"""
         if(not self.timer.started):  
@@ -20,7 +20,7 @@ class TimerDuel(commands.Cog):
             await interaction.response.send_message("le timer est déja lancé !",ephemeral=True)
       
 
-    @slash_command(name='time',description='Get remaining time of the timer')
+    @slash_command(name='time',description='Get remaining time of the timer',dm_permission=False)
     async def show_time(self,interaction):
         """get remaining time"""
 
