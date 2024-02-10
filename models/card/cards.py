@@ -113,6 +113,8 @@ class Cards():
             
             if len(resp) > 10:
                 await interaction.followup.send(f"Trop de résultat : {len(resp)} \n https://db.ygorganization.com/card#{self.id_rulling}")
+            elif len(resp) == 0:
+                return interaction.followup.send(f"Aucun résultat !")
             else:
                 for value in resp:
                     response_r = requests.get(
@@ -127,8 +129,12 @@ class Cards():
                     rulling = CardsRulling(id, cards, question, answer)
                     embed = Embed(title = self.name, url=rulling.url, color=0xff0000)
                     embed.add_field(name="Question", value=rulling.question, inline=False)
-                    embed.add_field(name="Answer", value=rulling.answer)
+                    if len(rulling.answer) < 1024 :
+                        embed.add_field(name="Answer", value=rulling.answer)
+                    else:
+                        embed.add_field(name="Answer", value=f"https://db.ygorganization.com/qa#{value}")
                     rullings.append(embed)
+                    
                 for r in rullings:
                     await interaction.channel.send(embed=r)
                 
@@ -153,7 +159,7 @@ class Cards():
                 embed.add_field(name=self.type, value=self.desc, inline=False)
         elif 'Spell' in self.type or 'Trap' in self.type:
             embed.add_field(name=f'{self.type} - {self.race}', value=self.desc, inline=False)
-        embed.set_footer(text=f'Prix cardmarket : {self.cm} €')
+        embed.set_footer(text=f'Prix cardmarket : {self.cm} € // rulling : https://db.ygorganization.com/card#{self.id_rulling}')
         return embed
 
     def __str__(self) -> str:
