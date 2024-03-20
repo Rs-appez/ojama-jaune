@@ -22,7 +22,13 @@ class Cards():
         self.img = data['card_images'][0]['image_url']
         self.img_cropped = self.img.replace("cards","cards_cropped")
         self.cm = data['card_prices'][0]['cardmarket_price']
-        
+        if 'banlist_info' in data:
+            self.ban_tcg = data['banlist_info']['ban_tcg']
+            self.ban_ocg = data['banlist_info']['ban_ocg']
+        else:
+            self.ban_tcg = 'Unbanned'
+            self.ban_ocg = 'Unbanned'
+            
         if self.type != 'Spell Card' and self.type != 'Trap Card':
             self.atk = data['atk']
             self.attribute = data['attribute']
@@ -159,6 +165,8 @@ class Cards():
                 embed.add_field(name=self.type, value=self.desc, inline=False)
         elif 'Spell' in self.type or 'Trap' in self.type:
             embed.add_field(name=f'{self.type} - {self.race}', value=self.desc, inline=False)
+        embed.add_field(name="OCG", value=f'{self.ban_ocg}', inline=True)
+        embed.add_field(name="TCG", value=f'{self.ban_tcg}', inline=True)
         embed.set_footer(text=f'Prix cardmarket : {self.cm} € // rulling : https://db.ygorganization.com/card#{self.id_rulling}')
         return embed
 
