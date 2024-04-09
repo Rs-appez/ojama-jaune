@@ -4,7 +4,7 @@ APScheduler==3.10.4
 async-timeout==4.0.3
 attrs==23.1.0
 bleach==6.0.0
-build==1.0.3
+build==1.2.1
 certifi==2023.7.22
 cffi==1.16.0
 chardet==5.2.0
