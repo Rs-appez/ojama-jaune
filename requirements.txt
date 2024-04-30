@@ -15,7 +15,7 @@ frozenlist==1.4.1
 future==1.0.0
 gTTS==2.5.1
 idna==3.7
-interaction_discord_bot==0.1.9
+interaction-discord-bot==0.1.9
 multidict==6.0.5
 nextcord==2.6.0
 packaging==24.0
