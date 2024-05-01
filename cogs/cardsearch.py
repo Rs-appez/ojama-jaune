@@ -54,7 +54,7 @@ class CardSearch(commands.Cog):
         dl = Decklist.get_decklist(1)
         await interaction.response.send_message(f"[{dl.name}]({dl.url})")
 
-    @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top')
+    @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top',default_member_permissions=0)
     async def updateTopDL(self, interaction : Interaction):
         """List of top deck list"""
         await interaction.response.send_modal(DecklistModal(self.bot, interaction.channel_id))
