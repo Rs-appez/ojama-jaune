@@ -51,13 +51,13 @@ class CardSearch(commands.Cog):
     async def topDL(self, interaction : Interaction):
         """List of top deck list"""
         dl = Decklist.get_decklist(1)
-        await interaction.response.send_message(f"{dl.name} : {dl.url}")
+        await interaction.response.send_message(f"[Les decklists des joueurs meilleurs que toi]({dl.url} \"{dl.name}\")")
 
     # @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top')
     # async def updateTopDL(self, interaction : Interaction):
     #     """List of top deck list"""
     #     dl = Decklist.get_decklist(1)
-    #     await interaction.response.send_message(f"{dl.name} : {dl.url}")
+    #     await interaction.response.send_message(f"[Les decklists des joueurs meilleurs que toi]({dl.url} \"{dl.name}\")")
 
 
     @commands.command(name="random")
