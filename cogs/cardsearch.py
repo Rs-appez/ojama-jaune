@@ -6,6 +6,7 @@ from models.card.decklist import Decklist
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 
+from views.card.decklistModal import DecklistModal
 from views.card.rulling_view import RullingView
 
 
@@ -53,11 +54,10 @@ class CardSearch(commands.Cog):
         dl = Decklist.get_decklist(1)
         await interaction.response.send_message(f"[{dl.name}]({dl.url})")
 
-    # @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top')
-    # async def updateTopDL(self, interaction : Interaction):
-    #     """List of top deck list"""
-    #     dl = Decklist.get_decklist(1)
-    #     await interaction.response.send_message(f"[Les decklists des joueurs meilleurs que toi]({dl.url} \"{dl.name}\")")
+    @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top')
+    async def updateTopDL(self, interaction : Interaction):
+        """List of top deck list"""
+        await interaction.response.send_modal(DecklistModal(self.bot, interaction.channel_id))
 
 
     @commands.command(name="random")

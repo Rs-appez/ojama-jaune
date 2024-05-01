@@ -20,7 +20,7 @@ class Decklist():
             return None
         
     def save(self):
-        response = requests.post(Decklist.api_url,headers={"Authorization":config.BACKEND_TOKEN},json={"name":self.name,"url":self.url,"post_by":self.post_by})
+        response = requests.put(Decklist.api_url + '1/',headers={"Authorization":config.BACKEND_TOKEN},json={"name":self.name,"url":self.url,"post_by":self.post_by})
         if response.status_code == 200:
             return True
         else:
