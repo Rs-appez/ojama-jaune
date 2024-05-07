@@ -11,7 +11,7 @@ class TimerDuel(commands.Cog):
         self.timer = None
 
     @slash_command(name='start_timer',description='Start timer',dm_permission=False)
-    async def launch_timer(self,interaction : Interaction, minutes:int = 40):
+    async def launch_timer(self,interaction : Interaction, minutes:int = 45):
         """Timer for a duel"""
         if not self.timer:
             guild = self.bot.get_guild(int(config.GUILD_ID))
