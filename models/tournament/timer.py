@@ -5,17 +5,21 @@ from nextcord import  Role
 from config import DUELIST_ID
 
 class Timer():
-    def __init__(self):
+    def __init__(self, channel):
         self.started = False
         self.freezed = False
-
+        self.channel = channel
+    
     def get_time_remianing(self) :
         return (self.time - (T.time() - self.started_time)).__floor__()
-
-    async def get_time(self, response = None):
+    
+    def get_time_str(self):
         time_remaining = self.get_time_remianing()
         mins, secs = divmod(time_remaining, 60)
-        time = '{:02d}:{:02d} min'.format(mins, secs)
+        return '{:02d}:{:02d} min'.format(mins, secs)
+
+    async def get_time(self, response = None):
+        time = self.get_time_str()
         if response :
             if(not self.freezed):
                 await response.send_message("il reste " + time)
@@ -37,6 +41,7 @@ class Timer():
         self.started_time = T.time()
         while self.started :
             await asyncio.sleep(1)
+            await self.channel.edit(name = f'TIME : {self.get_time_str()}')
             time_remaining = self.get_time_remianing()
             if   time_remaining <= 0 :
                 self.started = False

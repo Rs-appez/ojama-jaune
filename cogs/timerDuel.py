@@ -2,17 +2,21 @@ from nextcord.ext import commands
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 from models.tournament.timer import Timer
- 
+import config
 
 class TimerDuel(commands.Cog):
     """Manage timer"""
     def __init__(self,bot):
         self.bot = bot
-        self.timer = Timer()
+        self.timer = None
 
     @slash_command(name='start_timer',description='Start timer',dm_permission=False)
     async def launch_timer(self,interaction : Interaction, minutes:int = 40):
         """Timer for a duel"""
+        if not self.timer:
+            guild = self.bot.get_guild(int(config.GUILD_ID))
+            channel = guild.get_channel(int(config.TIMER_CHANNEL))
+            self.timer = Timer(channel)
         if(not self.timer.started):  
             await interaction.response.send_message(content="le timer est lancé !",ephemeral=True)
             await self.timer.launch_timer(interaction, minutes*60)
