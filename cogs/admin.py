@@ -13,8 +13,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     @commands.command()
     async def test(self,ctx : commands.Context):
-        chn = ctx.channel
-        test = await chn.tgger_rityping()
+        pass
 
     @commands.has_role(int(config.BOT_DEV_ID))
     @commands.command()
