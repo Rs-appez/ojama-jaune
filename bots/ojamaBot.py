@@ -4,6 +4,7 @@ from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType,CustomActivity
 import config
 import bleach
+from interaction_discord_bot.utils.message import transfer_message
 
 class OjamaBot(commands.Bot):
 
@@ -135,11 +136,8 @@ class OjamaBot(commands.Bot):
 
             guild = self.get_guild(int(config.GUILD_ID))
             if guild :
-                files = []
-                for file in message.attachments:
-                    files.append(await file.to_file())
-                await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send(content=f"{message.author} mp me : \n{message.content}",embeds=message.embeds,files=files) 
-
+                await transfer_message(message,guild,int(config.BOT_TEST_CHANNEL))
+                
     async def join_vocal(self, voice_channel : nextcord.VoiceChannel):
 
         return await voice_channel.connect()
