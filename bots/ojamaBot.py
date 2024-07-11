@@ -46,8 +46,9 @@ class OjamaBot(commands.Bot):
         guild = self.get_guild(int(config.GUILD_ID))
         if guild :
             self.oj_emoji= await guild.fetch_emoji(1027165609278050355)
-            msg = await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send("UP !")
-            await msg.add_reaction(self.oj_emoji)
+            if not config.DEBUG :
+                msg = await guild.get_channel(int(config.BOT_TEST_CHANNEL)).send("UP !")
+                await msg.add_reaction(self.oj_emoji)
             self.game_emojis["millennium"] = await guild.fetch_emoji(1138544208974717000)
         await self.__get_game_emoji()
 
