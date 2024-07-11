@@ -51,8 +51,9 @@ class CardSearch(commands.Cog):
     @slash_command(name='top_dl',description='GoogleDoc des decklists qui ont fait top')
     async def topDL(self, interaction : Interaction):
         """List of top deck list"""
+        await interaction.response.defer()
         dl = Decklist.get_decklist(1)
-        await interaction.response.send_message(f"[{dl.name}]({dl.url})")
+        await interaction.followup.send(f"[{dl.name}]({dl.url})")
 
     @slash_command(name='update_top_dl',description='Update googleDoc des decklists qui ont fait top',default_member_permissions=0)
     async def updateTopDL(self, interaction : Interaction):
