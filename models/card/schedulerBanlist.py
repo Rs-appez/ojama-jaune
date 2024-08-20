@@ -25,7 +25,7 @@ class SchedulerBanlist:
         self.scheduler.configure(job_defaults=job_defaults)
 
     def __add_jobs(self):
-        self.scheduler.add_job(self.__check_banlist, CronTrigger(minute='*/1'), id='banlist')
+        self.scheduler.add_job(self.__check_banlist, CronTrigger(minute='*/5'), id='banlist')
 
 
     async def __check_banlist(self):   
