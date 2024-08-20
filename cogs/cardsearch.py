@@ -6,6 +6,7 @@ from models.card.decklist import Decklist
 from nextcord.interactions import Interaction
 from nextcord import slash_command
 
+from models.card.schedulerBanlist import SchedulerBanlist
 from views.card.decklistModal import DecklistModal
 from views.card.rulling_view import RullingView
 
@@ -16,6 +17,9 @@ class CardSearch(commands.Cog):
         self.bot = bot
         self.url_ygopro =config.URL_YGOPRO
         self.url_ygorga =config.URL_YGORGA
+
+        #scheduler
+        self.schedulerBan = SchedulerBanlist(self.bot)
 
         
     @slash_command(name='card',description='Recherche de carte') 

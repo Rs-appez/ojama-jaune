@@ -18,6 +18,8 @@ class OjamaBot(commands.Bot):
         self.oj_emoji = None
         self.game_emojis = {}
 
+        self.init = False
+
         super().__init__(command_prefix, intents=intents,activity=CustomActivity(name="Custom Status",state="seeking the meaning of life"))
 
     async def on_voice_state_update(self,member,before,after):
@@ -42,6 +44,7 @@ class OjamaBot(commands.Bot):
                 await self.play_sound("baton magique.m4a",after.channel)
 
     async def on_ready(self):
+        self.init = True
         print(f"{self.user.display_name} est pret")
         guild = self.get_guild(int(config.GUILD_ID))
         if guild :
@@ -167,4 +170,3 @@ class OjamaBot(commands.Bot):
 
         self.voice_client.play(source, after= self.after_sound )
         
-    
