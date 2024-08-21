@@ -85,7 +85,7 @@ class SchedulerBanlist:
         return res.json()['banlist_date']
     
     def __update_last_banlist(self):
-        response = requests.put(SchedulerBanlist.api_url ,headers={"Authorization":config.BACKEND_TOKEN},json={"banlist_date":self.last_banlist})
+        response = requests.put(SchedulerBanlist.api_url+"1/" ,headers={"Authorization":config.BACKEND_TOKEN},json={"banlist_date":self.last_banlist})
         if response.status_code == 200:
             return True
         else:
