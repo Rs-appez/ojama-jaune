@@ -8,10 +8,14 @@ from threading import Thread
 from bs4 import BeautifulSoup
 
 class SchedulerBanlist:
+
+    api_url = config.BACKEND_URL + "decklist/lastbanlist/"
+
     def __init__(self,bot) -> None:
         self.bot=bot
         self.banlist_url = config.BANLIST_URL
-        self.last_banlist = config.LAST_BANLIST
+        self.banlist_url_db = config.BANLIST_URL_DB
+        self.last_banlist = self.__get_last_banlist()
         self.channel_id = int(config.BOT_TEST_CHANNEL)
         self.channel = None
         self.scheduler = None
@@ -44,8 +48,9 @@ class SchedulerBanlist:
             self.scheduler.remove_job('banlist') 
         
         elif url != self.last_banlist:
-            await self.__send_message("Banlist updated : https://www.yugioh-card.com" + url)
+            await self.__send_message("Banlist updated : " + self.banlist_url_db)
             self.last_banlist = url
+            self.__update_last_banlist()
 
 
 
@@ -74,3 +79,17 @@ class SchedulerBanlist:
             self.channel = guild.get_channel(self.channel_id)
 
         print(self.channel)
+
+
+    def __get_last_banlist(self):
+
+        res = requests.get(SchedulerBanlist.api_url ,headers={"Authorization":config.BACKEND_TOKEN})
+
+        return res.json()['banlist_date']
+    
+    def __update_last_banlist(self):
+        response = requests.put(SchedulerBanlist.api_url ,headers={"Authorization":config.BACKEND_TOKEN},json={"banlist_date":self.last_banlist})
+        if response.status_code == 200:
+            return True
+        else:
+            return False

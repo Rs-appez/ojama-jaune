@@ -56,4 +56,4 @@ URL_TOP_SEBTO = "https://docs.google.com/spreadsheets/d/1mCCb2BLY-FlQ8vrza433U62
 
 #banlist
 BANLIST_URL = "https://www.yugioh-card.com/en/limited/"
-LAST_BANLIST = "/en/limited/list_2024-04-15/"
+BANLIST_URL_DB = "https://www.db.yugioh-card.com/yugiohdb/forbidden_limited.action"
