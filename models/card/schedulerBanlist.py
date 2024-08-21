@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 class SchedulerBanlist:
 
-    api_url = config.BACKEND_URL + "decklist/lastbanlist/"
+    api_url = config.BACKEND_URL + "decklist/banlist/"
 
     def __init__(self,bot) -> None:
         self.bot=bot
@@ -74,16 +74,13 @@ class SchedulerBanlist:
         while not self.bot.init:
             await asyncio.sleep(1)
         guild = self.bot.get_guild(int(config.GUILD_ID))
-        print(guild)
         if guild :
             self.channel = guild.get_channel(self.channel_id)
-
-        print(self.channel)
 
 
     def __get_last_banlist(self):
 
-        res = requests.get(SchedulerBanlist.api_url ,headers={"Authorization":config.BACKEND_TOKEN})
+        res = requests.get(SchedulerBanlist.api_url+"1/" ,headers={"Authorization":config.BACKEND_TOKEN})
 
         return res.json()['banlist_date']
     
