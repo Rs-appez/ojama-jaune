@@ -16,8 +16,10 @@ class SchedulerBanlist:
         self.banlist_url = config.BANLIST_URL
         self.banlist_url_db = config.BANLIST_URL_DB
         self.last_banlist = self.__get_last_banlist()
-        self.channel_id = int(config.BOT_TEST_CHANNEL)
+        self.channel_id = int(config.BANLIST_CHANNEL)
+        self.channel_debug_id = int(config.BOT_TEST_CHANNEL)
         self.channel = None
+        self.channel_debug = None
         self.scheduler = None
 
         loop = asyncio.get_event_loop()
@@ -44,18 +46,18 @@ class SchedulerBanlist:
                 break
         
         if not url:
-            await self.__send_message("Error in banlist html")
+            await self.__send_message("Error in banlist html",self.channel_debug)
             self.scheduler.remove_job('banlist') 
         
         elif url != self.last_banlist:
-            await self.__send_message("Banlist updated : " + self.banlist_url_db)
+            await self.__send_message("@everyone\nBanlist updated : " + self.banlist_url_db, self.channel)
             self.last_banlist = url
             self.__update_last_banlist()
 
 
 
-    async def __send_message(self,msg):
-        await self.channel.send(msg)
+    async def __send_message(self,msg,channel):
+        await channel.send(msg)
 
 
     def __start(self, old_loop):
@@ -76,6 +78,7 @@ class SchedulerBanlist:
         guild = self.bot.get_guild(int(config.GUILD_ID))
         if guild :
             self.channel = guild.get_channel(self.channel_id)
+            self.channel_debug = guild.get_channel(self.channel_debug_id)
 
 
     def __get_last_banlist(self):
