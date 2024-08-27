@@ -7,4 +7,3 @@ processes = []
 
 [env]
 TZ="Europe/Brussels"
-destination="/data"
