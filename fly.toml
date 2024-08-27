@@ -7,7 +7,4 @@ processes = []
 
 [env]
 TZ="Europe/Brussels"
-
-[mounts]
-source="ojama_data"
 destination="/data"
