@@ -1,6 +1,7 @@
 # fly.toml file generated for ojama-jaune on 2022-12-20T17:09:31+01:00
 
 app = "ojama-jaune"
+primary_region = "ams"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
