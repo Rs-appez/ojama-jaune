@@ -19,7 +19,7 @@ class CardSearch(commands.Cog):
         self.url_ygorga =config.URL_YGORGA
 
         #scheduler
-        self.schedulerBan = SchedulerBanlist(self.bot)
+        # self.schedulerBan = SchedulerBanlist(self.bot)
 
         
     @slash_command(name='card',description='Recherche de carte') 
