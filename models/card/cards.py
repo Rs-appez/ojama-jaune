@@ -57,10 +57,11 @@ class Cards():
                 Cards._url_ygopro + "randomcard.php"
             )
             if response.status_code == 200:
-                response_type = response.json()['type']
-            else : break
+                response_type = response.json()['data'][0]['type']
+            else : 
+                break
         if response.status_code == 200:
-            return Cards(response.json())
+            return Cards(response.json()['data'][0])
         
     @staticmethod
     def get_random_cards(cards_list,nb_cards):
