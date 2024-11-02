@@ -48,15 +48,15 @@ class Ambiance(commands.Cog):
         await ctx.send("de marquer ses cartes")
         
         
-    @commands.command(name="tg")
-    async def tg(self, ctx, mention : Member):
-        nbr = random.randrange(1, 100, 1)
-        user = ctx.guild.get_member_named(str(mention))
-        assert isinstance(user, Member)
-        if nbr <= 50:
-            await ctx.author.edit(voice_channel=None)
-        else:
-            await user.edit(voice_channel=None)
+    # @commands.command(name="tg")
+    # async def tg(self, ctx, mention : Member):
+    #     nbr = random.randrange(1, 100, 1)
+    #     user = ctx.guild.get_member_named(str(mention))
+    #     assert isinstance(user, Member)
+    #     if nbr <= 50:
+    #         await ctx.author.edit(voice_channel=None)
+    #     else:
+    #         await user.edit(voice_channel=None)
         
     
         
