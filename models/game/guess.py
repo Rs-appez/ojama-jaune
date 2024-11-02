@@ -66,7 +66,8 @@ class Guess():
                 self.correct =  self.card.defe == int(type)
             else :
                 self.correct =  type in self.card.race.lower()
-        else : self.correct =  type in self.card.type.lower()
+        else : 
+            self.correct =  type in self.card.type.lower()
 
         return self.correct
 
