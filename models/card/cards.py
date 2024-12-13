@@ -23,8 +23,8 @@ class Cards():
         self.img_cropped = self.img.replace("cards","cards_cropped")
         self.cm = data['card_prices'][0]['cardmarket_price']
         if 'banlist_info' in data:
-            self.ban_tcg = data['banlist_info']['ban_tcg']
-            self.ban_ocg = data['banlist_info']['ban_ocg']
+            self.ban_tcg = data['banlist_info']['ban_tcg'] if 'ban_tcg' in data['banlist_info'] else None
+            self.ban_ocg = data['banlist_info']['ban_ocg'] if 'ban_ocg' in data['banlist_info'] else None
         else:
             self.ban_tcg = 'Unbanned'
             self.ban_ocg = 'Unbanned'
