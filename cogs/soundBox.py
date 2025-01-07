@@ -1,4 +1,3 @@
-import nextcord
 from nextcord.ext import commands
 from nextcord import slash_command
 from gtts import gTTS
