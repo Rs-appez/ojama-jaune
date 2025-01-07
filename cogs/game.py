@@ -7,6 +7,9 @@ from models.game.scheduler import Scheduler
 
 import config
 
+from nextcord import InteractionContextType
+
+
 class Game(commands.Cog):
     """some games"""
 
@@ -23,7 +26,7 @@ class Game(commands.Cog):
     async def guess(self,interaction : Interaction ):
        await self.__start_game(interaction,"guess_the_card")
         
-    @slash_command(name="guess_battle",description="Crois en l'âme des cartes! (plus fort que tes adversaires)",dm_permission=False)
+    @slash_command(name="guess_battle",description="Crois en l'âme des cartes! (plus fort que tes adversaires)",contexts=[InteractionContextType.guild])
     async def guess_battle(self,interaction : Interaction ):
        await self.__start_game(interaction,"guess_battle")
         

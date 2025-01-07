@@ -3,6 +3,7 @@ from nextcord.interactions import Interaction
 from nextcord import slash_command
 from models.tournament.timer import Timer
  
+from nextcord import InteractionContextType
 
 class TimerDuel(commands.Cog):
     """Manage timer"""
@@ -10,7 +11,7 @@ class TimerDuel(commands.Cog):
         self.bot = bot
         self.timer = Timer()
 
-    @slash_command(name='start_timer',description='Start timer',dm_permission=False)
+    @slash_command(name='start_timer',description='Start timer',contexts=[InteractionContextType.guild])
     async def launch_timer(self,interaction : Interaction, minutes:int = 40):
         """Timer for a duel"""
         if(not self.timer.started):  
@@ -20,7 +21,7 @@ class TimerDuel(commands.Cog):
             await interaction.response.send_message("le timer est déja lancé !",ephemeral=True)
       
 
-    @slash_command(name='time',description='Get remaining time of the timer',dm_permission=False)
+    @slash_command(name='time',description='Get remaining time of the timer',contexts=[InteractionContextType.guild])
     async def show_time(self,interaction):
         """get remaining time"""
 
