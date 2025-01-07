@@ -1,5 +1,7 @@
-from discord import ButtonStyle
-from nextcord.ui import View , Button
+from nextcord import ButtonStyle
+from nextcord.ui import View, Button
+
+
 class TypeView(View):
 
     class Button_type(Button):
@@ -10,48 +12,84 @@ class TypeView(View):
             self.current_view = current_view
 
             emoji = None
-            if type in current_view.guess.game_emojis :
+            if type in current_view.guess.game_emojis:
                 emoji = current_view.guess.game_emojis[type]
 
             label = str(type)
-            if current_view.cat in ["atk","def"]:
+            if current_view.cat in ["atk", "def"]:
                 label += f" {current_view.cat}"
 
-            super().__init__(label=label.upper(),style=ButtonStyle.primary,emoji=emoji)
+            super().__init__(
+                label=label.upper(), style=ButtonStyle.primary, emoji=emoji
+            )
 
-        async def callback(self,interaction):
-            await self.current_view.btn_callback(interaction,self)
-            
+        async def callback(self, interaction):
+            await self.current_view.btn_callback(interaction, self)
+
     class Button_level(Button):
 
-        def __init__(self, type, current_view,val):
+        def __init__(self, type, current_view, val):
             self.type_card = val
             self.current_view = current_view
             emoji = None
-            if type in current_view.guess.game_emojis :
+            if type in current_view.guess.game_emojis:
                 emoji = current_view.guess.game_emojis[type]
-            super().__init__(label=val,style=ButtonStyle.primary,emoji=emoji)
+            super().__init__(label=val, style=ButtonStyle.primary, emoji=emoji)
 
-        async def callback(self,interaction):
-            await self.current_view.btn_callback(interaction,self)
-            
-    
+        async def callback(self, interaction):
+            await self.current_view.btn_callback(interaction, self)
 
-    __card_types = ["monster","spell","trap"]
-    __spell_types = ["normal","continuous","equip","field","quick-play","ritual"]
-    __trap_types = ["normal","continuous","counter"]
-    __attribute_types = ["light","dark","water","fire","earth","wind","divine"]
-    __race_types1 = ["aqua","beast","beast-warrior","creator god","cyberse","dinosaur","divine-beast","dragon","fairy","fiend",
-                     "fish","illusionist","insect","machine","plant","psychic","pyro","reptile","rock","sea serpent","spellcaster",
-                     "thunder","warrior","winged beast","wyrm"]
+    __card_types = ["monster", "spell", "trap"]
+    __spell_types = ["normal", "continuous", "equip", "field", "quick-play", "ritual"]
+    __trap_types = ["normal", "continuous", "counter"]
+    __attribute_types = ["light", "dark", "water", "fire", "earth", "wind", "divine"]
+    __race_types1 = [
+        "aqua",
+        "beast",
+        "beast-warrior",
+        "creator god",
+        "cyberse",
+        "dinosaur",
+        "divine-beast",
+        "dragon",
+        "fairy",
+        "fiend",
+        "fish",
+        "illusionist",
+        "insect",
+        "machine",
+        "plant",
+        "psychic",
+        "pyro",
+        "reptile",
+        "rock",
+        "sea serpent",
+        "spellcaster",
+        "thunder",
+        "warrior",
+        "winged beast",
+        "wyrm",
+    ]
     __race_types2 = ["zombie"]
-    __monster_card_types = ["normal ","effect","tuner","spirit","toon","fusion","synchro","xyz","link","ritual ","pendulum"]
-    __level_monster = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
-    __linkrating_monster = [1,2,3,4,5,6,7,8]
-    
-    def __init__(self,guess,cat = "",first_view= None):
+    __monster_card_types = [
+        "normal ",
+        "effect",
+        "tuner",
+        "spirit",
+        "toon",
+        "fusion",
+        "synchro",
+        "xyz",
+        "link",
+        "ritual ",
+        "pendulum",
+    ]
+    __level_monster = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    __linkrating_monster = [1, 2, 3, 4, 5, 6, 7, 8]
+
+    def __init__(self, guess, cat="", first_view=None):
         self.guess = guess
-        self.click=False
+        self.click = False
         self.cat = cat
         self.first_view = first_view
         self.second_view = None
@@ -70,33 +108,35 @@ class TypeView(View):
             self.__init_button_type(self.__race_types1)
         elif cat == "race2":
             self.__init_button_type(self.__race_types2)
-        elif cat in ["level","rank"]:
+        elif cat in ["level", "rank"]:
             self.__init_button_val(self.__level_monster)
         elif cat == "link":
             self.__init_button_val(self.__linkrating_monster)
         elif cat == "type_monster_card":
             self.__init_button_type(self.__monster_card_types)
-        elif cat in ["atk","def"]:
+        elif cat in ["atk", "def"]:
             self.__init_button_type(self.guess.generate_stat(cat))
-        else :
+        else:
             self.__init_button_type(self.__card_types)
 
-    def __init_button_type(self,list):
+    def __init_button_type(self, list):
         for type in list:
-            button = self.Button_type(type,self)
+            button = self.Button_type(type, self)
             self.add_item(button)
 
-    def __init_button_val(self,list):
+    def __init_button_val(self, list):
         for val in list:
-            button = self.Button_level(self.cat,self,val)
+            button = self.Button_level(self.cat, self, val)
             self.add_item(button)
 
-    async def btn_callback(self,interaction,button):
+    async def btn_callback(self, interaction, button):
 
         if not self.click:
             self.click = True
-            if self.guess.check_type(button.type_card,self.cat) : button.style = ButtonStyle.green
-            else : button.style = ButtonStyle.danger
+            if self.guess.check_type(button.type_card, self.cat):
+                button.style = ButtonStyle.green
+            else:
+                button.style = ButtonStyle.danger
 
             for btn in self.children:
                 btn.disabled = True
@@ -115,19 +155,19 @@ class TypeView(View):
             await self.guess.finish()
             self.stop()
 
-    def __add_second_view(self,second_view):
+    def __add_second_view(self, second_view):
         self.second_view = second_view
-    
+
     async def on_timeout(self):
         for btn in self.children:
-                btn.disabled = True
+            btn.disabled = True
         if self.first_view:
             await self.guess.first_msg.edit(view=self.first_view)
         elif self.second_view:
             for btn in self.second_view.children:
                 btn.disabled = True
             await self.guess.second_msg.edit(view=self.second_view)
-        else :
+        else:
             await self.guess.msg.edit(view=self)
-        
+
         return await super().on_timeout()
