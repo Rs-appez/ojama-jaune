@@ -1,8 +1,6 @@
 import asyncio
-from nextcord import Member
 from nextcord import slash_command
 from nextcord.ext import commands
-import random
 
 class Ambiance(commands.Cog):
     """Manage ambience with ojama"""
