@@ -4,7 +4,7 @@ from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio,Message,ChannelType,CustomActivity
 import config
 import bleach
-from interaction_discord_bot.utils.message import transfer_message
+from speakNextcordBot.utils.message import transfer_message
 
 class OjamaBot(commands.Bot):
 
