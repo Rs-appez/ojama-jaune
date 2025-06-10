@@ -28,7 +28,7 @@ pyproject_hooks==1.2.0
 python-decouple==3.8
 python-dotenv==1.1.0
 pytz==2025.2
-requests==2.32.3
+requests==2.32.4
 six==1.17.0
 soupsieve==2.7
 SpeakNextcordBot==1.0.0
