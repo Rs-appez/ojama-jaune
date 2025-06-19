@@ -35,7 +35,7 @@ SpeakNextcordBot==1.0.0
 tomli==2.2.1
 typing_extensions==4.14.0
 tzlocal==5.3.1
-urllib3==2.4.0
+urllib3==2.5.0
 webencodings==0.5.1
 yarl==1.20.1
 zipp==3.23.0
