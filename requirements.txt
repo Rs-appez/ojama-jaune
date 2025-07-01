@@ -31,7 +31,7 @@ pytz==2025.2
 requests==2.32.4
 six==1.17.0
 soupsieve==2.7
-SpeakNextcordBot==1.0.0
+SpeakNextcordBot==1.1.1
 tomli==2.2.1
 typing_extensions==4.14.0
 tzlocal==5.3.1
