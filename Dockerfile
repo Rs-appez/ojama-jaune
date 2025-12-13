@@ -1,14 +1,12 @@
-FROM python:3.13.3-slim
+FROM python:3.13-alpine
 
 ENV TZ="Europe/Brussels"
+ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update \
-    && apt-get install -y ffmpeg
+RUN apk add --no-cache ffmpeg
 
 WORKDIR /ojama_jaune
-
-
-COPY requirements.txt /ojama_jaune/
-RUN pip install -r requirements.txt
 COPY . /ojama_jaune/
-CMD python main.py
+
+RUN pip install --no-cache-dir -r requirements.txt
+CMD ["python3", "main.py"]
