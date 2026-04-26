@@ -1,0 +1,6 @@
+services:
+  ojama-jaune:
+    build: .
+    container_name: ojamaBot
+    env_file: .env.prod
+    restart: unless-stopped
