@@ -6,11 +6,11 @@ async-timeout==5.0.1
 attrs==26.1.0
 beautifulsoup4==4.15.0
 bleach==6.4.0
-build==1.5.0
+build==1.5.1
 certifi==2026.6.17
-cffi==2.0.0
+cffi==2.1.0
 chardet==7.4.3
-charset-normalizer==3.4.8
+charset-normalizer==3.4.9
 click==8.4.2
 colorama==0.4.6
 frozenlist==1.8.0
